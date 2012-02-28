@@ -1,0 +1,11 @@
+﻿<Window x:Class="IremEczOtomasyonu.BarcodeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Barkod Girişi" Height="93" Width="345" ShowInTaskbar="False" WindowStyle="ToolWindow"
+        FocusManager.FocusedElement="{Binding ElementName=barcodeTextBox}">
+    <Grid>
+        <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,12,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="68,12,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="162" />
+        <Button Content="Giriş" Height="23" HorizontalAlignment="Right" Margin="0,13,12,0" Name="enterButton" VerticalAlignment="Top" Width="75" IsDefault="True" Click="EnterButton_Click" />
+    </Grid>
+</Window>

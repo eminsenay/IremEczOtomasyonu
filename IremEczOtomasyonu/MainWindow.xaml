@@ -21,11 +21,9 @@
         </Menu>
         <ToolBar Name="toolBar1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Margin="0,23,0,0" />
         <TabControl Name="tabControl1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,48,0,0">
-            <TabItem Header="Müşteriler" Name="tabItemMusteri">
+            <TabItem Header="Müşteriler" Name="customersTabItem">
             </TabItem>
-            <TabItem Header="Ürünler" Name="tabItemUrun">
-                <Grid>
-                </Grid>
+            <TabItem Header="Ürünler" Name="productsTabItem">
             </TabItem>
         </TabControl>
     </Grid>

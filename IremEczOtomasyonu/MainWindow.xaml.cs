@@ -23,12 +23,17 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly UserControlCustomers _customersUserControl;
+        private readonly UserControlCustomers _customersUserControl;
+        private readonly UserControlProducts _productsUserControl;
+
         public MainWindow()
         {
             InitializeComponent();
             _customersUserControl = new UserControlCustomers();
-            tabItemMusteri.Content = _customersUserControl;
+            customersTabItem.Content = _customersUserControl;
+            _productsUserControl = new UserControlProducts();
+            productsTabItem.Content = _productsUserControl;
+
             //Focus the datagrid to receive the changed events of the selected customer correctly
             // TODO: Find a better solution
             _customersUserControl.customersDataGrid.Focus();
