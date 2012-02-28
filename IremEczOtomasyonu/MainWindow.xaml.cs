@@ -196,7 +196,6 @@ namespace IremEczOtomasyonu
                 selectedCustomer = _customersViewSource.View.CurrentItem as Customer;
             }
             ShowCustomerPhoto(selectedCustomer);
-            //Test
         }
 
         /// <summary>
