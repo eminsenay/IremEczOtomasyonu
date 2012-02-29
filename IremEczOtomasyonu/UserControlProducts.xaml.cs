@@ -53,8 +53,16 @@ namespace IremEczOtomasyonu
                                               Owner = Parent as Window, 
                                               WindowStartupLocation = WindowStartupLocation.CenterOwner
                                           };
-            bool? res = barcodeWindow.ShowDialog();
-            string barcode = barcodeWindow.Barcode;
+            if (barcodeWindow.ShowDialog() != true)
+            {
+                return;
+            }
+            AddProductWindow addProductWindow = new AddProductWindow(barcodeWindow.Barcode)
+                                                {
+                                                    Owner = Parent as Window,
+                                                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                                                };
+            addProductWindow.ShowDialog();
         }
     }
 }

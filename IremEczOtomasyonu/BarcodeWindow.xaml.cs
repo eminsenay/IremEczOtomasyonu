@@ -36,5 +36,17 @@ namespace IremEczOtomasyonu
             DialogResult = true;
             Close();
         }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Close the window if the Esc key is pressed
+            if (e.Key != Key.Escape)
+            {
+                return;
+            }
+            DialogResult = false;
+            e.Handled = true;
+            Close();
+        }
     }
 }
