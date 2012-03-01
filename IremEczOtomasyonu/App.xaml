@@ -3,5 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <Storyboard x:Key="FlashError">
+            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" 
+                                       Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="00:00:03" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style x:Key="myErrorTemplate" TargetType="Control">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <!--<StackPanel Orientation="Vertical">-->
+                            <Border BorderBrush="Red" BorderThickness="1">
+                                <AdornedElementPlaceholder Name="mycontrol">
+                                    <!-- Here's a technique to fill up the textbox with the message for three seconds-->
+                                    <Label Foreground="White" Background="Red" Margin="-3" 
+                                           Content="{Binding ElementName=mycontrol, 
+                                                     Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                                        <Label.Triggers>
+                                            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                                <BeginStoryboard Storyboard="{StaticResource FlashError}" />
+                                            </EventTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </AdornedElementPlaceholder>
+                            </Border>
+                            <!-- Here's a technique to put the message under the control. 
+                                 Switch the StackPanel Orientation above to "Horizontal" to put this message next to the contol instead -->
+                            <!--<Label Foreground="White" Background="Red" 
+                                           Content="{Binding ElementName=mycontrol, 
+                                                     Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            </Label>-->
+                        <!--</StackPanel>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <!-- Set the tooltip to the error message if there is one -->
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" 
+                            Value="{Binding 
+                                    RelativeSource={x:Static RelativeSource.Self},
+                                    Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource myErrorTemplate}" />
+        <Style TargetType="CheckBox" BasedOn="{StaticResource myErrorTemplate}" />
+        <Style TargetType="ComboBox" BasedOn="{StaticResource myErrorTemplate}" />
     </Application.Resources>
 </Application>
