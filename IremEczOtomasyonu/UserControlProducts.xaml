@@ -11,7 +11,6 @@
         <CollectionViewSource x:Key="productsViewSource" CollectionViewType="{x:Type ListCollectionView}" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource productsViewSource}">
-        <Button Content="Ürün Ekle" Height="23" HorizontalAlignment="Left" Margin="12,290,0,0" Name="addProduct" VerticalAlignment="Top" Width="75" Click="AddProduct_Click" />
         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="272" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="12,12,0,0" Name="productsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="776">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" MinWidth="200" />
@@ -19,5 +18,7 @@
                 <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Stok Miktarı" Width="SizeToHeader" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button Content="Yeni Ürün Tanımla" Height="23" HorizontalAlignment="Left" Margin="12,290,0,0" Name="addNewProduct" VerticalAlignment="Top" Width="110" Click="AddNewProduct_Click" />
+        <Button Content="Stok Girişi" Height="23" HorizontalAlignment="Left" Margin="128,290,0,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" Click="AddPurchaseButton_Click" />
     </Grid>
 </UserControl>

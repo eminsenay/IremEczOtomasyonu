@@ -18,12 +18,12 @@ namespace IremEczOtomasyonu
     /// <summary>
     /// Interaction logic for AddProduct.xaml
     /// </summary>
-    public partial class AddProductWindow : Window
+    public partial class AddPurchaseWindow : Window
     {
         private Model1Container _dbContext;
         private ProductCollection Products { get; set; }
 
-        public AddProductWindow(string barcode)
+        public AddPurchaseWindow(string barcode)
         {
             InitializeComponent();
             barcodeTextBox.Text = barcode;

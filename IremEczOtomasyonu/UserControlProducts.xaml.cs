@@ -46,23 +46,39 @@ namespace IremEczOtomasyonu
             return productsQuery;
         }
 
-        private void AddProduct_Click(object sender, RoutedEventArgs e)
+        private void AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            BarcodeWindow barcodeWindow = new BarcodeWindow
-                                          {
-                                              Owner = Parent as Window, 
-                                              WindowStartupLocation = WindowStartupLocation.CenterOwner
-                                          };
-            if (barcodeWindow.ShowDialog() != true)
-            {
-                return;
-            }
-            AddProductWindow addProductWindow = new AddProductWindow(barcodeWindow.Barcode)
+            AddNewProductWindow addProductWindow = new AddNewProductWindow()
                                                 {
                                                     Owner = Parent as Window,
                                                     WindowStartupLocation = WindowStartupLocation.CenterOwner
                                                 };
-            addProductWindow.ShowDialog();
+            if (addProductWindow.ShowDialog() == true)
+            {
+                // A product is added. Refresh the datagrid
+                Products.Add(addProductWindow.CurrentProduct);
+                _productsViewSource.View.Refresh();
+            }
+
+        }
+
+        private void AddPurchaseButton_Click(object sender, RoutedEventArgs e)
+        {
+            BarcodeWindow barcodeWindow = new BarcodeWindow
+            {
+                Owner = Parent as Window,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            if (barcodeWindow.ShowDialog() != true)
+            {
+                return;
+            }
+            AddPurchaseWindow addPurchaseWindow = new AddPurchaseWindow(barcodeWindow.Barcode)
+            {
+                Owner = Parent as Window,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            addPurchaseWindow.ShowDialog();
         }
     }
 }
