@@ -33,6 +33,16 @@ namespace IremEczOtomasyonu
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
+            BindingExpression expression = barcodeTextBox.GetBindingExpression(TextBox.TextProperty);
+            if (expression != null)
+            {
+                expression.UpdateSource();
+            }
+            if (Validation.GetHasError(barcodeTextBox))
+            {
+                e.Handled = true;
+                return;
+            }
             DialogResult = true;
             Close();
         }

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="IremEczOtomasyonu.AddNewProductWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Yeni Ürün Girişi" Height="269" Width="330" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:IremEczOtomasyonu" Loaded="Window_Loaded">
+        Title="Yeni Ürün Girişi" Height="269" Width="400" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:my="clr-namespace:IremEczOtomasyonu" Loaded="Window_Loaded">
     <Window.Resources>
         <ObjectDataProvider x:Key="currentProduct" ObjectType="{x:Type my:Product}"/>
     </Window.Resources>
@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Content="Barkod:" Grid.Row="0" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="barcodeTextBox" VerticalAlignment="Center" Width="180">
+            <TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="barcodeTextBox" VerticalAlignment="Center" Width="250">
                 <Binding Path="Barcode" Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <my:UniqueBarcodeRule/>
@@ -30,14 +30,15 @@
                 </Binding>
             </TextBox>
             <Label Content="Ürün Adı:" Grid.Row="1" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="nameTextBox" VerticalAlignment="Center" Width="180"
+            <TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="nameTextBox" VerticalAlignment="Center" Width="250"
                      Text="{Binding Path=Name, Mode=TwoWay, ValidatesOnDataErrors=True}">
             </TextBox>
             <Label Content="Ürün Markası:" Grid.Row="2" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="brandTextBox" VerticalAlignment="Center" Width="180"
-                     Text="{Binding Path=Brand, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+            <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="brandTextBox" VerticalAlignment="Center" Width="250"
+                     Text="{Binding Path=Brand, Mode=TwoWay, ValidatesOnDataErrors=True}" >
+            </TextBox>
             <Label Content="Stoktaki Adedi:" Grid.Row="3" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="numItemsInStockTextBox" VerticalAlignment="Center" Width="180">
+            <TextBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="numItemsInStockTextBox" VerticalAlignment="Center" Width="250">
                 <Binding Path="NumItems" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                     <Binding.ValidationRules>
                         <my:IntegerValidationRule Min="0"/>
@@ -45,7 +46,7 @@
                 </Binding>
             </TextBox>
             <Label Content="Güncel Alış Fiyatı:" Grid.Row="4" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="4" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Width="180">
+            <TextBox Grid.Column="1" Grid.Row="4" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Width="250">
                 <Binding Path="CurrentBuyingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                     <Binding.ValidationRules>
                         <my:MoneyValidationRule/>
@@ -53,7 +54,7 @@
                 </Binding>
             </TextBox>
             <Label Content="Güncel Satış Fiyatı:" Grid.Row="5" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Width="180">
+            <TextBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Width="250">
                 <Binding Path="CurrentSellingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                     <Binding.ValidationRules>
                         <my:MoneyValidationRule/>

@@ -37,6 +37,11 @@ namespace IremEczOtomasyonu
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
         {
+            //BindingExpression expression = barcodeTextBox.GetBindingExpression(TextBox.TextProperty);
+            //if (expression != null)
+            //{
+            //    expression.UpdateSource();
+            //}
             if (Validation.GetHasError(barcodeTextBox) || Validation.GetHasError(nameTextBox) ||
                 Validation.GetHasError(brandTextBox) || Validation.GetHasError(numItemsInStockTextBox) ||
                 Validation.GetHasError(currentBuyingPriceTextBox) || Validation.GetHasError(currentSellingPriceTextBox))

@@ -13,6 +13,7 @@
     <Grid DataContext="{StaticResource productsViewSource}">
         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="272" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="12,12,0,0" Name="productsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="776">
             <DataGrid.Columns>
+                <DataGridTextColumn x:Name="barcodeColumn" Binding="{Binding Path=Barcode}" Header="Barkod" MinWidth="200" />
                 <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" MinWidth="200" />
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" Header="İsim" MinWidth="200" />
                 <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Stok Miktarı" Width="SizeToHeader" />

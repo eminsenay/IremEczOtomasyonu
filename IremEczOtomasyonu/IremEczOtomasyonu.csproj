@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Product.cs" />
     <Compile Include="ProductCollection.cs" />
+    <Compile Include="ProductPurchase.cs" />
     <Compile Include="ValidationRules.cs" />
     <Compile Include="Resources1.Designer.cs">
       <AutoGen>True</AutoGen>

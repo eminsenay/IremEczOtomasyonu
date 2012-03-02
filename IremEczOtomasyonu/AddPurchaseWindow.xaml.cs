@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Objects;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -21,112 +22,61 @@ namespace IremEczOtomasyonu
     public partial class AddPurchaseWindow : Window
     {
         private Model1Container _dbContext;
-        private ProductCollection Products { get; set; }
+        public ProductPurchase CurrentPurchase { get; private set; }
 
         public AddPurchaseWindow(string barcode)
         {
             InitializeComponent();
             barcodeTextBox.Text = barcode;
-            purchaseDateDatePicker.SelectedDate = DateTime.Now;
-        }
-
-        private ObjectQuery<Product> GetProductsQuery(Model1Container model1Container)
-        {
-            // Auto generated code
-
-            ObjectQuery<Product> productsQuery = model1Container.Products.Where(p => p.Barcode == barcodeTextBox.Text) 
-                as ObjectQuery<Product>;
-            // Returns an ObjectQuery.
-            return productsQuery;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-            if (_dbContext == null)
-            {
-                _dbContext = new Model1Container();
-            }
-            // Load data into Products. You can modify this code as needed.
-            CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
-            ObjectQuery<Product> productsQuery = GetProductsQuery(_dbContext);
-            //var productsQuery = from p in _dbContext.Products where p.Barcode == barcodeTextBox.Text select p;
-            Products = new ProductCollection(productsQuery, _dbContext);
-            if (Products.Count == 0)
-            {
-                Products.Add(new Product());
-            }
-            //productsViewSource.Source = productsQuery.Execute(MergeOption.AppendOnly);
-            productsViewSource.Source = Products;
-            //ListCollectionView lcw = (ListCollectionView) productsViewSource.View;
-            //Product pr = (Product) lcw.AddNew();
-            //lcw.CommitNew();
-
-
-
-            // Load data into ProductPurchases. You can modify this code as needed.
-            //CollectionViewSource productPurchasesViewSource = ((CollectionViewSource)(FindResource("productPurchasesViewSource")));
-            //ObjectQuery<ProductPurchase> productPurchasesQuery = GetProductPurchasesQuery(_dbContext);
-            //productPurchasesViewSource.Source = productPurchasesQuery.Execute(MergeOption.AppendOnly);
+            _dbContext = new Model1Container();
+            CollectionViewSource productPurchasesViewSource = ((CollectionViewSource)
+                (FindResource("productPurchasesViewSource")));
+            Product product = _dbContext.Products.First(p => p.Barcode == barcodeTextBox.Text);
+            CurrentPurchase = new ProductPurchase
+                               {
+                                   Product = product,
+                                   ProductId = product.Id,
+                                   PurchaseDate = DateTime.Now,
+                               };
+            productPurchasesViewSource.Source = new List<ProductPurchase> { CurrentPurchase };
         }
-
-        //private ObjectQuery<ProductPurchase> GetProductPurchasesQuery(Model1Container model1Container)
-        //{
-        //    return null;
-        //    // Auto generated code
-
-        //    //ObjectQuery<ProductPurchase> productPurchasesQuery = model1Container.ProductPurchases;
-        //    // To explicitly load data, you may need to add Include methods like below:
-        //    // productPurchasesQuery = productPurchasesQuery.Include("ProductPurchases.Product").
-        //    // For more information, please see http://go.microsoft.com/fwlink/?LinkId=157380
-        //    // Returns an ObjectQuery.
-        //    //return productPurchasesQuery;
-        //}
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
         {
-            string barcode = barcodeTextBox.Text;
-            string productName = nameTextBox.Text;
-            string brandName = brandTextBox.Text;
-            decimal currBuyingPrice = decimal.Parse(currentBuyingPriceTextBox.Text);
-            decimal currSellinPrice = decimal.Parse(currentSellingPriceTextBox.Text);
+            if (Validation.GetHasError(numItemsBoughtTextBox) || Validation.GetHasError(priceTextBox) || 
+                Validation.GetHasError(purchaseDateDatePicker) || Validation.GetHasError(expirationDateDatePicker) ||
+                Validation.GetHasError(remarksTextBox))
+            {
+                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
+                                "Ürün alımı uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            int numBought = int.Parse(numItemsBoughtTextBox.Text);
-            decimal buyingPrice = decimal.Parse(priceTextBox.Text);
-            DateTime buyingDate = (purchaseDateDatePicker.SelectedDate != null) ? 
-                (DateTime) purchaseDateDatePicker.SelectedDate : DateTime.Now;
-            DateTime expirationDate = (expirationDateDatePicker.SelectedDate != null) ?
-                (DateTime)expirationDateDatePicker.SelectedDate : DateTime.Now;
-            string buyingRemarks = remarksTextBox.Text;
-
-            Product lastProduct = _dbContext.Products.OrderByDescending(o => o.Id).FirstOrDefault();
-            long productId = lastProduct != null ? lastProduct.Id + 1 : 1;
-            //Customer lastCustomer = _dbContext.Customers.OrderByDescending(o => o.Id).FirstOrDefault();
-            Product product = new Product
-                        {
-                            Id = productId,
-                            Barcode = barcode,
-                            Name = productName,
-                            Brand = brandName,
-                            CurrentBuyingPrice = currBuyingPrice,
-                            CurrentSellingPrice = currSellinPrice, 
-                            NumItems = numBought,
-                        };
-            _dbContext.AddToProducts(product);
+            if (CurrentPurchase.Price > 0 && CurrentPurchase.Price != CurrentPurchase.Product.CurrentBuyingPrice)
+            {
+                MessageBoxResult res = MessageBox.Show(this, 
+                    "Girdiğiniz alış fiyatı ürünün güncel alış fiyatından farklı. \nGüncel alış fiyatını değiştirmek ister misiniz?", 
+                    "Güncel Alış Fiyatı Uyarısı", MessageBoxButton.YesNoCancel);
+                if (res == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+                if (res == MessageBoxResult.Yes)
+                {
+                    CurrentPurchase.Product.CurrentBuyingPrice = CurrentPurchase.Price;
+                }
+            }
 
             ProductPurchase lastPurchase = _dbContext.ProductPurchases.OrderByDescending(pu => pu.Id).FirstOrDefault();
             long purchaseId = lastPurchase != null ? lastPurchase.Id + 1 : 1;
-            ProductPurchase purchase = new ProductPurchase
-                                       {
-                                           Id = purchaseId,
-                                           ProductId = productId,
-                                           NumItems = numBought,
-                                           PurchaseDate = buyingDate,
-                                           ExpirationDate = expirationDate,
-                                           Price = buyingPrice,
-                                           Remarks = buyingRemarks,
-                                       };
-            _dbContext.AddToProductPurchases(purchase);
+
+            CurrentPurchase.Id = purchaseId;
+            CurrentPurchase.Product.NumItems += CurrentPurchase.NumItems;
+            _dbContext.AddToProductPurchases(CurrentPurchase);
 
             _dbContext.SaveChanges();
             DialogResult = true;
@@ -150,11 +100,6 @@ namespace IremEczOtomasyonu
             {
                 ((Calendar)popup.Child).DisplayMode = CalendarMode.Decade;
             }
-        }
-
-        private void nameTextBox_Error(object sender, ValidationErrorEventArgs e)
-        {
-
         }
     }
 }

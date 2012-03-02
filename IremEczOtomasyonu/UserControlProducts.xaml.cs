@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -21,7 +22,8 @@ namespace IremEczOtomasyonu
     {
         private readonly Model1Container _dbContext;
         private readonly CollectionViewSource _productsViewSource;
-        private List<Product> Products { get; set; }
+        //private List<Product> Products { get; set; }
+        private ProductCollection Products { get; set; }
 
         public UserControlProducts()
         {
@@ -30,16 +32,19 @@ namespace IremEczOtomasyonu
             _dbContext = new Model1Container();
 
             _productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
-            System.Data.Objects.ObjectQuery<Product> productsQuery = GetProductsQuery(_dbContext);
-            Products = productsQuery.Execute(System.Data.Objects.MergeOption.AppendOnly).ToList();
+            ObjectQuery<Product> productsQuery = GetProductsQuery(_dbContext);
+            //Products = productsQuery.Execute(System.Data.Objects.MergeOption.AppendOnly).ToList();
+            //_productsViewSource.Source = Products;
+            //_productsViewSource.Source = productsQuery.Execute(MergeOption.AppendOnly);
+            Products = new ProductCollection(productsQuery.Execute(MergeOption.AppendOnly), _dbContext);
             _productsViewSource.Source = Products;
         }
 
-        private System.Data.Objects.ObjectQuery<Product> GetProductsQuery(Model1Container model1Container)
+        private ObjectQuery<Product> GetProductsQuery(Model1Container model1Container)
         {
             // Auto generated code
 
-            System.Data.Objects.ObjectQuery<Product> productsQuery = model1Container.Products;
+            ObjectQuery<Product> productsQuery = model1Container.Products;
             // Update the query to include Purchases data in Customers. You can modify this code as needed.
             //customersQuery = customersQuery.Include("ProductSales");
             // Returns an ObjectQuery.
@@ -57,7 +62,8 @@ namespace IremEczOtomasyonu
             {
                 // A product is added. Refresh the datagrid
                 Products.Add(addProductWindow.CurrentProduct);
-                _productsViewSource.View.Refresh();
+                //Products.Add(addProductWindow.CurrentProduct);
+                //_productsViewSource.View.Refresh();
             }
 
         }
@@ -78,7 +84,11 @@ namespace IremEczOtomasyonu
                 Owner = Parent as Window,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
-            addPurchaseWindow.ShowDialog();
+            if (addPurchaseWindow.ShowDialog() == true)
+            {
+                // A product is refreshed (number of items, and buying price). Refresh the datagrid
+                _productsViewSource.View.Refresh();
+            }
         }
     }
 }

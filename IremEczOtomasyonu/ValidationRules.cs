@@ -7,21 +7,24 @@ using System.Windows.Controls;
 
 namespace IremEczOtomasyonu
 {
-    ///// <summary>
-    ///// Validates if the input field is empty.
-    ///// </summary>
-    //class NotEmptyValidationRule: ValidationRule
-    //{
-    //    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
-    //    {
-    //        if (value == null || string.IsNullOrEmpty(value.ToString()))
-    //        {
-    //            return new ValidationResult(false, "Lütfen bir değer giriniz.");
-    //        }
-    //        return new ValidationResult(true, null);
-    //    }
-    //}
+    /// <summary>
+    /// Validates if the input field is empty.
+    /// </summary>
+    class NotEmptyValidationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value == null || string.IsNullOrEmpty(value.ToString()))
+            {
+                return new ValidationResult(false, "Lütfen bir değer giriniz.");
+            }
+            return new ValidationResult(true, null);
+        }
+    }
 
+    /// <summary>
+    /// Validates if the given value can be used as a money value.
+    /// </summary>
     internal class MoneyValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
@@ -46,6 +49,9 @@ namespace IremEczOtomasyonu
         }
     }
 
+    /// <summary>
+    /// Validates if the entered barcode is unique among the product database.
+    /// </summary>
     internal class UniqueBarcodeRule: ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
@@ -70,6 +76,36 @@ namespace IremEczOtomasyonu
         }
     }
 
+    /// <summary>
+    /// Validates if the entered barcode is found in the product database.
+    /// </summary>
+    internal class FoundBarcodeRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return new ValidationResult(false, "Lütfen geçerli bir değer giriniz.");
+            }
+            string barcode = value.ToString();
+            if (string.IsNullOrEmpty(barcode))
+            {
+                return new ValidationResult(false, "Lütfen geçerli bir değer giriniz.");
+            }
+            using (Model1Container dbContext = new Model1Container())
+            {
+                if (dbContext.Products.Any(p => p.Barcode == barcode))
+                {
+                    return new ValidationResult(true, null);
+                }
+            }
+            return new ValidationResult(false, "Bu barkoda sahip bir ürün sistemde kayıtlı değil.");
+        }
+    }
+
+    /// <summary>
+    /// Validates if the given value is integer within the given limits.
+    /// </summary>
     internal class IntegerValidationRule : ValidationRule
     {
         private int _min = int.MinValue;
