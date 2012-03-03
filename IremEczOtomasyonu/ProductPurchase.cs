@@ -20,6 +20,12 @@ namespace IremEczOtomasyonu
                             return "Lütfen geçerli bir son kullanma tarihi giriniz.";
                         }
                         break;
+                    case "PurchaseDate":
+                        if (PurchaseDate > DateTime.Today)
+                        {
+                            return "Alış tarihi bugün ya da daha önceki bir tarih olabilir.";
+                        }
+                        break;
                 }
                 return null;
             }

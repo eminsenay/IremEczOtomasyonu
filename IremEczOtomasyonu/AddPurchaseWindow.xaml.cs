@@ -21,25 +21,26 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class AddPurchaseWindow : Window
     {
-        private Model1Container _dbContext;
+        private readonly Model1Container _dbContext;
         public ProductPurchase CurrentPurchase { get; private set; }
+        public Product CurrentProduct { get; private set; }
 
-        public AddPurchaseWindow(string barcode)
+        public AddPurchaseWindow(Product product, Model1Container dbContext)
         {
             InitializeComponent();
-            barcodeTextBox.Text = barcode;
+            CurrentProduct = product;
+            _dbContext = dbContext;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _dbContext = new Model1Container();
             CollectionViewSource productPurchasesViewSource = ((CollectionViewSource)
                 (FindResource("productPurchasesViewSource")));
-            Product product = _dbContext.Products.First(p => p.Barcode == barcodeTextBox.Text);
+            
             CurrentPurchase = new ProductPurchase
                                {
-                                   Product = product,
-                                   ProductId = product.Id,
+                                   Product = CurrentProduct,
+                                   ProductId = CurrentProduct.Id,
                                    PurchaseDate = DateTime.Now,
                                };
             productPurchasesViewSource.Source = new List<ProductPurchase> { CurrentPurchase };

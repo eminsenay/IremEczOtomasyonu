@@ -31,7 +31,7 @@ namespace IremEczOtomasyonu
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _dbContext = new Model1Container();
-            ObjectDataProvider currentProductDataProvider = ((ObjectDataProvider) (FindResource("currentProduct")));
+            ObjectDataProvider currentProductDataProvider = ((ObjectDataProvider)(FindResource("currentProduct")));
             CurrentProduct = currentProductDataProvider.Data as Product;
         }
 
