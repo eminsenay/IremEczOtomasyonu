@@ -25,15 +25,11 @@ namespace IremEczOtomasyonu
         private readonly Model1Container _dbContext;
         private readonly CollectionViewSource _customersViewSource;
         public bool AllChangesSaved { get; private set; }
-        private bool _customerModifiable;
-        private readonly Brush _defaultTextFgColor = Brushes.Gray;
         private List<Customer> Customers { get; set; }
 
         public UserControlCustomers()
         {
             InitializeComponent();
-
-            InitializeCustomerSearchControls();
             
             _dbContext = new Model1Container();
 
@@ -42,65 +38,6 @@ namespace IremEczOtomasyonu
             Customers = customersQuery.Execute(System.Data.Objects.MergeOption.AppendOnly).ToList();
             _customersViewSource.Source = Customers;
             AllChangesSaved = true;
-        }
-
-        private void InitializeCustomerSearchControls()
-        {
-            searchFirstNameTextBox.Text = Resources1.FirstName;
-            searchLastNameTextBox.Text = Resources1.LastName;
-            searchDetailedInfoTextBox.Text = Resources1.DetailedInfo;
-            searchFirstNameTextBox.Foreground = _defaultTextFgColor;
-            searchLastNameTextBox.Foreground = _defaultTextFgColor;
-            searchDetailedInfoTextBox.Foreground = _defaultTextFgColor;
-        }
-
-        private void CustomerSearchControl_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox == null)
-            {
-                Debug.Fail("Sender of the gotFocus method is not a TextBox.");
-                return;
-            }
-
-            if (textBox.Foreground != _defaultTextFgColor)
-            {
-                return;
-            }
-            textBox.Text = string.Empty;
-            textBox.Foreground = Brushes.Black;
-        }
-
-        private void CustomerSearchControl_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox == null)
-            {
-                Debug.Fail("Sender of the gotFocus method is not a TextBox.");
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(textBox.Text))
-            {
-                return;
-            }
-
-            textBox.Foreground = _defaultTextFgColor;
-
-            string defaultText = string.Empty;
-            if (textBox == searchFirstNameTextBox)
-            {
-                defaultText = Resources1.FirstName;
-            }
-            else if (textBox == searchLastNameTextBox)
-            {
-                defaultText = Resources1.LastName;
-            }
-            else if (textBox == searchDetailedInfoTextBox)
-            {
-                defaultText = Resources1.DetailedInfo;
-            }
-            textBox.Text = defaultText;
         }
 
         private System.Data.Objects.ObjectQuery<Customer> GetCustomersQuery(Model1Container model1Container)
@@ -116,12 +53,9 @@ namespace IremEczOtomasyonu
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
         {
-            string firstName = searchFirstNameTextBox.Foreground == _defaultTextFgColor ? null :
-                searchFirstNameTextBox.Text;
-            string lastName = searchLastNameTextBox.Foreground == _defaultTextFgColor ? null :
-                searchLastNameTextBox.Text;
-            string detailedInfo = searchDetailedInfoTextBox.Foreground == _defaultTextFgColor ? null :
-                searchDetailedInfoTextBox.Text;
+            string firstName = searchFirstNameInfoTextBox.Text;
+            string lastName = searchLastNameInfoTextBox.Text;
+            string detailedInfo = searchDetailedInfoInfoTextBox.Text;
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
             {
                 MessageBox.Show("Lütfen bir isim ve soyisim girin.");
@@ -235,36 +169,12 @@ namespace IremEczOtomasyonu
             addPhotoButton.Visibility = Visibility.Hidden;
         }
 
-        private void SelectedCustomerModified(object sender, TextChangedEventArgs e)
-        {
-            OnSelectedCustomerModified();
-        }
-
-        private void CustomersDataGrid_LostFocus(object sender, RoutedEventArgs e)
-        {
-            _customerModifiable = true;
-        }
-
-        private void CustomersDataGrid_GotFocus(object sender, RoutedEventArgs e)
-        {
-            _customerModifiable = false;
-        }
-
-        private void BirthdayDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            OnSelectedCustomerModified();
-        }
-
         /// <summary>
         /// Checks if the customer can be modified. If so, it changes the background of the selected row in the 
         /// customers datagrid to display that it is not saved yet.
         /// </summary>
         private void OnSelectedCustomerModified()
         {
-            if (!_customerModifiable)
-            {
-                return;
-            }
             AllChangesSaved = false;
             // Use the views current item instead of selected item because of the last empty row.
             DataGridRow dataGridRow = customersDataGrid.ItemContainerGenerator.ContainerFromIndex(
@@ -291,9 +201,6 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            // Set customerModifiable manually to true since clicking the context menu item doesn't change the focus and
-            // it causes problems if the focus is in the datagrid.
-            _customerModifiable = true;
             currCustomer.Photo = null;
             ShowCustomerPhoto(currCustomer);
             OnSelectedCustomerModified();
@@ -311,19 +218,16 @@ namespace IremEczOtomasyonu
         private void CustomerCollection_Filter(object sender, FilterEventArgs e)
         {
             Customer c = e.Item as Customer;
-            if (c == null || searchFirstNameTextBox == null || searchLastNameTextBox == null ||
-                searchDetailedInfoTextBox == null)
+            if (c == null || searchFirstNameInfoTextBox == null || searchLastNameInfoTextBox == null ||
+                searchDetailedInfoInfoTextBox == null)
             {
                 e.Accepted = true;
                 return;
             }
-
-            string firstName = searchFirstNameTextBox.Foreground == _defaultTextFgColor ? string.Empty :
-                searchFirstNameTextBox.Text.ToUpperInvariant();
-            string lastName = searchLastNameTextBox.Foreground == _defaultTextFgColor ? string.Empty :
-                searchLastNameTextBox.Text.ToUpperInvariant();
-            string detailedInfo = searchDetailedInfoTextBox.Foreground == _defaultTextFgColor ? string.Empty :
-                searchDetailedInfoTextBox.Text.ToUpperInvariant();
+            
+            string firstName = searchFirstNameInfoTextBox.Text.ToUpperInvariant();
+            string lastName = searchLastNameInfoTextBox.Text.ToUpperInvariant();
+            string detailedInfo = searchDetailedInfoInfoTextBox.Text.ToUpperInvariant();
 
             string customerFirstName = c.FirstName == null ? string.Empty : c.FirstName.ToUpperInvariant();
             string customerLastName = c.LastName == null ? string.Empty : c.LastName.ToUpperInvariant();
@@ -371,6 +275,11 @@ namespace IremEczOtomasyonu
         private void DatagridDeleteCustomerMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DeleteSelectedCustomer();
+        }
+
+        private void SelectedCustomerModified(object sender, DataTransferEventArgs e)
+        {
+            OnSelectedCustomerModified();
         }
     }
 }

@@ -39,7 +39,7 @@ namespace IremEczOtomasyonu
 
         private void AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            AddNewProductWindow addProductWindow = new AddNewProductWindow()
+            AddNewProductWindow addProductWindow = new AddNewProductWindow
                                                 {
                                                     Owner = Parent as Window,
                                                     WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -75,6 +75,38 @@ namespace IremEczOtomasyonu
                 // A product is refreshed (number of items, and buying price). Refresh the datagrid
                 CurrentView.Refresh();
             }
+        }
+
+        private void ProductSearchControl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CurrentView.Refresh();
+        }
+
+        private void ProductCollection_Filter(object sender, FilterEventArgs e)
+        {
+            Product p = e.Item as Product;
+            if (p == null || searchBarcodeInfoTextBox == null || searchBrandNameInfoTextBox == null ||
+                searchProductNameInfoTextBox == null)
+            {
+                e.Accepted = true;
+                return;
+            }
+
+            string barcode = searchBarcodeInfoTextBox.Text.ToUpperInvariant();
+            string brand = searchBrandNameInfoTextBox.Text.ToUpperInvariant();
+            string name = searchProductNameInfoTextBox.Text.ToUpperInvariant();
+
+            string productBarcode = p.Barcode == null ? string.Empty : p.Barcode.ToUpperInvariant();
+            string productBrand = p.Brand == null ? string.Empty : p.Brand.ToUpperInvariant();
+            string productName = p.Name == null ? string.Empty : p.Name.ToUpperInvariant();
+
+            if (productBarcode.Contains(barcode) && productBrand.Contains(brand) &&
+                productName.Contains(name))
+            {
+                e.Accepted = true;
+                return;
+            }
+            e.Accepted = false;
         }
     }
 }

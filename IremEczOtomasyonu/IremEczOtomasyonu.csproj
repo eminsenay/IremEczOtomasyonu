@@ -51,6 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PixelLab.Wpf, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Downloads\thinkpixellab-bot-b68e577\Wpf\_build\WPF\bin\Release\PixelLab.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -88,11 +92,6 @@
     <Compile Include="Product.cs" />
     <Compile Include="ProductPurchase.cs" />
     <Compile Include="ValidationRules.cs" />
-    <Compile Include="Resources1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources1.resx</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="UserControlCustomers.xaml.cs">
       <DependentUpon>UserControlCustomers.xaml</DependentUpon>
@@ -155,10 +154,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources1.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>

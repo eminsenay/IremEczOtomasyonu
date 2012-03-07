@@ -3,23 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:my="clr-namespace:IremEczOtomasyonu"
+             xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
         <!--<CollectionViewSource x:Key="productsViewSource" d:DesignSource="{d:DesignInstance my:Product, CreateList=True}" />-->
-        <CollectionViewSource x:Key="productsViewSource" CollectionViewType="{x:Type ListCollectionView}" />
+        <CollectionViewSource x:Key="productsViewSource" Filter="ProductCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource productsViewSource}">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="272" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="12,12,0,0" Name="productsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" Width="776">
+        <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="searchBarcodeInfoTextBox" VerticalAlignment="Top" Width="255" TextBoxInfo="Barkod" TextChanged="ProductSearchControl_TextChanged" />
+        <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="273,12,0,0" Name="searchBrandNameInfoTextBox" VerticalAlignment="Top" Width="255" TextBoxInfo="Marka Adı" TextChanged="ProductSearchControl_TextChanged" />
+        <lib:InfoTextBox Height="23" Margin="534,12,12,0" Name="searchProductNameInfoTextBox" VerticalAlignment="Top" TextBoxInfo="Ürün Adı" TextChanged="ProductSearchControl_TextChanged" />
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="272" ItemsSource="{Binding}" Margin="12,41,12,0" Name="productsDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Binding="{Binding Path=Barcode}" Header="Barkod" MinWidth="200" />
                 <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" MinWidth="200" />
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" Header="İsim" MinWidth="200" />
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" Header="İsim" MinWidth="200" Width="*" />
                 <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Stok Miktarı" Width="SizeToHeader" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Yeni Ürün Tanımla" Height="23" HorizontalAlignment="Left" Margin="12,290,0,0" Name="addNewProduct" VerticalAlignment="Top" Width="110" Click="AddNewProduct_Click" />
-        <Button Content="Stok Girişi" Height="23" HorizontalAlignment="Left" Margin="128,290,0,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" Click="AddPurchaseButton_Click" />
+        <Button Content="Yeni Ürün Tanımla" Height="23" HorizontalAlignment="Left" Margin="12,319,0,0" Name="addNewProduct" VerticalAlignment="Top" Width="110" Click="AddNewProduct_Click" />
+        <Button Content="Stok Girişi" Height="23" HorizontalAlignment="Left" Margin="128,319,0,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" Click="AddPurchaseButton_Click" />
     </Grid>
 </UserControl>
