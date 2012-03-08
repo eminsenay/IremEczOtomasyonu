@@ -1161,7 +1161,8 @@ namespace IremEczOtomasyonu
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="saleDate">Initial value of the SaleDate property.</param>
         /// <param name="expirationDate">Initial value of the ExpirationDate property.</param>
-        public static ProductSale CreateProductSale(global::System.Int64 id, global::System.Int64 productId, global::System.Int32 numItems, global::System.Decimal price, global::System.DateTime saleDate, global::System.DateTime expirationDate)
+        /// <param name="saleGroupId">Initial value of the SaleGroupId property.</param>
+        public static ProductSale CreateProductSale(global::System.Int64 id, global::System.Int64 productId, global::System.Int32 numItems, global::System.Decimal price, global::System.DateTime saleDate, global::System.DateTime expirationDate, global::System.Int64 saleGroupId)
         {
             ProductSale productSale = new ProductSale();
             productSale.Id = id;
@@ -1170,6 +1171,7 @@ namespace IremEczOtomasyonu
             productSale.Price = price;
             productSale.SaleDate = saleDate;
             productSale.ExpirationDate = expirationDate;
+            productSale.SaleGroupId = saleGroupId;
             return productSale;
         }
 
@@ -1370,6 +1372,30 @@ namespace IremEczOtomasyonu
         private global::System.DateTime _ExpirationDate;
         partial void OnExpirationDateChanging(global::System.DateTime value);
         partial void OnExpirationDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 SaleGroupId
+        {
+            get
+            {
+                return _SaleGroupId;
+            }
+            set
+            {
+                OnSaleGroupIdChanging(value);
+                ReportPropertyChanging("SaleGroupId");
+                _SaleGroupId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SaleGroupId");
+                OnSaleGroupIdChanged();
+            }
+        }
+        private global::System.Int64 _SaleGroupId;
+        partial void OnSaleGroupIdChanging(global::System.Int64 value);
+        partial void OnSaleGroupIdChanged();
 
         #endregion
     

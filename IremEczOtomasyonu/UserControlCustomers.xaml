@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}">
+             d:DesignHeight="800" d:DesignWidth="800" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <!--<CollectionViewSource x:Key="customersViewSource" d:DesignSource="{d:DesignInstance my:Customer, CreateList=True}" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type dat:ListCollectionView}" />-->
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
@@ -19,7 +20,7 @@
             <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="132,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Soyisim" />
             <lib:InfoTextBox Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="258,6,87,0" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Detaylı Bilgi" />
             <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="170" ItemsSource="{Binding}" Margin="0,35,6,0" Name="customersDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" HorizontalAlignment="Stretch" SelectionChanged="CustomersDataGrid_SelectionChanged" SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown">
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="210" ItemsSource="{Binding}" Margin="6,35,6,0" Name="customersDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" HorizontalAlignment="Stretch" SelectionChanged="CustomersDataGrid_SelectionChanged" SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding Path=FirstName}" Header="İsim" Width="4*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Path=LastName}" Header="Soyisim" Width="4*" IsReadOnly="True" />
@@ -31,6 +32,7 @@
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
+                        <MenuItem Name="datagridSaleMenuItem" Header="Satış Yap" Click="DatagridSaleMenuItem_Click" />
                         <MenuItem Name="datagridDeleteCustomerMenuItem" Header="Sil" Click="DatagridDeleteCustomerMenuItem_Click" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>

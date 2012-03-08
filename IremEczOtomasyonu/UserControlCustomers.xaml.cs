@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -23,7 +24,7 @@ namespace IremEczOtomasyonu
     public partial class UserControlCustomers : UserControl
     {
         private readonly Model1Container _dbContext;
-        private readonly CollectionViewSource _customersViewSource;
+        private ICollectionView CurrentView { get; set; }
         public bool AllChangesSaved { get; private set; }
         private List<Customer> Customers { get; set; }
 
@@ -31,12 +32,16 @@ namespace IremEczOtomasyonu
         {
             InitializeComponent();
             
-            _dbContext = new Model1Container();
+            _dbContext = new Model1Container();           
+        }
 
-            _customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
             System.Data.Objects.ObjectQuery<Customer> customersQuery = GetCustomersQuery(_dbContext);
             Customers = customersQuery.Execute(System.Data.Objects.MergeOption.AppendOnly).ToList();
-            _customersViewSource.Source = Customers;
+            customersViewSource.Source = Customers;
+            CurrentView = customersViewSource.View;
             AllChangesSaved = true;
         }
 
@@ -73,7 +78,7 @@ namespace IremEczOtomasyonu
             Customers.Add(newCustomer);
             _dbContext.AddToCustomers(newCustomer);
             _dbContext.SaveChanges();
-            _customersViewSource.View.Refresh();
+            CurrentView.Refresh();
         }
 
         private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
@@ -81,7 +86,7 @@ namespace IremEczOtomasyonu
             _dbContext.SaveChanges();
             // Use the views current item instead of selected item because of the last empty row.
             DataGridRow selectedRow = customersDataGrid.ItemContainerGenerator.ContainerFromIndex(
-                customersDataGrid.Items.IndexOf(_customersViewSource.View.CurrentItem)) as DataGridRow;
+                customersDataGrid.Items.IndexOf(CurrentView.CurrentItem)) as DataGridRow;
             if (selectedRow == null)
             {
                 return;
@@ -105,7 +110,7 @@ namespace IremEczOtomasyonu
             }
 
             string imagePath = openFileDialog.FileName;
-            Customer currCustomer = _customersViewSource.View.CurrentItem as Customer;
+            Customer currCustomer = CurrentView.CurrentItem as Customer;
             if (currCustomer == null)
             {
                 return;
@@ -132,10 +137,10 @@ namespace IremEczOtomasyonu
         {
             Customer selectedCustomer = (e.AddedItems == null || e.AddedItems.Count == 0) ? null :
                 e.AddedItems[0] as Customer;
-            if (selectedCustomer == null && _customersViewSource != null)
+            if (selectedCustomer == null && CurrentView != null)
             {
                 // If the last empty row is selected, details keep displaying the last selected item.
-                selectedCustomer = _customersViewSource.View.CurrentItem as Customer;
+                selectedCustomer = CurrentView.CurrentItem as Customer;
             }
             ShowCustomerPhoto(selectedCustomer);
         }
@@ -178,7 +183,7 @@ namespace IremEczOtomasyonu
             AllChangesSaved = false;
             // Use the views current item instead of selected item because of the last empty row.
             DataGridRow dataGridRow = customersDataGrid.ItemContainerGenerator.ContainerFromIndex(
-                customersDataGrid.Items.IndexOf(_customersViewSource.View.CurrentItem)) as DataGridRow;
+                customersDataGrid.Items.IndexOf(CurrentView.CurrentItem)) as DataGridRow;
             if (dataGridRow == null)
             {
                 return;
@@ -195,7 +200,7 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            Customer currCustomer = _customersViewSource.View.CurrentItem as Customer;
+            Customer currCustomer = CurrentView.CurrentItem as Customer;
             if (currCustomer == null)
             {
                 return;
@@ -208,11 +213,11 @@ namespace IremEczOtomasyonu
 
         private void CustomerSearchControl_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (_customersViewSource == null || _customersViewSource.View == null)
+            if (CurrentView == null)
             {
                 return;
             }
-            _customersViewSource.View.Refresh();
+            CurrentView.Refresh();
         }
 
         private void CustomerCollection_Filter(object sender, FilterEventArgs e)
@@ -268,8 +273,10 @@ namespace IremEczOtomasyonu
                 Customers.Remove(currCustomer);
                 _dbContext.DeleteObject(currCustomer);
                 _dbContext.SaveChanges();
-                _customersViewSource.View.Refresh();
+                CurrentView.Refresh();
             }
+
+            // TODO: Purchases of the customer
         }
 
         private void DatagridDeleteCustomerMenuItem_Click(object sender, RoutedEventArgs e)
@@ -280,6 +287,18 @@ namespace IremEczOtomasyonu
         private void SelectedCustomerModified(object sender, DataTransferEventArgs e)
         {
             OnSelectedCustomerModified();
+        }
+
+        private void DatagridSaleMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Customer currCustomer = customersDataGrid.SelectedItem as Customer;
+            SaleWindow saleWindow = new SaleWindow(_dbContext, currCustomer)
+                                    {
+                                        Owner = Parent as Window,
+                                        WindowStartupLocation = WindowStartupLocation.CenterOwner
+                                    };
+            saleWindow.ShowDialog();
+            // TODO: Refresh the view on success after customer sale details are added
         }
     }
 }

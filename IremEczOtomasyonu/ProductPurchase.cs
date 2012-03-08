@@ -15,13 +15,13 @@ namespace IremEczOtomasyonu
                 switch (columnName)
                 {
                     case "ExpirationDate":
-                        if (ExpirationDate < DateTime.Today)
+                        if (ExpirationDate.Date < DateTime.Today)
                         {
                             return "Lütfen geçerli bir son kullanma tarihi giriniz.";
                         }
                         break;
                     case "PurchaseDate":
-                        if (PurchaseDate > DateTime.Today)
+                        if (PurchaseDate.Date > DateTime.Today)
                         {
                             return "Alış tarihi bugün ya da daha önceki bir tarih olabilir.";
                         }

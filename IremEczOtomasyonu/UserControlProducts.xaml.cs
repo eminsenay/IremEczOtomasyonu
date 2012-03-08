@@ -30,16 +30,19 @@ namespace IremEczOtomasyonu
             InitializeComponent();
 
             _dbContext = new Model1Container();
+        }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
-            Products = _dbContext.Products.ToList();
+            Products = _dbContext.Products.Include("ProductPurchases").Include("ProductSales").ToList();
             productsViewSource.Source = Products;
             CurrentView = productsViewSource.View;
         }
 
         private void AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            AddNewProductWindow addProductWindow = new AddNewProductWindow
+            AddNewProductWindow addProductWindow = new AddNewProductWindow(_dbContext)
                                                 {
                                                     Owner = Parent as Window,
                                                     WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -55,7 +58,7 @@ namespace IremEczOtomasyonu
 
         private void AddPurchaseButton_Click(object sender, RoutedEventArgs e)
         {
-            BarcodeWindow barcodeWindow = new BarcodeWindow
+            BarcodeWindow barcodeWindow = new BarcodeWindow()
             {
                 Owner = Parent as Window,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -64,12 +67,21 @@ namespace IremEczOtomasyonu
             {
                 return;
             }
-            Product product = Products.First(p => p.Barcode == barcodeWindow.Barcode);
+            OpenPurchaseDialog(barcodeWindow.Barcode);
+        }
+
+        /// <summary>
+        /// Opens a purchase dialog with the given barcode and refreshes the view if a new product is added.
+        /// </summary>
+        /// <param name="barcode"></param>
+        private void OpenPurchaseDialog(string barcode)
+        {
+            Product product = Products.First(p => p.Barcode == barcode);
             AddPurchaseWindow addPurchaseWindow = new AddPurchaseWindow(product, _dbContext)
-            {
-                Owner = Parent as Window,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+                                                  {
+                                                      Owner = Parent as Window,
+                                                      WindowStartupLocation = WindowStartupLocation.CenterOwner
+                                                  };
             if (addPurchaseWindow.ShowDialog() == true)
             {
                 // A product is refreshed (number of items, and buying price). Refresh the datagrid
@@ -107,6 +119,63 @@ namespace IremEczOtomasyonu
                 return;
             }
             e.Accepted = false;
+        }
+
+        private void ProductsDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                DeleteSelectedProduct();
+                e.Handled = true;
+            }
+        }
+
+        private void DeleteSelectedProduct()
+        {
+            Product currProduct = productsDataGrid.SelectedItem as Product;
+            if (currProduct == null)
+            {
+                return;
+            }
+
+            MessageBoxResult result = MessageBox.Show("Seçili ürünü silmek istediğinizden emin misiniz?",
+                "Ürün silme onayı", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            if (currProduct.ProductPurchases.Count > 0 || currProduct.ProductSales.Count > 0)
+            {
+                result = MessageBox.Show(
+                    "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmeniz bunları " +
+                    "kaybetmenize neden olacaktır.\nDevam etmek istiyor musunuz?", 
+                    "Ürün silme onayı", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.No)
+                {
+                    return;
+                }
+            }
+
+            Products.Remove(currProduct);
+            _dbContext.DeleteObject(currProduct);
+            _dbContext.SaveChanges();
+            CurrentView.Refresh();
+        }
+
+        private void DatagridDeleteProductMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteSelectedProduct();
+        }
+
+        private void DatagridAddPurchaseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Product currProduct = productsDataGrid.SelectedItem as Product;
+            if (currProduct == null)
+            {
+                return;
+            }
+            OpenPurchaseDialog(currProduct.Barcode);
         }
     }
 }

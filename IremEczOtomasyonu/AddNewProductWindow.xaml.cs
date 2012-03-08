@@ -20,17 +20,18 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class AddNewProductWindow : Window
     {
-        private Model1Container _dbContext;
+        private readonly Model1Container _dbContext;
         public Product CurrentProduct { get; private set; }
 
-        public AddNewProductWindow()
+        public AddNewProductWindow(Model1Container dbContext)
         {
             InitializeComponent();
+            _dbContext = dbContext;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _dbContext = new Model1Container();
+            //_dbContext = new Model1Container();
             ObjectDataProvider currentProductDataProvider = ((ObjectDataProvider)(FindResource("currentProduct")));
             CurrentProduct = currentProductDataProvider.Data as Product;
         }
@@ -43,8 +44,8 @@ namespace IremEczOtomasyonu
             //    expression.UpdateSource();
             //}
             if (Validation.GetHasError(barcodeTextBox) || Validation.GetHasError(nameTextBox) ||
-                Validation.GetHasError(brandTextBox) || Validation.GetHasError(numItemsInStockTextBox) ||
-                Validation.GetHasError(currentBuyingPriceTextBox) || Validation.GetHasError(currentSellingPriceTextBox))
+                Validation.GetHasError(brandTextBox) || Validation.GetHasError(currentBuyingPriceTextBox) || 
+                Validation.GetHasError(currentSellingPriceTextBox))
             {
                 MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
                                 "Ürün giriş uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -59,6 +60,21 @@ namespace IremEczOtomasyonu
             _dbContext.SaveChanges();
             DialogResult = true;
             Close();
+        }
+
+        /// <summary>
+        /// Selects the content of the textbox for easy editing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProductTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox t = sender as TextBox;
+            if (t == null)
+            {
+                return;
+            }
+            t.SelectAll();
         }
     }
 }
