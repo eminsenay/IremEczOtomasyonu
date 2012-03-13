@@ -58,7 +58,7 @@ namespace IremEczOtomasyonu
 
         private void AddPurchaseButton_Click(object sender, RoutedEventArgs e)
         {
-            BarcodeWindow barcodeWindow = new BarcodeWindow()
+            BarcodeWindow barcodeWindow = new BarcodeWindow 
             {
                 Owner = Parent as Window,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
