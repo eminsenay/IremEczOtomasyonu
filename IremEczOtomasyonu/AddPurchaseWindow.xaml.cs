@@ -24,12 +24,16 @@ namespace IremEczOtomasyonu
         private readonly Model1Container _dbContext;
         public ProductPurchase CurrentPurchase { get; private set; }
         public Product CurrentProduct { get; private set; }
+        private readonly ProductExpirationDate _currExpirationDate;
 
         public AddPurchaseWindow(Product product, Model1Container dbContext)
         {
             InitializeComponent();
             CurrentProduct = product;
             _dbContext = dbContext;
+
+            _currExpirationDate = new ProductExpirationDate { ProductId = CurrentProduct.Id };
+            expirationDateDatePicker.DataContext = _currExpirationDate;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -74,6 +78,24 @@ namespace IremEczOtomasyonu
 
             ProductPurchase lastPurchase = _dbContext.ProductPurchases.OrderByDescending(pu => pu.Id).FirstOrDefault();
             long purchaseId = lastPurchase != null ? lastPurchase.Id + 1 : 1;
+
+            // check the curr. expiration date in db
+            ProductExpirationDate expirationDate = _dbContext.ProductExpirationDates.FirstOrDefault(
+                x => x.ProductId == CurrentProduct.Id && x.ExpirationDate == _currExpirationDate.ExpirationDate);
+            if (expirationDate == null)
+            {
+                ProductExpirationDate lastExpDate =
+                    _dbContext.ProductExpirationDates.OrderByDescending(x => x.Id).FirstOrDefault();
+                long expDateId = lastExpDate != null ? lastExpDate.Id + 1 : 1;
+
+                _currExpirationDate.NumItems = CurrentPurchase.NumItems;
+                _currExpirationDate.Id = expDateId;
+                _dbContext.AddToProductExpirationDates(_currExpirationDate);
+            }
+            else
+            {
+                expirationDate.NumItems += CurrentPurchase.NumItems;
+            }
 
             CurrentPurchase.Id = purchaseId;
             CurrentPurchase.Product.NumItems += CurrentPurchase.NumItems;

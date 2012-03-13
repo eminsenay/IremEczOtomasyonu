@@ -6,7 +6,7 @@ using System.Text;
 
 namespace IremEczOtomasyonu
 {
-    partial class ProductPurchase: IDataErrorInfo
+    partial class ProductExpirationDate: IDataErrorInfo
     {
         public string this[string columnName]
         {
@@ -14,10 +14,10 @@ namespace IremEczOtomasyonu
             {
                 switch (columnName)
                 {
-                    case "PurchaseDate":
-                        if (PurchaseDate.Date > DateTime.Today)
+                    case "ExpirationDate":
+                        if (ExpirationDate.Date < DateTime.Today)
                         {
-                            return "Alış tarihi bugün ya da daha önceki bir tarih olabilir.";
+                            return "Lütfen geçerli bir son kullanma tarihi giriniz.";
                         }
                         break;
                 }

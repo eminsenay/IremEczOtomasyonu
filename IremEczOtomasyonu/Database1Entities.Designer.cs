@@ -761,11 +761,13 @@ namespace IremEczOtomasyonu
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="expirationDate">Initial value of the ExpirationDate property.</param>
-        public static ProductExpirationDate CreateProductExpirationDate(global::System.Int64 id, global::System.DateTime expirationDate)
+        /// <param name="numItems">Initial value of the NumItems property.</param>
+        public static ProductExpirationDate CreateProductExpirationDate(global::System.Int64 id, global::System.DateTime expirationDate, global::System.Int64 numItems)
         {
             ProductExpirationDate productExpirationDate = new ProductExpirationDate();
             productExpirationDate.Id = id;
             productExpirationDate.ExpirationDate = expirationDate;
+            productExpirationDate.NumItems = numItems;
             return productExpirationDate;
         }
 
@@ -846,6 +848,30 @@ namespace IremEczOtomasyonu
         private global::System.DateTime _ExpirationDate;
         partial void OnExpirationDateChanging(global::System.DateTime value);
         partial void OnExpirationDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 NumItems
+        {
+            get
+            {
+                return _NumItems;
+            }
+            set
+            {
+                OnNumItemsChanging(value);
+                ReportPropertyChanging("NumItems");
+                _NumItems = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumItems");
+                OnNumItemsChanged();
+            }
+        }
+        private global::System.Int64 _NumItems;
+        partial void OnNumItemsChanging(global::System.Int64 value);
+        partial void OnNumItemsChanged();
 
         #endregion
     
@@ -910,8 +936,7 @@ namespace IremEczOtomasyonu
         /// <param name="numItems">Initial value of the NumItems property.</param>
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="purchaseDate">Initial value of the PurchaseDate property.</param>
-        /// <param name="expirationDate">Initial value of the ExpirationDate property.</param>
-        public static ProductPurchase CreateProductPurchase(global::System.Int64 id, global::System.Int64 productId, global::System.Int32 numItems, global::System.Decimal price, global::System.DateTime purchaseDate, global::System.DateTime expirationDate)
+        public static ProductPurchase CreateProductPurchase(global::System.Int64 id, global::System.Int64 productId, global::System.Int32 numItems, global::System.Decimal price, global::System.DateTime purchaseDate)
         {
             ProductPurchase productPurchase = new ProductPurchase();
             productPurchase.Id = id;
@@ -919,7 +944,6 @@ namespace IremEczOtomasyonu
             productPurchase.NumItems = numItems;
             productPurchase.Price = price;
             productPurchase.PurchaseDate = purchaseDate;
-            productPurchase.ExpirationDate = expirationDate;
             return productPurchase;
         }
 
@@ -1072,30 +1096,6 @@ namespace IremEczOtomasyonu
         private global::System.String _Remarks;
         partial void OnRemarksChanging(global::System.String value);
         partial void OnRemarksChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime ExpirationDate
-        {
-            get
-            {
-                return _ExpirationDate;
-            }
-            set
-            {
-                OnExpirationDateChanging(value);
-                ReportPropertyChanging("ExpirationDate");
-                _ExpirationDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ExpirationDate");
-                OnExpirationDateChanged();
-            }
-        }
-        private global::System.DateTime _ExpirationDate;
-        partial void OnExpirationDateChanging(global::System.DateTime value);
-        partial void OnExpirationDateChanged();
 
         #endregion
     

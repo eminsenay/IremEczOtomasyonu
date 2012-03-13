@@ -31,6 +31,10 @@ namespace IremEczOtomasyonu
 
         public ObservableCollection<SaleItem> SaleItems { get; set; }
 
+        /// <summary>
+        /// Initializes a new sale window
+        /// </summary>
+        /// <param name="dbContext">Database context to use.</param>
         public SaleWindow(Model1Container dbContext)
         {
             InitializeComponent();
@@ -38,15 +42,25 @@ namespace IremEczOtomasyonu
             SaleItems = new ObservableCollection<SaleItem>();
 
             productSaleDataGrid.ItemsSource = SaleItems;
-            totalPriceTextBlock.Text = "0";
+            UpdateTotalPriceTextBlock();
         }
 
+        /// <summary>
+        /// Initializes a new sale window for the given customer.
+        /// </summary>
+        /// <param name="dbContext">Database context to use.</param>
+        /// <param name="customer">Customer who is buying the products</param>
         public SaleWindow(Model1Container dbContext, Customer customer): this(dbContext)
         {
             _customer = customer;
             customerNameTextBlock.Text = _customer.FirstName + " " + _customer.LastName;
         }
 
+        /// <summary>
+        /// Adds a new product to the purchase. If the barcode cannot be found in the database, an error is raised.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProductAddButton_Click(object sender, RoutedEventArgs e)
         {
             if (barcodeTextBox == null || string.IsNullOrEmpty(barcodeTextBox.Text))
@@ -84,6 +98,53 @@ namespace IremEczOtomasyonu
             _isManualEditCommit = true;
             productSaleDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             _isManualEditCommit = false;
+            UpdateTotalPriceTextBlock();
+        }
+
+        /// <summary>
+        /// Manual handle for the Delete key event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProductSaleDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                DeleteSelectedSaleItem();
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Event handler for the delete context menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DatagridDeleteSaleItemMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteSelectedSaleItem();
+        }
+
+        /// <summary>
+        /// Deletes the selected sale item from the datagrid without any questions.
+        /// </summary>
+        private void DeleteSelectedSaleItem()
+        {
+            SaleItem saleItem = productSaleDataGrid.SelectedItem as SaleItem;
+            if (saleItem == null)
+            {
+                return;
+            }
+
+            SaleItems.Remove(saleItem);
+            UpdateTotalPriceTextBlock();
+        }
+
+        /// <summary>
+        /// Updates the total price text block with the sum of the purchases.
+        /// </summary>
+        private void UpdateTotalPriceTextBlock()
+        {
             totalPriceTextBlock.Text = SaleItems.Sum(x => x.Price).ToString(CultureInfo.InvariantCulture);
         }
     }

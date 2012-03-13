@@ -49,6 +49,7 @@
           <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="ProductId" Type="bigint" />
           <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+          <Property Name="NumItems" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPurchases">
           <Key>
@@ -56,11 +57,10 @@
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="ProductId" Type="bigint" Nullable="false" />
-          <Property Name="NumItems" Type="int" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="PurchaseDate" Type="datetime" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+          <Property Name="NumItems" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -208,7 +208,6 @@
           <Property Type="DateTime" Name="PurchaseDate" Nullable="false" />
           <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="Model1.ProductPurchases_Products" FromRole="ProductPurchas" ToRole="Product" />
-          <Property Type="DateTime" Name="ExpirationDate" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductSale">
           <Key>
@@ -276,6 +275,7 @@
           <Property Type="Int64" Name="ProductId" />
           <Property Type="DateTime" Name="ExpirationDate" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Model1.ProductExpirateionDates_Product_Relation" FromRole="ProductExpirationDate" ToRole="Product" />
+          <Property Type="Int64" Name="NumItems" Nullable="false" />
         </EntityType>
         <Association Name="ProductExpirateionDates_Product_Relation">
           <End Type="Model1.Product" Role="Product" Multiplicity="0..1" />
@@ -328,7 +328,6 @@
           <EntitySetMapping Name="ProductPurchases">
             <EntityTypeMapping TypeName="Model1.ProductPurchase">
               <MappingFragment StoreEntitySet="ProductPurchases">
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -356,6 +355,7 @@
           <EntitySetMapping Name="ProductExpirationDates">
             <EntityTypeMapping TypeName="Model1.ProductExpirationDate">
               <MappingFragment StoreEntitySet="ProductExpirationDates">
+                <ScalarProperty Name="NumItems" ColumnName="NumItems" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -385,15 +385,15 @@
       <Diagram Name="Model1" >
         <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="6" PointY="0.875" Height="2.9417936197916665" />
         <EntityTypeShape EntityType="Model1.Product" Width="1.5" PointX="3.375" PointY="1" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="1.25" PointY="1" Height="2.3648893229166656" />
+        <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="1.25" PointY="1" Height="2.364889322916667" />
         <EntityTypeShape EntityType="Model1.ProductSale" Width="1.625" PointX="6.25" PointY="4.875" Height="2.7494921874999996" />
         <AssociationConnector Association="Model1.ProductSales_Customers" >
           <ConnectorPoint PointX="6.875" PointY="3.8167936197916665" />
           <ConnectorPoint PointX="6.875" PointY="4.875" />
         </AssociationConnector>
         <AssociationConnector Association="Model1.ProductPurchases_Products" >
-          <ConnectorPoint PointX="3.375" PointY="2.2785953776041667" />
-          <ConnectorPoint PointX="2.875" PointY="2.2785953776041667" />
+          <ConnectorPoint PointX="3.375" PointY="2.1824446614583337" />
+          <ConnectorPoint PointX="2.875" PointY="2.1824446614583337" />
         </AssociationConnector>
         <AssociationConnector Association="Model1.ProductSales_Products" >
           <ConnectorPoint PointX="4.15625" PointY="3.5571907552083331" />
