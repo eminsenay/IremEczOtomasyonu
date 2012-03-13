@@ -1,53 +1,27 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace IremEczOtomasyonu
 {
-    public class SaleItem
+    public class SaleItem: INotifyPropertyChanged
     {
         public Product Product { get; set; }
-        //private string _barcode;
+        
         private decimal _price;
+        private int _numSold;
 
-        //public string Barcode
-        //{
-        //    get { return _barcode; }
-        //    set
-        //    {
-        //        _barcode = value;
-        //        //using (Model1Container context = new Model1Container())
-        //        //{
-        //        //    _product = context.Products.First(p => p.Barcode == _barcode);
-        //        //}
-        //    }
-        //}
-            
-        //public string BrandName 
-        //{ 
-        //    get
-        //    {
-        //        if (Product == null)
-        //        {
-        //            return String.Empty;
-        //        }
-        //        return Product.Brand ?? String.Empty;
-        //    }
-        //}
-            
-        //public string ProductName
-        //{
-        //    get
-        //    {
-        //        if (Product == null)
-        //        {
-        //            return String.Empty;
-        //        }
-        //        return Product.Name ?? String.Empty;
-        //    }
-        //}
-
-        public int NumSold { get; set; }
+        public int NumSold
+        {
+            get { return _numSold; } 
+            set 
+            { 
+                _numSold = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("NumSold"));
+                OnPropertyChanged(new PropertyChangedEventArgs("Price"));
+            }
+        }
 
         public decimal Price
         {
@@ -63,20 +37,18 @@ namespace IremEczOtomasyonu
                 }
                 return Product.CurrentSellingPrice == null ? 0 : (decimal)Product.CurrentSellingPrice*NumSold;
             }
-            set { _price = value; }
+            set
+            {
+                _price = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Price")); 
+            }
         }
 
-        //public List<DateTime> ExpirationDates
-        //{
-        //    get
-        //    {
-        //        if (Product == null)
-        //        {
-        //            return null;
-        //        }
-        //        var exDate = from e in Product.ProductExpirationDates select e.ExpirationDate;
-        //        return exDate.ToList();
-        //    }
-        //}
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, e);
+        } 
     }
 }

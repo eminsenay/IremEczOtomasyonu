@@ -90,6 +90,7 @@
       <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Product.cs" />
+    <Compile Include="ProductCollectionToTotalPriceConverter.cs" />
     <Compile Include="ProductPurchase.cs" />
     <Compile Include="SaleItemCollection.cs" />
     <Compile Include="SaleItem.cs" />
