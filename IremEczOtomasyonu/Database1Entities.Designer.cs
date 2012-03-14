@@ -18,10 +18,11 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("Model1", "ProductSales_Customers", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(IremEczOtomasyonu.Customer), "ProductSale", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductSale), true)]
+[assembly: EdmRelationshipAttribute("Model1", "ProductSale_Customer", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(IremEczOtomasyonu.Customer), "ProductSale", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductSale), true)]
+[assembly: EdmRelationshipAttribute("Model1", "Products_ExpirationDates", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "ExpirationDate", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ExpirationDate), true)]
 [assembly: EdmRelationshipAttribute("Model1", "ProductPurchases_Products", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "ProductPurchas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductPurchase), true)]
-[assembly: EdmRelationshipAttribute("Model1", "ProductSales_Products", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "ProductSale", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductSale), true)]
-[assembly: EdmRelationshipAttribute("Model1", "ProductExpirateionDates_Product_Relation", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(IremEczOtomasyonu.Product), "ProductExpirationDate", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductExpirationDate), true)]
+[assembly: EdmRelationshipAttribute("Model1", "SaleItem_Product", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "SaleItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.SaleItem), true)]
+[assembly: EdmRelationshipAttribute("Model1", "SaleItem_ProductSale", "ProductSale", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.ProductSale), "SaleItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.SaleItem), true)]
 
 #endregion
 
@@ -92,18 +93,18 @@ namespace IremEczOtomasyonu
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Product> Products
+        public ObjectSet<ExpirationDate> ExpirationDates
         {
             get
             {
-                if ((_Products == null))
+                if ((_ExpirationDates == null))
                 {
-                    _Products = base.CreateObjectSet<Product>("Products");
+                    _ExpirationDates = base.CreateObjectSet<ExpirationDate>("ExpirationDates");
                 }
-                return _Products;
+                return _ExpirationDates;
             }
         }
-        private ObjectSet<Product> _Products;
+        private ObjectSet<ExpirationDate> _ExpirationDates;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -124,6 +125,22 @@ namespace IremEczOtomasyonu
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<Product> Products
+        {
+            get
+            {
+                if ((_Products == null))
+                {
+                    _Products = base.CreateObjectSet<Product>("Products");
+                }
+                return _Products;
+            }
+        }
+        private ObjectSet<Product> _Products;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<ProductSale> ProductSales
         {
             get
@@ -140,18 +157,18 @@ namespace IremEczOtomasyonu
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<ProductExpirationDate> ProductExpirationDates
+        public ObjectSet<SaleItem> SaleItems
         {
             get
             {
-                if ((_ProductExpirationDates == null))
+                if ((_SaleItems == null))
                 {
-                    _ProductExpirationDates = base.CreateObjectSet<ProductExpirationDate>("ProductExpirationDates");
+                    _SaleItems = base.CreateObjectSet<SaleItem>("SaleItems");
                 }
-                return _ProductExpirationDates;
+                return _SaleItems;
             }
         }
-        private ObjectSet<ProductExpirationDate> _ProductExpirationDates;
+        private ObjectSet<SaleItem> _SaleItems;
 
         #endregion
         #region AddTo Methods
@@ -165,11 +182,11 @@ namespace IremEczOtomasyonu
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Products EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the ExpirationDates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToProducts(Product product)
+        public void AddToExpirationDates(ExpirationDate expirationDate)
         {
-            base.AddObject("Products", product);
+            base.AddObject("ExpirationDates", expirationDate);
         }
     
         /// <summary>
@@ -181,6 +198,14 @@ namespace IremEczOtomasyonu
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the Products EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToProducts(Product product)
+        {
+            base.AddObject("Products", product);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the ProductSales EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToProductSales(ProductSale productSale)
@@ -189,11 +214,11 @@ namespace IremEczOtomasyonu
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the ProductExpirationDates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the SaleItems EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToProductExpirationDates(ProductExpirationDate productExpirationDate)
+        public void AddToSaleItems(SaleItem saleItem)
         {
-            base.AddObject("ProductExpirationDates", productExpirationDate);
+            base.AddObject("SaleItems", saleItem);
         }
 
         #endregion
@@ -457,18 +482,192 @@ namespace IremEczOtomasyonu
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductSales_Customers", "ProductSale")]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductSale_Customer", "ProductSale")]
         public EntityCollection<ProductSale> ProductSales
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductSale>("Model1.ProductSales_Customers", "ProductSale");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductSale>("Model1.ProductSale_Customer", "ProductSale");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductSale>("Model1.ProductSales_Customers", "ProductSale", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductSale>("Model1.ProductSale_Customer", "ProductSale", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model1", Name="ExpirationDate")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ExpirationDate : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ExpirationDate object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="productId">Initial value of the ProductId property.</param>
+        /// <param name="exDate">Initial value of the ExDate property.</param>
+        /// <param name="numItems">Initial value of the NumItems property.</param>
+        public static ExpirationDate CreateExpirationDate(global::System.Int64 id, global::System.Int64 productId, global::System.DateTime exDate, global::System.Int32 numItems)
+        {
+            ExpirationDate expirationDate = new ExpirationDate();
+            expirationDate.Id = id;
+            expirationDate.ProductId = productId;
+            expirationDate.ExDate = exDate;
+            expirationDate.NumItems = numItems;
+            return expirationDate;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ProductId
+        {
+            get
+            {
+                return _ProductId;
+            }
+            set
+            {
+                OnProductIdChanging(value);
+                ReportPropertyChanging("ProductId");
+                _ProductId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ProductId");
+                OnProductIdChanged();
+            }
+        }
+        private global::System.Int64 _ProductId;
+        partial void OnProductIdChanging(global::System.Int64 value);
+        partial void OnProductIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ExDate
+        {
+            get
+            {
+                return _ExDate;
+            }
+            set
+            {
+                OnExDateChanging(value);
+                ReportPropertyChanging("ExDate");
+                _ExDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExDate");
+                OnExDateChanged();
+            }
+        }
+        private global::System.DateTime _ExDate;
+        partial void OnExDateChanging(global::System.DateTime value);
+        partial void OnExDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NumItems
+        {
+            get
+            {
+                return _NumItems;
+            }
+            set
+            {
+                OnNumItemsChanging(value);
+                ReportPropertyChanging("NumItems");
+                _NumItems = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumItems");
+                OnNumItemsChanged();
+            }
+        }
+        private global::System.Int32 _NumItems;
+        partial void OnNumItemsChanging(global::System.Int32 value);
+        partial void OnNumItemsChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "Products_ExpirationDates", "Product")]
+        public Product Product
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.Products_ExpirationDates", "Product").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.Products_ExpirationDates", "Product").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Product> ProductReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.Products_ExpirationDates", "Product");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("Model1.Products_ExpirationDates", "Product", value);
                 }
             }
         }
@@ -683,6 +882,28 @@ namespace IremEczOtomasyonu
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "Products_ExpirationDates", "ExpirationDate")]
+        public EntityCollection<ExpirationDate> ExpirationDates
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ExpirationDate>("Model1.Products_ExpirationDates", "ExpirationDate");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ExpirationDate>("Model1.Products_ExpirationDates", "ExpirationDate", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductPurchases_Products", "ProductPurchas")]
         public EntityCollection<ProductPurchase> ProductPurchases
         {
@@ -705,212 +926,18 @@ namespace IremEczOtomasyonu
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductSales_Products", "ProductSale")]
-        public EntityCollection<ProductSale> ProductSales
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "SaleItem_Product", "SaleItem")]
+        public EntityCollection<SaleItem> SaleItems
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductSale>("Model1.ProductSales_Products", "ProductSale");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SaleItem>("Model1.SaleItem_Product", "SaleItem");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductSale>("Model1.ProductSales_Products", "ProductSale", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductExpirateionDates_Product_Relation", "ProductExpirationDate")]
-        public EntityCollection<ProductExpirationDate> ProductExpirationDates
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductExpirationDate>("Model1.ProductExpirateionDates_Product_Relation", "ProductExpirationDate");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductExpirationDate>("Model1.ProductExpirateionDates_Product_Relation", "ProductExpirationDate", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="Model1", Name="ProductExpirationDate")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class ProductExpirationDate : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new ProductExpirationDate object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="expirationDate">Initial value of the ExpirationDate property.</param>
-        /// <param name="numItems">Initial value of the NumItems property.</param>
-        public static ProductExpirationDate CreateProductExpirationDate(global::System.Int64 id, global::System.DateTime expirationDate, global::System.Int64 numItems)
-        {
-            ProductExpirationDate productExpirationDate = new ProductExpirationDate();
-            productExpirationDate.Id = id;
-            productExpirationDate.ExpirationDate = expirationDate;
-            productExpirationDate.NumItems = numItems;
-            return productExpirationDate;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Int64 _Id;
-        partial void OnIdChanging(global::System.Int64 value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> ProductId
-        {
-            get
-            {
-                return _ProductId;
-            }
-            set
-            {
-                OnProductIdChanging(value);
-                ReportPropertyChanging("ProductId");
-                _ProductId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ProductId");
-                OnProductIdChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _ProductId;
-        partial void OnProductIdChanging(Nullable<global::System.Int64> value);
-        partial void OnProductIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime ExpirationDate
-        {
-            get
-            {
-                return _ExpirationDate;
-            }
-            set
-            {
-                OnExpirationDateChanging(value);
-                ReportPropertyChanging("ExpirationDate");
-                _ExpirationDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ExpirationDate");
-                OnExpirationDateChanged();
-            }
-        }
-        private global::System.DateTime _ExpirationDate;
-        partial void OnExpirationDateChanging(global::System.DateTime value);
-        partial void OnExpirationDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 NumItems
-        {
-            get
-            {
-                return _NumItems;
-            }
-            set
-            {
-                OnNumItemsChanging(value);
-                ReportPropertyChanging("NumItems");
-                _NumItems = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumItems");
-                OnNumItemsChanged();
-            }
-        }
-        private global::System.Int64 _NumItems;
-        partial void OnNumItemsChanging(global::System.Int64 value);
-        partial void OnNumItemsChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductExpirateionDates_Product_Relation", "Product")]
-        public Product Product
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.ProductExpirateionDates_Product_Relation", "Product").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.ProductExpirateionDates_Product_Relation", "Product").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Product> ProductReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.ProductExpirateionDates_Product_Relation", "Product");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("Model1.ProductExpirateionDates_Product_Relation", "Product", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SaleItem>("Model1.SaleItem_Product", "SaleItem", value);
                 }
             }
         }
@@ -933,17 +960,17 @@ namespace IremEczOtomasyonu
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="productId">Initial value of the ProductId property.</param>
-        /// <param name="numItems">Initial value of the NumItems property.</param>
         /// <param name="price">Initial value of the Price property.</param>
         /// <param name="purchaseDate">Initial value of the PurchaseDate property.</param>
-        public static ProductPurchase CreateProductPurchase(global::System.Int64 id, global::System.Int64 productId, global::System.Int32 numItems, global::System.Decimal price, global::System.DateTime purchaseDate)
+        /// <param name="numItems">Initial value of the NumItems property.</param>
+        public static ProductPurchase CreateProductPurchase(global::System.Int64 id, global::System.Int64 productId, global::System.Decimal price, global::System.DateTime purchaseDate, global::System.Int32 numItems)
         {
             ProductPurchase productPurchase = new ProductPurchase();
             productPurchase.Id = id;
             productPurchase.ProductId = productId;
-            productPurchase.NumItems = numItems;
             productPurchase.Price = price;
             productPurchase.PurchaseDate = purchaseDate;
+            productPurchase.NumItems = numItems;
             return productPurchase;
         }
 
@@ -1000,30 +1027,6 @@ namespace IremEczOtomasyonu
         private global::System.Int64 _ProductId;
         partial void OnProductIdChanging(global::System.Int64 value);
         partial void OnProductIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NumItems
-        {
-            get
-            {
-                return _NumItems;
-            }
-            set
-            {
-                OnNumItemsChanging(value);
-                ReportPropertyChanging("NumItems");
-                _NumItems = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumItems");
-                OnNumItemsChanged();
-            }
-        }
-        private global::System.Int32 _NumItems;
-        partial void OnNumItemsChanging(global::System.Int32 value);
-        partial void OnNumItemsChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1096,6 +1099,30 @@ namespace IremEczOtomasyonu
         private global::System.String _Remarks;
         partial void OnRemarksChanging(global::System.String value);
         partial void OnRemarksChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NumItems
+        {
+            get
+            {
+                return _NumItems;
+            }
+            set
+            {
+                OnNumItemsChanging(value);
+                ReportPropertyChanging("NumItems");
+                _NumItems = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumItems");
+                OnNumItemsChanged();
+            }
+        }
+        private global::System.Int32 _NumItems;
+        partial void OnNumItemsChanging(global::System.Int32 value);
+        partial void OnNumItemsChanged();
 
         #endregion
     
@@ -1156,23 +1183,237 @@ namespace IremEczOtomasyonu
         /// Create a new ProductSale object.
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="productId">Initial value of the ProductId property.</param>
-        /// <param name="numItems">Initial value of the NumItems property.</param>
-        /// <param name="price">Initial value of the Price property.</param>
         /// <param name="saleDate">Initial value of the SaleDate property.</param>
-        /// <param name="expirationDate">Initial value of the ExpirationDate property.</param>
-        /// <param name="saleGroupId">Initial value of the SaleGroupId property.</param>
-        public static ProductSale CreateProductSale(global::System.Int64 id, global::System.Int64 productId, global::System.Int32 numItems, global::System.Decimal price, global::System.DateTime saleDate, global::System.DateTime expirationDate, global::System.Int64 saleGroupId)
+        /// <param name="totalPrice">Initial value of the TotalPrice property.</param>
+        public static ProductSale CreateProductSale(global::System.Int64 id, global::System.DateTime saleDate, global::System.Decimal totalPrice)
         {
             ProductSale productSale = new ProductSale();
             productSale.Id = id;
-            productSale.ProductId = productId;
-            productSale.NumItems = numItems;
-            productSale.Price = price;
             productSale.SaleDate = saleDate;
-            productSale.ExpirationDate = expirationDate;
-            productSale.SaleGroupId = saleGroupId;
+            productSale.TotalPrice = totalPrice;
             return productSale;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 Id
+        {
+            get
+            {
+                return _Id;
+            }
+            set
+            {
+                if (_Id != value)
+                {
+                    OnIdChanging(value);
+                    ReportPropertyChanging("Id");
+                    _Id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Id");
+                    OnIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _Id;
+        partial void OnIdChanging(global::System.Int64 value);
+        partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> CustomerId
+        {
+            get
+            {
+                return _CustomerId;
+            }
+            set
+            {
+                OnCustomerIdChanging(value);
+                ReportPropertyChanging("CustomerId");
+                _CustomerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CustomerId");
+                OnCustomerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _CustomerId;
+        partial void OnCustomerIdChanging(Nullable<global::System.Int64> value);
+        partial void OnCustomerIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime SaleDate
+        {
+            get
+            {
+                return _SaleDate;
+            }
+            set
+            {
+                OnSaleDateChanging(value);
+                ReportPropertyChanging("SaleDate");
+                _SaleDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SaleDate");
+                OnSaleDateChanged();
+            }
+        }
+        private global::System.DateTime _SaleDate;
+        partial void OnSaleDateChanging(global::System.DateTime value);
+        partial void OnSaleDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TotalPrice
+        {
+            get
+            {
+                return _TotalPrice;
+            }
+            set
+            {
+                OnTotalPriceChanging(value);
+                ReportPropertyChanging("TotalPrice");
+                _TotalPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TotalPrice");
+                OnTotalPriceChanged();
+            }
+        }
+        private global::System.Decimal _TotalPrice;
+        partial void OnTotalPriceChanging(global::System.Decimal value);
+        partial void OnTotalPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Remarks
+        {
+            get
+            {
+                return _Remarks;
+            }
+            set
+            {
+                OnRemarksChanging(value);
+                ReportPropertyChanging("Remarks");
+                _Remarks = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Remarks");
+                OnRemarksChanged();
+            }
+        }
+        private global::System.String _Remarks;
+        partial void OnRemarksChanging(global::System.String value);
+        partial void OnRemarksChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductSale_Customer", "Customer")]
+        public Customer Customer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("Model1.ProductSale_Customer", "Customer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("Model1.ProductSale_Customer", "Customer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Customer> CustomerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("Model1.ProductSale_Customer", "Customer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Customer>("Model1.ProductSale_Customer", "Customer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "SaleItem_ProductSale", "SaleItem")]
+        public EntityCollection<SaleItem> SaleItems
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SaleItem>("Model1.SaleItem_ProductSale", "SaleItem");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SaleItem>("Model1.SaleItem_ProductSale", "SaleItem", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model1", Name="SaleItem")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SaleItem : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SaleItem object.
+        /// </summary>
+        /// <param name="id">Initial value of the Id property.</param>
+        /// <param name="productId">Initial value of the ProductId property.</param>
+        /// <param name="productSaleId">Initial value of the ProductSaleId property.</param>
+        /// <param name="numSold">Initial value of the NumSold property.</param>
+        /// <param name="exDate">Initial value of the ExDate property.</param>
+        public static SaleItem CreateSaleItem(global::System.Int64 id, global::System.Int64 productId, global::System.Int64 productSaleId, global::System.Int32 numSold, global::System.DateTime exDate)
+        {
+            SaleItem saleItem = new SaleItem();
+            saleItem.Id = id;
+            saleItem.ProductId = productId;
+            saleItem.ProductSaleId = productSaleId;
+            saleItem.NumSold = numSold;
+            saleItem.ExDate = exDate;
+            return saleItem;
         }
 
         #endregion
@@ -1232,170 +1473,74 @@ namespace IremEczOtomasyonu
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int64> CustomerId
+        public global::System.Int64 ProductSaleId
         {
             get
             {
-                return _CustomerId;
+                return _ProductSaleId;
             }
             set
             {
-                OnCustomerIdChanging(value);
-                ReportPropertyChanging("CustomerId");
-                _CustomerId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CustomerId");
-                OnCustomerIdChanged();
+                OnProductSaleIdChanging(value);
+                ReportPropertyChanging("ProductSaleId");
+                _ProductSaleId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ProductSaleId");
+                OnProductSaleIdChanged();
             }
         }
-        private Nullable<global::System.Int64> _CustomerId;
-        partial void OnCustomerIdChanging(Nullable<global::System.Int64> value);
-        partial void OnCustomerIdChanged();
+        private global::System.Int64 _ProductSaleId;
+        partial void OnProductSaleIdChanging(global::System.Int64 value);
+        partial void OnProductSaleIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 NumItems
+        public global::System.Int32 NumSold
         {
             get
             {
-                return _NumItems;
+                return _NumSold;
             }
             set
             {
-                OnNumItemsChanging(value);
-                ReportPropertyChanging("NumItems");
-                _NumItems = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumItems");
-                OnNumItemsChanged();
+                OnNumSoldChanging(value);
+                ReportPropertyChanging("NumSold");
+                _NumSold = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumSold");
+                OnNumSoldChanged();
             }
         }
-        private global::System.Int32 _NumItems;
-        partial void OnNumItemsChanging(global::System.Int32 value);
-        partial void OnNumItemsChanged();
+        private global::System.Int32 _NumSold;
+        partial void OnNumSoldChanging(global::System.Int32 value);
+        partial void OnNumSoldChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal Price
+        public global::System.DateTime ExDate
         {
             get
             {
-                return _Price;
+                return _ExDate;
             }
             set
             {
-                OnPriceChanging(value);
-                ReportPropertyChanging("Price");
-                _Price = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("Price");
-                OnPriceChanged();
+                OnExDateChanging(value);
+                ReportPropertyChanging("ExDate");
+                _ExDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExDate");
+                OnExDateChanged();
             }
         }
-        private global::System.Decimal _Price;
-        partial void OnPriceChanging(global::System.Decimal value);
-        partial void OnPriceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime SaleDate
-        {
-            get
-            {
-                return _SaleDate;
-            }
-            set
-            {
-                OnSaleDateChanging(value);
-                ReportPropertyChanging("SaleDate");
-                _SaleDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SaleDate");
-                OnSaleDateChanged();
-            }
-        }
-        private global::System.DateTime _SaleDate;
-        partial void OnSaleDateChanging(global::System.DateTime value);
-        partial void OnSaleDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Remarks
-        {
-            get
-            {
-                return _Remarks;
-            }
-            set
-            {
-                OnRemarksChanging(value);
-                ReportPropertyChanging("Remarks");
-                _Remarks = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Remarks");
-                OnRemarksChanged();
-            }
-        }
-        private global::System.String _Remarks;
-        partial void OnRemarksChanging(global::System.String value);
-        partial void OnRemarksChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime ExpirationDate
-        {
-            get
-            {
-                return _ExpirationDate;
-            }
-            set
-            {
-                OnExpirationDateChanging(value);
-                ReportPropertyChanging("ExpirationDate");
-                _ExpirationDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ExpirationDate");
-                OnExpirationDateChanged();
-            }
-        }
-        private global::System.DateTime _ExpirationDate;
-        partial void OnExpirationDateChanging(global::System.DateTime value);
-        partial void OnExpirationDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int64 SaleGroupId
-        {
-            get
-            {
-                return _SaleGroupId;
-            }
-            set
-            {
-                OnSaleGroupIdChanging(value);
-                ReportPropertyChanging("SaleGroupId");
-                _SaleGroupId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SaleGroupId");
-                OnSaleGroupIdChanged();
-            }
-        }
-        private global::System.Int64 _SaleGroupId;
-        partial void OnSaleGroupIdChanging(global::System.Int64 value);
-        partial void OnSaleGroupIdChanged();
+        private global::System.DateTime _ExDate;
+        partial void OnExDateChanging(global::System.DateTime value);
+        partial void OnExDateChanged();
 
         #endregion
     
@@ -1407,54 +1552,16 @@ namespace IremEczOtomasyonu
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductSales_Customers", "Customer")]
-        public Customer Customer
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("Model1.ProductSales_Customers", "Customer").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("Model1.ProductSales_Customers", "Customer").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Customer> CustomerReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("Model1.ProductSales_Customers", "Customer");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Customer>("Model1.ProductSales_Customers", "Customer", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductSales_Products", "Product")]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "SaleItem_Product", "Product")]
         public Product Product
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.ProductSales_Products", "Product").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.SaleItem_Product", "Product").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.ProductSales_Products", "Product").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.SaleItem_Product", "Product").Value = value;
             }
         }
         /// <summary>
@@ -1466,13 +1573,51 @@ namespace IremEczOtomasyonu
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.ProductSales_Products", "Product");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Product>("Model1.SaleItem_Product", "Product");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("Model1.ProductSales_Products", "Product", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Product>("Model1.SaleItem_Product", "Product", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "SaleItem_ProductSale", "ProductSale")]
+        public ProductSale ProductSale
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ProductSale>("Model1.SaleItem_ProductSale", "ProductSale").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ProductSale>("Model1.SaleItem_ProductSale", "ProductSale").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ProductSale> ProductSaleReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ProductSale>("Model1.SaleItem_ProductSale", "ProductSale");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ProductSale>("Model1.SaleItem_ProductSale", "ProductSale", value);
                 }
             }
         }

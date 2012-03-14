@@ -7,25 +7,30 @@
     <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="Customers" EntityType="Model1.Store.Customers" store:Type="Tables" />
-          <EntitySet Name="ProductExpirationDates" EntityType="Model1.Store.ProductExpirationDates" store:Type="Tables" />
+          <EntitySet Name="ExpirationDates" EntityType="Model1.Store.ExpirationDates" store:Type="Tables" />
           <EntitySet Name="ProductPurchases" EntityType="Model1.Store.ProductPurchases" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Model1.Store.Products" store:Type="Tables" />
           <EntitySet Name="ProductSales" EntityType="Model1.Store.ProductSales" store:Type="Tables" />
-          <AssociationSet Name="ProductExpirateionDates_Product_Relation" Association="Model1.Store.ProductExpirateionDates_Product_Relation">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="ProductExpirationDates" EntitySet="ProductExpirationDates" />
-          </AssociationSet>
+          <EntitySet Name="SaleItems" EntityType="Model1.Store.SaleItems" store:Type="Tables" />
           <AssociationSet Name="ProductPurchases_Products" Association="Model1.Store.ProductPurchases_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="ProductPurchases" EntitySet="ProductPurchases" />
           </AssociationSet>
-          <AssociationSet Name="ProductSales_Customers" Association="Model1.Store.ProductSales_Customers">
+          <AssociationSet Name="Products_ExpirationDates" Association="Model1.Store.Products_ExpirationDates">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ExpirationDates" EntitySet="ExpirationDates" />
+          </AssociationSet>
+          <AssociationSet Name="ProductSale_Customer" Association="Model1.Store.ProductSale_Customer">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="ProductSales" EntitySet="ProductSales" />
           </AssociationSet>
-          <AssociationSet Name="ProductSales_Products" Association="Model1.Store.ProductSales_Products">
+          <AssociationSet Name="SaleItem_Product" Association="Model1.Store.SaleItem_Product">
             <End Role="Products" EntitySet="Products" />
+            <End Role="SaleItems" EntitySet="SaleItems" />
+          </AssociationSet>
+          <AssociationSet Name="SaleItem_ProductSale" Association="Model1.Store.SaleItem_ProductSale">
             <End Role="ProductSales" EntitySet="ProductSales" />
+            <End Role="SaleItems" EntitySet="SaleItems" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customers">
@@ -42,14 +47,14 @@
           <Property Name="DetailedInfo" Type="nvarchar" MaxLength="100" />
           <Property Name="Photo" Type="image" />
         </EntityType>
-        <EntityType Name="ProductExpirationDates">
+        <EntityType Name="ExpirationDates">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="ProductId" Type="bigint" />
-          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
-          <Property Name="NumItems" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="ExDate" Type="datetime" Nullable="false" />
+          <Property Name="NumItems" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductPurchases">
           <Key>
@@ -60,7 +65,7 @@
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="PurchaseDate" Type="datetime" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="1000" />
-          <Property Name="NumItems" Type="bigint" Nullable="false" />
+          <Property Name="NumItems" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -79,27 +84,21 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="ProductId" Type="bigint" Nullable="false" />
           <Property Name="CustomerId" Type="bigint" />
-          <Property Name="NumItems" Type="int" Nullable="false" />
-          <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="SaleDate" Type="datetime" Nullable="false" />
+          <Property Name="TotalPrice" Type="money" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
-          <Property Name="SaleGroupId" Type="bigint" Nullable="false" />
         </EntityType>
-        <Association Name="ProductExpirateionDates_Product_Relation">
-          <End Role="Products" Type="Model1.Store.Products" Multiplicity="0..1" />
-          <End Role="ProductExpirationDates" Type="Model1.Store.ProductExpirationDates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductExpirationDates">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="SaleItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="ProductSaleId" Type="bigint" Nullable="false" />
+          <Property Name="NumSold" Type="int" Nullable="false" />
+          <Property Name="ExDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="ProductPurchases_Products">
           <End Role="Products" Type="Model1.Store.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -114,7 +113,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductSales_Customers">
+        <Association Name="Products_ExpirationDates">
+          <End Role="Products" Type="Model1.Store.Products" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ExpirationDates" Type="Model1.Store.ExpirationDates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExpirationDates">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductSale_Customer">
           <End Role="Customers" Type="Model1.Store.Customers" Multiplicity="0..1" />
           <End Role="ProductSales" Type="Model1.Store.ProductSales" Multiplicity="*" />
           <ReferentialConstraint>
@@ -126,17 +139,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductSales_Products">
+        <Association Name="SaleItem_Product">
           <End Role="Products" Type="Model1.Store.Products" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ProductSales" Type="Model1.Store.ProductSales" Multiplicity="*" />
+          <End Role="SaleItems" Type="Model1.Store.SaleItems" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductSales">
+            <Dependent Role="SaleItems">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SaleItem_ProductSale">
+          <End Role="ProductSales" Type="Model1.Store.ProductSales" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SaleItems" Type="Model1.Store.SaleItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSales">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SaleItems">
+              <PropertyRef Name="ProductSaleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -146,25 +173,30 @@
       <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Model1.Customer" />
-          <EntitySet Name="Products" EntityType="Model1.Product" />
+          <EntitySet Name="ExpirationDates" EntityType="Model1.ExpirationDate" />
           <EntitySet Name="ProductPurchases" EntityType="Model1.ProductPurchase" />
+          <EntitySet Name="Products" EntityType="Model1.Product" />
           <EntitySet Name="ProductSales" EntityType="Model1.ProductSale" />
-          <AssociationSet Name="ProductSales_Customers" Association="Model1.ProductSales_Customers">
+          <EntitySet Name="SaleItems" EntityType="Model1.SaleItem" />
+          <AssociationSet Name="ProductSale_Customer" Association="Model1.ProductSale_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ProductSale" EntitySet="ProductSales" />
+          </AssociationSet>
+          <AssociationSet Name="Products_ExpirationDates" Association="Model1.Products_ExpirationDates">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ExpirationDate" EntitySet="ExpirationDates" />
           </AssociationSet>
           <AssociationSet Name="ProductPurchases_Products" Association="Model1.ProductPurchases_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductPurchas" EntitySet="ProductPurchases" />
           </AssociationSet>
-          <AssociationSet Name="ProductSales_Products" Association="Model1.ProductSales_Products">
+          <AssociationSet Name="SaleItem_Product" Association="Model1.SaleItem_Product">
             <End Role="Product" EntitySet="Products" />
-            <End Role="ProductSale" EntitySet="ProductSales" />
+            <End Role="SaleItem" EntitySet="SaleItems" />
           </AssociationSet>
-          <EntitySet Name="ProductExpirationDates" EntityType="Model1.ProductExpirationDate" />
-          <AssociationSet Name="ProductExpirateionDates_Product_Relation" Association="Model1.ProductExpirateionDates_Product_Relation">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="ProductExpirationDate" EntitySet="ProductExpirationDates" />
+          <AssociationSet Name="SaleItem_ProductSale" Association="Model1.SaleItem_ProductSale">
+            <End Role="ProductSale" EntitySet="ProductSales" />
+            <End Role="SaleItem" EntitySet="SaleItems" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customer">
@@ -180,7 +212,29 @@
           <Property Type="String" Name="Job" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="DetailedInfo" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Binary" Name="Photo" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="ProductSales" Relationship="Model1.ProductSales_Customers" FromRole="Customer" ToRole="ProductSale" />
+          <NavigationProperty Name="ProductSales" Relationship="Model1.ProductSale_Customer" FromRole="Customer" ToRole="ProductSale" />
+        </EntityType>
+        <EntityType Name="ExpirationDate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="Int64" Name="ProductId" Nullable="false" />
+          <Property Type="DateTime" Name="ExDate" Nullable="false" />
+          <Property Type="Int32" Name="NumItems" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Model1.Products_ExpirationDates" FromRole="ExpirationDate" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductPurchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="Int64" Name="ProductId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="PurchaseDate" Nullable="false" />
+          <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NumItems" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Model1.ProductPurchases_Products" FromRole="ProductPurchas" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -191,41 +245,37 @@
           <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Brand" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="NumItems" Nullable="false" />
-          <NavigationProperty Name="ProductPurchases" Relationship="Model1.ProductPurchases_Products" FromRole="Product" ToRole="ProductPurchas" />
-          <NavigationProperty Name="ProductSales" Relationship="Model1.ProductSales_Products" FromRole="Product" ToRole="ProductSale" />
-          <NavigationProperty Name="ProductExpirationDates" Relationship="Model1.ProductExpirateionDates_Product_Relation" FromRole="Product" ToRole="ProductExpirationDate" />
           <Property Type="Decimal" Name="CurrentBuyingPrice" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="CurrentSellingPrice" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="ProductPurchase">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="Int64" Name="ProductId" Nullable="false" />
-          <Property Type="Int32" Name="NumItems" Nullable="false" />
-          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="DateTime" Name="PurchaseDate" Nullable="false" />
-          <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="Model1.ProductPurchases_Products" FromRole="ProductPurchas" ToRole="Product" />
+          <NavigationProperty Name="ExpirationDates" Relationship="Model1.Products_ExpirationDates" FromRole="Product" ToRole="ExpirationDate" />
+          <NavigationProperty Name="ProductPurchases" Relationship="Model1.ProductPurchases_Products" FromRole="Product" ToRole="ProductPurchas" />
+          <NavigationProperty Name="SaleItems" Relationship="Model1.SaleItem_Product" FromRole="Product" ToRole="SaleItem" />
         </EntityType>
         <EntityType Name="ProductSale">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="Int64" Name="ProductId" Nullable="false" />
           <Property Type="Int64" Name="CustomerId" />
-          <Property Type="Int32" Name="NumItems" Nullable="false" />
-          <Property Type="Decimal" Name="Price" Nullable="false" Precision="19" Scale="4" />
           <Property Type="DateTime" Name="SaleDate" Nullable="false" />
+          <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="19" Scale="4" />
           <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="Model1.ProductSales_Customers" FromRole="ProductSale" ToRole="Customer" />
-          <NavigationProperty Name="Product" Relationship="Model1.ProductSales_Products" FromRole="ProductSale" ToRole="Product" />
-          <Property Type="DateTime" Name="ExpirationDate" Nullable="false" />
-          <Property Type="Int64" Name="SaleGroupId" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Model1.ProductSale_Customer" FromRole="ProductSale" ToRole="Customer" />
+          <NavigationProperty Name="SaleItems" Relationship="Model1.SaleItem_ProductSale" FromRole="ProductSale" ToRole="SaleItem" />
         </EntityType>
-        <Association Name="ProductSales_Customers">
+        <EntityType Name="SaleItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="Int64" Name="ProductId" Nullable="false" />
+          <Property Type="Int64" Name="ProductSaleId" Nullable="false" />
+          <Property Type="Int32" Name="NumSold" Nullable="false" />
+          <Property Type="DateTime" Name="ExDate" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Model1.SaleItem_Product" FromRole="SaleItem" ToRole="Product" />
+          <NavigationProperty Name="ProductSale" Relationship="Model1.SaleItem_ProductSale" FromRole="SaleItem" ToRole="ProductSale" />
+        </EntityType>
+        <Association Name="ProductSale_Customer">
           <End Type="Model1.Customer" Role="Customer" Multiplicity="0..1" />
           <End Type="Model1.ProductSale" Role="ProductSale" Multiplicity="*" />
           <ReferentialConstraint>
@@ -237,12 +287,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Products_ExpirationDates">
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model1.ExpirationDate" Role="ExpirationDate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExpirationDate">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ProductPurchases_Products">
-          <End Type="Model1.Product" Role="Product" Multiplicity="1" >
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model1.ProductPurchase" Role="ProductPurchas" Multiplicity="*" >
-          </End>
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model1.ProductPurchase" Role="ProductPurchas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
@@ -252,40 +311,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ProductSales_Products">
-          <End Type="Model1.Product" Role="Product" Multiplicity="1" >
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model1.ProductSale" Role="ProductSale" Multiplicity="*" >
-          </End>
+        <Association Name="SaleItem_Product">
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model1.SaleItem" Role="SaleItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductSale">
+            <Dependent Role="SaleItem">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ProductExpirationDate">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="Int64" Name="ProductId" />
-          <Property Type="DateTime" Name="ExpirationDate" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Model1.ProductExpirateionDates_Product_Relation" FromRole="ProductExpirationDate" ToRole="Product" />
-          <Property Type="Int64" Name="NumItems" Nullable="false" />
-        </EntityType>
-        <Association Name="ProductExpirateionDates_Product_Relation">
-          <End Type="Model1.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="Model1.ProductExpirationDate" Role="ProductExpirationDate" Multiplicity="*" />
+        <Association Name="SaleItem_ProductSale">
+          <End Type="Model1.ProductSale" Role="ProductSale" Multiplicity="1" />
+          <End Type="Model1.SaleItem" Role="SaleItem" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product">
+            <Principal Role="ProductSale">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductExpirationDate">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="SaleItem">
+              <PropertyRef Name="ProductSaleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -312,6 +358,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ExpirationDates">
+            <EntityTypeMapping TypeName="Model1.ExpirationDate">
+              <MappingFragment StoreEntitySet="ExpirationDates">
+                <ScalarProperty Name="NumItems" ColumnName="NumItems" />
+                <ScalarProperty Name="ExDate" ColumnName="ExDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPurchases">
+            <EntityTypeMapping TypeName="Model1.ProductPurchase">
+              <MappingFragment StoreEntitySet="ProductPurchases">
+                <ScalarProperty Name="NumItems" ColumnName="NumItems" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="Model1.Product">
               <MappingFragment StoreEntitySet="Products">
@@ -325,38 +393,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductPurchases">
-            <EntityTypeMapping TypeName="Model1.ProductPurchase">
-              <MappingFragment StoreEntitySet="ProductPurchases">
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NumItems" ColumnName="NumItems" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductSales">
             <EntityTypeMapping TypeName="Model1.ProductSale">
               <MappingFragment StoreEntitySet="ProductSales">
-                <ScalarProperty Name="SaleGroupId" ColumnName="SaleGroupId" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NumItems" ColumnName="NumItems" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductExpirationDates">
-            <EntityTypeMapping TypeName="Model1.ProductExpirationDate">
-              <MappingFragment StoreEntitySet="ProductExpirationDates">
-                <ScalarProperty Name="NumItems" ColumnName="NumItems" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+          <EntitySetMapping Name="SaleItems">
+            <EntityTypeMapping TypeName="Model1.SaleItem">
+              <MappingFragment StoreEntitySet="SaleItems">
+                <ScalarProperty Name="ExDate" ColumnName="ExDate" />
+                <ScalarProperty Name="NumSold" ColumnName="NumSold" />
+                <ScalarProperty Name="ProductSaleId" ColumnName="ProductSaleId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -383,28 +436,32 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram Name="Model1" >
-        <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="6" PointY="0.875" Height="2.9417936197916665" />
-        <EntityTypeShape EntityType="Model1.Product" Width="1.5" PointX="3.375" PointY="1" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="1.25" PointY="1" Height="2.364889322916667" />
-        <EntityTypeShape EntityType="Model1.ProductSale" Width="1.625" PointX="6.25" PointY="4.875" Height="2.7494921874999996" />
-        <AssociationConnector Association="Model1.ProductSales_Customers" >
-          <ConnectorPoint PointX="6.875" PointY="3.8167936197916665" />
-          <ConnectorPoint PointX="6.875" PointY="4.875" />
+        <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="1.5" PointY="0.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="Model1.ExpirationDate" Width="1.5" PointX="10" PointY="0.875" Height="1.9802864583333388" />
+        <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.75" PointX="5.625" PointY="3.5" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model1.Product" Width="1.75" PointX="7.75" PointY="0.625" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="Model1.ProductSale" Width="1.5" PointX="3.75" PointY="0.875" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model1.SaleItem" Width="1.5" PointX="5.75" PointY="0.875" Height="2.3648893229166674" />
+        <AssociationConnector Association="Model1.ProductSale_Customer" >
+          <ConnectorPoint PointX="3" PointY="2.0574446614583337" />
+          <ConnectorPoint PointX="3.75" PointY="2.0574446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model1.Products_ExpirationDates" >
+          <ConnectorPoint PointX="9.5" PointY="1.8651432291666694" />
+          <ConnectorPoint PointX="10" PointY="1.8651432291666694" />
         </AssociationConnector>
         <AssociationConnector Association="Model1.ProductPurchases_Products" >
-          <ConnectorPoint PointX="3.375" PointY="2.1824446614583337" />
-          <ConnectorPoint PointX="2.875" PointY="2.1824446614583337" />
+          <ConnectorPoint PointX="8.625" PointY="3.5667936197916674" />
+          <ConnectorPoint PointX="8.625" PointY="4.7158419713541679" />
+          <ConnectorPoint PointX="7.375" PointY="4.7158419713541679" />
         </AssociationConnector>
-        <AssociationConnector Association="Model1.ProductSales_Products" >
-          <ConnectorPoint PointX="4.15625" PointY="3.5571907552083331" />
-          <ConnectorPoint PointX="4.15625" PointY="6.3458968098958328" />
-          <ConnectorPoint PointX="6.25" PointY="6.3458968098958328" />
+        <AssociationConnector Association="Model1.SaleItem_Product" >
+          <ConnectorPoint PointX="7.75" PointY="2.0574446614583337" />
+          <ConnectorPoint PointX="7.25" PointY="2.0574446614583337" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="Model1.ProductExpirationDate" Width="1.5" PointX="1.875" PointY="5.375" Height="1.7879850260416674" />
-        <AssociationConnector Association="Model1.ProductExpirateionDates_Product_Relation" >
-          <ConnectorPoint PointX="3.7656225" PointY="3.5571907552083331" />
-          <ConnectorPoint PointX="3.7656225" PointY="5.8604484049479169" />
-          <ConnectorPoint PointX="3.375" PointY="5.8604484049479169" />
+        <AssociationConnector Association="Model1.SaleItem_ProductSale" >
+          <ConnectorPoint PointX="5.25" PointY="2.0574446614583337" />
+          <ConnectorPoint PointX="5.75" PointY="2.0574446614583337" />
         </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>

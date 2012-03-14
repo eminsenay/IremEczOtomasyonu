@@ -6,7 +6,7 @@ using System.Text;
 
 namespace IremEczOtomasyonu
 {
-    partial class ProductExpirationDate: IDataErrorInfo
+    partial class ExpirationDate: IDataErrorInfo
     {
         public string this[string columnName]
         {
@@ -14,8 +14,8 @@ namespace IremEczOtomasyonu
             {
                 switch (columnName)
                 {
-                    case "ExpirationDate":
-                        if (ExpirationDate.Date < DateTime.Today)
+                    case "ExDate":
+                        if (ExDate.Date < DateTime.Today)
                         {
                             return "Lütfen geçerli bir son kullanma tarihi giriniz.";
                         }

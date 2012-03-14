@@ -35,7 +35,7 @@ namespace IremEczOtomasyonu
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
-            Products = _dbContext.Products.Include("ProductPurchases").Include("ProductSales").ToList();
+            Products = _dbContext.Products.Include("ProductPurchases").Include("SaleItems").ToList();
             productsViewSource.Source = Products;
             CurrentView = productsViewSource.View;
         }
@@ -145,7 +145,7 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            if (currProduct.ProductPurchases.Count > 0 || currProduct.ProductSales.Count > 0)
+            if (currProduct.ProductPurchases.Count > 0 || currProduct.SaleItems.Count > 0)
             {
                 result = MessageBox.Show(
                     "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmeniz bunları " +

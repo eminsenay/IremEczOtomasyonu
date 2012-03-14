@@ -24,7 +24,7 @@ namespace IremEczOtomasyonu
         private readonly Model1Container _dbContext;
         public ProductPurchase CurrentPurchase { get; private set; }
         public Product CurrentProduct { get; private set; }
-        private readonly ProductExpirationDate _currExpirationDate;
+        private readonly ExpirationDate _currExpirationDate;
 
         public AddPurchaseWindow(Product product, Model1Container dbContext)
         {
@@ -32,7 +32,7 @@ namespace IremEczOtomasyonu
             CurrentProduct = product;
             _dbContext = dbContext;
 
-            _currExpirationDate = new ProductExpirationDate { ProductId = CurrentProduct.Id };
+            _currExpirationDate = new ExpirationDate { ProductId = CurrentProduct.Id };
             expirationDateDatePicker.DataContext = _currExpirationDate;
         }
 
@@ -80,17 +80,17 @@ namespace IremEczOtomasyonu
             long purchaseId = lastPurchase != null ? lastPurchase.Id + 1 : 1;
 
             // check the curr. expiration date in db
-            ProductExpirationDate expirationDate = _dbContext.ProductExpirationDates.FirstOrDefault(
-                x => x.ProductId == CurrentProduct.Id && x.ExpirationDate == _currExpirationDate.ExpirationDate);
+            ExpirationDate expirationDate = _dbContext.ExpirationDates.FirstOrDefault(
+                x => x.ProductId == CurrentProduct.Id && x.ExDate == _currExpirationDate.ExDate);
             if (expirationDate == null)
             {
-                ProductExpirationDate lastExpDate =
-                    _dbContext.ProductExpirationDates.OrderByDescending(x => x.Id).FirstOrDefault();
+                ExpirationDate lastExpDate =
+                    _dbContext.ExpirationDates.OrderByDescending(x => x.Id).FirstOrDefault();
                 long expDateId = lastExpDate != null ? lastExpDate.Id + 1 : 1;
 
                 _currExpirationDate.NumItems = CurrentPurchase.NumItems;
                 _currExpirationDate.Id = expDateId;
-                _dbContext.AddToProductExpirationDates(_currExpirationDate);
+                _dbContext.AddToExpirationDates(_currExpirationDate);
             }
             else
             {

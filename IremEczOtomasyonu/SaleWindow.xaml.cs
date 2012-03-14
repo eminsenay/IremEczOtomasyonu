@@ -4,11 +4,13 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Objects.DataClasses;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,11 +27,10 @@ namespace IremEczOtomasyonu
     public partial class SaleWindow : Window
     {
         private readonly Model1Container _dbContext;
-        private readonly Customer _customer;
         
         private bool _isManualEditCommit;
 
-        public ObservableCollection<SaleItem> SaleItems { get; set; }
+        public ProductSale CurrentProductSale { get; private set; }
 
         /// <summary>
         /// Initializes a new sale window
@@ -39,9 +40,12 @@ namespace IremEczOtomasyonu
         {
             InitializeComponent();
             _dbContext = dbContext;
-            SaleItems = new ObservableCollection<SaleItem>();
 
-            productSaleDataGrid.ItemsSource = SaleItems;
+            CurrentProductSale = new ProductSale
+                                 {SaleItems = new EntityCollection<SaleItem>(), SaleDate = DateTime.Today};
+
+            saleGrid.DataContext = CurrentProductSale;
+            productSaleDataGrid.ItemsSource = CurrentProductSale.SaleItems;
             UpdateTotalPriceTextBlock();
         }
 
@@ -52,8 +56,7 @@ namespace IremEczOtomasyonu
         /// <param name="customer">Customer who is buying the products</param>
         public SaleWindow(Model1Container dbContext, Customer customer): this(dbContext)
         {
-            _customer = customer;
-            customerNameTextBlock.Text = _customer.FirstName + " " + _customer.LastName;
+            CurrentProductSale.Customer = customer;
         }
 
         /// <summary>
@@ -75,8 +78,15 @@ namespace IremEczOtomasyonu
                 barcodeTextBox.SelectAll();
                 return;
             }
-            SaleItems.Add(new SaleItem { Product = newProduct, NumSold = 1 });
-            totalPriceTextBlock.Text = SaleItems.Sum(x => x.Price).ToString(CultureInfo.InvariantCulture);
+            //SaleItems.Add(new SaleItem {Product = newProduct, NumSold = 1, ProductSale = CurrentProductSale});
+            CurrentProductSale.SaleItems.Add(new SaleItem
+                                             {
+                                                 Product = newProduct,
+                                                 NumSold = 1,
+                                                 ProductSale = CurrentProductSale,
+                                                 ExpDate = newProduct.ExpirationDates.FirstOrDefault()
+                                             });
+            UpdateTotalPriceTextBlock();
 
             barcodeTextBox.Text = string.Empty;
             barcodeTextBox.Focus();
@@ -136,7 +146,7 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            SaleItems.Remove(saleItem);
+            CurrentProductSale.SaleItems.Remove(saleItem);
             UpdateTotalPriceTextBlock();
         }
 
@@ -145,17 +155,32 @@ namespace IremEczOtomasyonu
         /// </summary>
         private void UpdateTotalPriceTextBlock()
         {
-            totalPriceTextBlock.Text = SaleItems.Sum(x => x.Price).ToString(CultureInfo.InvariantCulture);
+            decimal totalPrice = (decimal)CurrentProductSale.SaleItems.Sum(
+                x => (x.NumSold * x.Product.CurrentSellingPrice));
+            totalPriceTextBlock.Text = totalPrice.ToString(CultureInfo.CurrentCulture);
+            CurrentProductSale.TotalPrice = totalPrice;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            DateTime saleDate = DateTime.Now;
-            foreach (SaleItem saleItem in SaleItems)
+            // Entity framework sql explorer compact hack
+            ProductSale lastProductSale = _dbContext.ProductSales.OrderByDescending(o => o.Id).FirstOrDefault();
+            long productSaleId = lastProductSale != null ? lastProductSale.Id + 1 : 1;
+            CurrentProductSale.Id = productSaleId;
+
+            // Set entity expiration dates manually
+            foreach (SaleItem saleItem in CurrentProductSale.SaleItems)
             {
-                ProductSale productSale = new ProductSale { Customer = _customer, Product = saleItem.Product, NumItems = saleItem.NumSold,
-                Price = saleItem.Price, SaleDate = saleDate, };
+                saleItem.ExDate = saleItem.ExpDate.ExDate;
+                // Decrease the item count from products & expiration date tables
+                saleItem.Product.NumItems -= saleItem.NumSold;
+                saleItem.ExpDate.NumItems -= saleItem.NumSold;
             }
+            
+            _dbContext.AddToProductSales(CurrentProductSale);
+            _dbContext.SaveChanges();
+            DialogResult = true;
+            Close();
         }
     }
 }
