@@ -147,5 +147,15 @@ namespace IremEczOtomasyonu
         {
             totalPriceTextBlock.Text = SaleItems.Sum(x => x.Price).ToString(CultureInfo.InvariantCulture);
         }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime saleDate = DateTime.Now;
+            foreach (SaleItem saleItem in SaleItems)
+            {
+                ProductSale productSale = new ProductSale { Customer = _customer, Product = saleItem.Product, NumItems = saleItem.NumSold,
+                Price = saleItem.Price, SaleDate = saleDate, };
+            }
+        }
     }
 }

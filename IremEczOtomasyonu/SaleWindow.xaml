@@ -18,8 +18,14 @@
                                     Binding="{Binding Path=Product.Name, Mode=OneWay}"/>
                 <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="SizeToHeader"
                                     Binding="{Binding Path=NumSold, Mode=TwoWay}"/>
-                <DataGridComboBoxColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="SizeToHeader"
-                                        ItemsSource="{Binding Path=ExpirationDates, Mode=TwoWay}"/>
+                <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Path=Product.ProductExpirationDates}" 
+                                      DisplayMemberPath="ExpirationDate" ItemStringFormat="{}{0:d}" SelectedIndex="0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="priceColumn" Header="Fiyat" MinWidth="150"
                                     Binding="{Binding Path=Price, Mode=TwoWay}"/>
             </DataGrid.Columns>
@@ -34,7 +40,7 @@
                    Text="Genel"/>
         <Label Content="Toplam:" Height="28" HorizontalAlignment="Left" Margin="663,247,0,0" Name="totalPriceLabel" VerticalAlignment="Top" />
         <TextBlock Height="23" Margin="0,252,12,0" Name="totalPriceTextBlock" VerticalAlignment="Top" HorizontalAlignment="Right" Width="141"/>            
-        <Button Content="Tamam" HorizontalAlignment="Right" Margin="0,0,93,11" Name="okButton" Width="75" Height="23" VerticalAlignment="Bottom" />
+        <Button Content="Tamam" HorizontalAlignment="Right" Margin="0,0,93,11" Name="okButton" Width="75" Height="23" VerticalAlignment="Bottom" Click="OkButton_Click" />
         <Button Content="İptal" HorizontalAlignment="Right" Margin="0,0,12,11" Name="cancalButton" Width="75" Height="23" VerticalAlignment="Bottom" IsCancel="True" />
     </Grid>
 </Window>
