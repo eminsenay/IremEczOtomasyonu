@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
-             Loaded="UserControl_Loaded">
+             Loaded="UserControl_Loaded" xmlns:my="clr-namespace:IremEczOtomasyonu">
     <UserControl.Resources>
-        <!--<CollectionViewSource x:Key="customersViewSource" d:DesignSource="{d:DesignInstance my:Customer, CreateList=True}" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type dat:ListCollectionView}" />-->
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
-        <!--<Style TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Text" Value="Seçiniz" />
-        </Style>
-        <CollectionViewSource x:Key="customersProductSalesViewSource" Source="{Binding Path=ProductSales, Source={StaticResource customersViewSource}}" />-->
+        <!--<CollectionViewSource x:Key="productSalesViewSource" d:DesignSource="{d:DesignInstance my:ProductSale, CreateList=True}" 
+                              Source="{Binding Source={StaticResource customersViewSource}, Path=ProductSales}" />-->
+        <CollectionViewSource x:Key="saleItemsViewSource" d:DesignSource="{d:DesignInstance my:SaleItem, CreateList=True}"
+                              Filter="SaleItems_Filter" CollectionViewType="{x:Type ListCollectionView}"/>
+        <my:SaleItemListToHeaderConverter x:Key="saleItemListToHeaderConverter" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource customersViewSource}">
         <Grid>
@@ -20,14 +20,16 @@
             <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="132,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Soyisim" />
             <lib:InfoTextBox Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="258,6,87,0" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Detaylı Bilgi" />
             <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="210" ItemsSource="{Binding}" Margin="6,35,6,0" Name="customersDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" HorizontalAlignment="Stretch" SelectionChanged="CustomersDataGrid_SelectionChanged" SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown">
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="210" ItemsSource="{Binding}" Margin="6,35,6,0" Name="customersDataGrid" 
+                      RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" HorizontalAlignment="Stretch" SelectionChanged="CustomersDataGrid_SelectionChanged" 
+                      SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding Path=FirstName}" Header="İsim" Width="4*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Path=LastName}" Header="Soyisim" Width="4*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="birthdayColumn" Binding="{Binding Path=Birthday, StringFormat={}{0:d}}" Header="Doğum Tarihi" Width="3*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="skinTypeColumn" Binding="{Binding Path=SkinType}" Header="Cilt Tipi" Width="2*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="maritalStatusColumn" Binding="{Binding Path=MaritalStatus}" Header="Medeni Hal" Width="3*" IsReadOnly="True" />
-                    <DataGridTextColumn x:Name="jobColumn" Binding="{Binding Path=Job}" Header="Meslek" Width="2*" IsReadOnly="True" />
+                    <DataGridTextColumn x:Name="jobColumn" Binding="{Binding Path=Job}" Header="Meslek" Width="3*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="detailedInfoColumn" Binding="{Binding Path=DetailedInfo}" Header="Detaylı Bilgi" Width="6*" IsReadOnly="True" />
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
@@ -38,14 +40,14 @@
                 </DataGrid.ContextMenu>
             </DataGrid>
         </Grid>
-        <GroupBox Header="Detaylar" Margin="6,251,6,6" Name="groupBox2">
+        <GroupBox Header="Detaylar" Margin="6,251,6,0" Name="detailsGroupBox" Height="268" VerticalAlignment="Top">
             <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" MinWidth="200" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -55,7 +57,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="30" />
                 </Grid.RowDefinitions>
-                <Image Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" Height="150" HorizontalAlignment="Center" Margin="3" Name="photoImage" Stretch="Fill" VerticalAlignment="Center" Width="150">
+                <Image Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" Height="150" HorizontalAlignment="Center" Margin="3" Name="photoImage" Stretch="Uniform" VerticalAlignment="Center" Width="150">
                     <Image.ContextMenu>
                         <ContextMenu>
                             <MenuItem Name="photoImgDeleteMenuItem" Header="Sil" Click="PhotoImgDeleteMenuItem_Click"/>
@@ -85,6 +87,47 @@
                 <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="4" Grid.Row="4" Height="80" Name="detailedInfoTextBox" Margin="6,0,0,0" Width="559"
                          Text="{Binding Path=DetailedInfo, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
                 <Button Grid.Column="4" Content="Değişiklikleri Kaydet" Grid.Row="5" Height="23" HorizontalAlignment="Center" Name="saveChangesButton" VerticalAlignment="Center" Width="124" Click="SaveChangesButton_Click" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Müşterinin Aldığı Ürünler" Margin="6,525,6,12" Name="productsGroupBox">
+            <Grid>
+                <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" 
+                          ItemsSource="{Binding Source={StaticResource saleItemsViewSource}}" Margin="6,6,0,6" CanUserAddRows="False">
+                    <DataGrid.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=Name}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Expander IsExpanded="True">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Path=Items, Converter={StaticResource saleItemListToHeaderConverter}}"/>
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </DataGrid.GroupStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=Product.Name}" Header="Ürün Adı" MinWidth="250" />
+                        <DataGridTextColumn Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" MinWidth="250" />
+                        <DataGridTextColumn Binding="{Binding Path=NumSold}" Header="Miktar" />
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </GroupBox>
     </Grid>

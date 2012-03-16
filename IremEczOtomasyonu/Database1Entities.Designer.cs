@@ -20,7 +20,7 @@ using System.Runtime.Serialization;
 
 [assembly: EdmRelationshipAttribute("Model1", "ProductSale_Customer", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(IremEczOtomasyonu.Customer), "ProductSale", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductSale), true)]
 [assembly: EdmRelationshipAttribute("Model1", "Products_ExpirationDates", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "ExpirationDate", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ExpirationDate), true)]
-[assembly: EdmRelationshipAttribute("Model1", "ProductPurchases_Products", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "ProductPurchas", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductPurchase), true)]
+[assembly: EdmRelationshipAttribute("Model1", "ProductPurchases_Products", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "ProductPurchase", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.ProductPurchase), true)]
 [assembly: EdmRelationshipAttribute("Model1", "SaleItem_Product", "Product", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.Product), "SaleItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.SaleItem), true)]
 [assembly: EdmRelationshipAttribute("Model1", "SaleItem_ProductSale", "ProductSale", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(IremEczOtomasyonu.ProductSale), "SaleItem", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IremEczOtomasyonu.SaleItem), true)]
 
@@ -904,18 +904,18 @@ namespace IremEczOtomasyonu
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductPurchases_Products", "ProductPurchas")]
+        [EdmRelationshipNavigationPropertyAttribute("Model1", "ProductPurchases_Products", "ProductPurchase")]
         public EntityCollection<ProductPurchase> ProductPurchases
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductPurchase>("Model1.ProductPurchases_Products", "ProductPurchas");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductPurchase>("Model1.ProductPurchases_Products", "ProductPurchase");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductPurchase>("Model1.ProductPurchases_Products", "ProductPurchas", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductPurchase>("Model1.ProductPurchases_Products", "ProductPurchase", value);
                 }
             }
         }

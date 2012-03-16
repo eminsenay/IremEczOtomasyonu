@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Objects;
 using System.Linq;
@@ -22,8 +23,8 @@ namespace IremEczOtomasyonu
     public partial class UserControlProducts : UserControl
     {
         private readonly Model1Container _dbContext;
-        private ICollectionView CurrentView { get; set; }
-        private List<Product> Products { get; set; }
+        private ICollectionView _currentView;
+        private ObservableCollection<Product> Products { get; set; }
 
         public UserControlProducts()
         {
@@ -35,9 +36,13 @@ namespace IremEczOtomasyonu
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
-            Products = _dbContext.Products.Include("ProductPurchases").Include("SaleItems").ToList();
+            Products = new ObservableCollection<Product>(
+                _dbContext.Products.Include("ProductPurchases").Include("SaleItems"));
+
             productsViewSource.Source = Products;
-            CurrentView = productsViewSource.View;
+
+            _currentView = productsViewSource.View;
+            _currentView.GroupDescriptions.Add(new PropertyGroupDescription("Brand"));
         }
 
         private void AddNewProduct_Click(object sender, RoutedEventArgs e)
@@ -51,23 +56,32 @@ namespace IremEczOtomasyonu
             {
                 // A product is added. Refresh the datagrid
                 Products.Add(addProductWindow.CurrentProduct);
-                CurrentView.Refresh();
             }
-
         }
 
         private void AddPurchaseButton_Click(object sender, RoutedEventArgs e)
         {
-            BarcodeWindow barcodeWindow = new BarcodeWindow 
+            string barcode;
+            Product selectedProduct = productsDataGrid.SelectedItem as Product;
+            if (selectedProduct != null)
             {
-                Owner = Parent as Window,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
-            if (barcodeWindow.ShowDialog() != true)
-            {
-                return;
+                barcode = selectedProduct.Barcode;
             }
-            OpenPurchaseDialog(barcodeWindow.Barcode);
+            else
+            {
+                BarcodeWindow barcodeWindow = new BarcodeWindow
+                {
+                    Owner = Parent as Window,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                if (barcodeWindow.ShowDialog() != true)
+                {
+                    return;
+                }
+                barcode = barcodeWindow.Barcode;
+            }
+            
+            OpenPurchaseDialog(barcode);
         }
 
         /// <summary>
@@ -82,16 +96,12 @@ namespace IremEczOtomasyonu
                                                       Owner = Parent as Window,
                                                       WindowStartupLocation = WindowStartupLocation.CenterOwner
                                                   };
-            if (addPurchaseWindow.ShowDialog() == true)
-            {
-                // A product is refreshed (number of items, and buying price). Refresh the datagrid
-                CurrentView.Refresh();
-            }
+            addPurchaseWindow.ShowDialog();
         }
 
         private void ProductSearchControl_TextChanged(object sender, TextChangedEventArgs e)
         {
-            CurrentView.Refresh();
+            _currentView.Refresh();
         }
 
         private void ProductCollection_Filter(object sender, FilterEventArgs e)
@@ -160,7 +170,6 @@ namespace IremEczOtomasyonu
             Products.Remove(currProduct);
             _dbContext.DeleteObject(currProduct);
             _dbContext.SaveChanges();
-            CurrentView.Refresh();
         }
 
         private void DatagridDeleteProductMenuItem_Click(object sender, RoutedEventArgs e)

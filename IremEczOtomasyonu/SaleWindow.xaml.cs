@@ -42,7 +42,7 @@ namespace IremEczOtomasyonu
             _dbContext = dbContext;
 
             CurrentProductSale = new ProductSale
-                                 {SaleItems = new EntityCollection<SaleItem>(), SaleDate = DateTime.Today};
+                                 {SaleItems = new EntityCollection<SaleItem>(), SaleDate = DateTime.Now};
 
             saleGrid.DataContext = CurrentProductSale;
             productSaleDataGrid.ItemsSource = CurrentProductSale.SaleItems;
@@ -168,13 +168,16 @@ namespace IremEczOtomasyonu
             long productSaleId = lastProductSale != null ? lastProductSale.Id + 1 : 1;
             CurrentProductSale.Id = productSaleId;
 
-            // Set entity expiration dates manually
+            // Set entity expiration dates and ids manually
+            SaleItem lastSaleItem = _dbContext.SaleItems.OrderByDescending(o => o.Id).FirstOrDefault();
+            long saleItemId = lastSaleItem != null ? lastSaleItem.Id + 1 : 1;
             foreach (SaleItem saleItem in CurrentProductSale.SaleItems)
             {
                 saleItem.ExDate = saleItem.ExpDate.ExDate;
                 // Decrease the item count from products & expiration date tables
                 saleItem.Product.NumItems -= saleItem.NumSold;
                 saleItem.ExpDate.NumItems -= saleItem.NumSold;
+                saleItem.Id = saleItemId++;
             }
             
             _dbContext.AddToProductSales(CurrentProductSale);

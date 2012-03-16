@@ -188,7 +188,7 @@
           </AssociationSet>
           <AssociationSet Name="ProductPurchases_Products" Association="Model1.ProductPurchases_Products">
             <End Role="Product" EntitySet="Products" />
-            <End Role="ProductPurchas" EntitySet="ProductPurchases" />
+            <End Role="ProductPurchase" EntitySet="ProductPurchases" />
           </AssociationSet>
           <AssociationSet Name="SaleItem_Product" Association="Model1.SaleItem_Product">
             <End Role="Product" EntitySet="Products" />
@@ -234,7 +234,7 @@
           <Property Type="DateTime" Name="PurchaseDate" Nullable="false" />
           <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="NumItems" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="Model1.ProductPurchases_Products" FromRole="ProductPurchas" ToRole="Product" />
+          <NavigationProperty Name="Product" Relationship="Model1.ProductPurchases_Products" FromRole="ProductPurchase" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -248,7 +248,7 @@
           <Property Type="Decimal" Name="CurrentBuyingPrice" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="CurrentSellingPrice" Precision="19" Scale="4" />
           <NavigationProperty Name="ExpirationDates" Relationship="Model1.Products_ExpirationDates" FromRole="Product" ToRole="ExpirationDate" />
-          <NavigationProperty Name="ProductPurchases" Relationship="Model1.ProductPurchases_Products" FromRole="Product" ToRole="ProductPurchas" />
+          <NavigationProperty Name="ProductPurchases" Relationship="Model1.ProductPurchases_Products" FromRole="Product" ToRole="ProductPurchase" />
           <NavigationProperty Name="SaleItems" Relationship="Model1.SaleItem_Product" FromRole="Product" ToRole="SaleItem" />
         </EntityType>
         <EntityType Name="ProductSale">
@@ -288,7 +288,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="Products_ExpirationDates">
-          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="Model1.ExpirationDate" Role="ExpirationDate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -300,19 +302,24 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ProductPurchases_Products">
-          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
-          <End Type="Model1.ProductPurchase" Role="ProductPurchas" Multiplicity="*" />
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.ProductPurchase" Role="ProductPurchase" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductPurchas">
+            <Dependent Role="ProductPurchase">
               <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="SaleItem_Product">
-          <End Type="Model1.Product" Role="Product" Multiplicity="1" />
+          <End Type="Model1.Product" Role="Product" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="Model1.SaleItem" Role="SaleItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -324,7 +331,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="SaleItem_ProductSale">
-          <End Type="Model1.ProductSale" Role="ProductSale" Multiplicity="1" />
+          <End Type="Model1.ProductSale" Role="ProductSale" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="Model1.SaleItem" Role="SaleItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductSale">

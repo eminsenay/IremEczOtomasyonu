@@ -93,7 +93,7 @@
     <Compile Include="ExpirationDate.cs" />
     <Compile Include="ProductPurchase.cs" />
     <Compile Include="SaleItem.cs" />
-    <Compile Include="SaleItemToPriceConverter.cs" />
+    <Compile Include="ValueConverters.cs" />
     <Compile Include="SaleWindow.xaml.cs">
       <DependentUpon>SaleWindow.xaml</DependentUpon>
     </Compile>

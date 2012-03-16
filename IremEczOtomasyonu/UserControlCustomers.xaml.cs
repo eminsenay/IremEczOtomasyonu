@@ -1,6 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -24,9 +27,12 @@ namespace IremEczOtomasyonu
     public partial class UserControlCustomers : UserControl
     {
         private readonly Model1Container _dbContext;
-        private ICollectionView CurrentView { get; set; }
+        private ICollectionView _customerView;
+        private ICollectionView _saleItemsView;
+
         public bool AllChangesSaved { get; private set; }
-        private List<Customer> Customers { get; set; }
+        private ObservableCollection<Customer> Customers { get; set; }
+        private ObservableCollection<SaleItem> _saleItems;
 
         public UserControlCustomers()
         {
@@ -38,22 +44,18 @@ namespace IremEczOtomasyonu
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
-            System.Data.Objects.ObjectQuery<Customer> customersQuery = GetCustomersQuery(_dbContext);
-            Customers = customersQuery.Execute(System.Data.Objects.MergeOption.AppendOnly).ToList();
+            Customers = new ObservableCollection<Customer>(_dbContext.Customers);
             customersViewSource.Source = Customers;
-            CurrentView = customersViewSource.View;
+            _customerView = customersViewSource.View;
             AllChangesSaved = true;
-        }
 
-        private System.Data.Objects.ObjectQuery<Customer> GetCustomersQuery(Model1Container model1Container)
-        {
-            // Auto generated code
+            CollectionViewSource saleItemsViewSource = ((CollectionViewSource)(FindResource("saleItemsViewSource")));
+            //saleItemsViewSource.Source = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
+            _saleItems = new ObservableCollection<SaleItem>(_dbContext.SaleItems.Execute(MergeOption.AppendOnly));
+            saleItemsViewSource.Source = _saleItems;
+            _saleItemsView = saleItemsViewSource.View;
 
-            System.Data.Objects.ObjectQuery<Customer> customersQuery = model1Container.Customers;
-            // Update the query to include Purchases data in Customers. You can modify this code as needed.
-            //customersQuery = customersQuery.Include("ProductSales");
-            // Returns an ObjectQuery.
-            return customersQuery;
+            _saleItemsView.GroupDescriptions.Add(new PropertyGroupDescription("ProductSale.Id"));
         }
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
@@ -78,15 +80,13 @@ namespace IremEczOtomasyonu
             Customers.Add(newCustomer);
             _dbContext.AddToCustomers(newCustomer);
             _dbContext.SaveChanges();
-            CurrentView.Refresh();
         }
 
         private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
         {
             _dbContext.SaveChanges();
-            // Use the views current item instead of selected item because of the last empty row.
             DataGridRow selectedRow = customersDataGrid.ItemContainerGenerator.ContainerFromIndex(
-                customersDataGrid.Items.IndexOf(CurrentView.CurrentItem)) as DataGridRow;
+                customersDataGrid.SelectedIndex) as DataGridRow;
             if (selectedRow == null)
             {
                 return;
@@ -110,7 +110,7 @@ namespace IremEczOtomasyonu
             }
 
             string imagePath = openFileDialog.FileName;
-            Customer currCustomer = CurrentView.CurrentItem as Customer;
+            Customer currCustomer = customersDataGrid.SelectedItem as Customer;
             if (currCustomer == null)
             {
                 return;
@@ -137,12 +137,15 @@ namespace IremEczOtomasyonu
         {
             Customer selectedCustomer = (e.AddedItems == null || e.AddedItems.Count == 0) ? null :
                 e.AddedItems[0] as Customer;
-            if (selectedCustomer == null && CurrentView != null)
+            if (selectedCustomer == null)
             {
-                // If the last empty row is selected, details keep displaying the last selected item.
-                selectedCustomer = CurrentView.CurrentItem as Customer;
+                return;
             }
             ShowCustomerPhoto(selectedCustomer);
+            if (_saleItemsView != null)
+            {
+                _saleItemsView.Refresh();
+            }
         }
 
         /// <summary>
@@ -181,9 +184,8 @@ namespace IremEczOtomasyonu
         private void OnSelectedCustomerModified()
         {
             AllChangesSaved = false;
-            // Use the views current item instead of selected item because of the last empty row.
             DataGridRow dataGridRow = customersDataGrid.ItemContainerGenerator.ContainerFromIndex(
-                customersDataGrid.Items.IndexOf(CurrentView.CurrentItem)) as DataGridRow;
+                customersDataGrid.SelectedIndex) as DataGridRow;
             if (dataGridRow == null)
             {
                 return;
@@ -200,7 +202,7 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            Customer currCustomer = CurrentView.CurrentItem as Customer;
+            Customer currCustomer = customersDataGrid.SelectedItem as Customer;
             if (currCustomer == null)
             {
                 return;
@@ -213,11 +215,15 @@ namespace IremEczOtomasyonu
 
         private void CustomerSearchControl_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (CurrentView == null)
+            if (_customerView == null)
             {
                 return;
             }
-            CurrentView.Refresh();
+            _customerView.Refresh();
+            if (_saleItemsView != null)
+            {
+                _saleItemsView.Refresh();
+            }
         }
 
         private void CustomerCollection_Filter(object sender, FilterEventArgs e)
@@ -273,7 +279,6 @@ namespace IremEczOtomasyonu
                 Customers.Remove(currCustomer);
                 _dbContext.DeleteObject(currCustomer);
                 _dbContext.SaveChanges();
-                CurrentView.Refresh();
             }
 
             // TODO: Purchases of the customer
@@ -297,8 +302,33 @@ namespace IremEczOtomasyonu
                                         Owner = Parent as Window,
                                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                                     };
-            saleWindow.ShowDialog();
-            // TODO: Refresh the view on success after customer sale details are added
+
+            if (saleWindow.ShowDialog() == true)
+            {
+                _saleItems.Clear();
+                ObjectResult<SaleItem> objectResult = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
+                foreach (SaleItem saleItem in objectResult)
+                {
+                    _saleItems.Add(saleItem);
+                }
+            }
+        }
+
+        private void SaleItems_Filter(object sender, FilterEventArgs e)
+        {
+            SaleItem s = e.Item as SaleItem;
+            Customer selectedCustomer = customersDataGrid.SelectedItem as Customer;
+            if (s == null || selectedCustomer == null)
+            {
+                e.Accepted = false;
+                return;
+            }
+            if (s.ProductSale.Customer == selectedCustomer)
+            {
+                e.Accepted = true;
+                return;
+            }
+            e.Accepted = false;
         }
     }
 }
