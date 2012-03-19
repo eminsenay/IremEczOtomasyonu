@@ -34,11 +34,10 @@ namespace IremEczOtomasyonu
         private ObservableCollection<Customer> Customers { get; set; }
         private ObservableCollection<SaleItem> _saleItems;
 
-        public UserControlCustomers()
+        public UserControlCustomers(Model1Container dbContext)
         {
             InitializeComponent();
-            
-            _dbContext = new Model1Container();           
+            _dbContext = dbContext;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -305,6 +304,7 @@ namespace IremEczOtomasyonu
 
             if (saleWindow.ShowDialog() == true)
             {
+                // Refresh the sale items
                 _saleItems.Clear();
                 ObjectResult<SaleItem> objectResult = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
                 foreach (SaleItem saleItem in objectResult)

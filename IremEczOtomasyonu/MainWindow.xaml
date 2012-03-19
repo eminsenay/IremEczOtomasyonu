@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="İrem Eczanesi Dermokozmetik Sistemi" Height="800" Width="1100" mc:Ignorable="d" Closing="Window_Closing" Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
+       
     </Window.Resources>
     <Grid>
         <Menu Height="23" Name="menu1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Dosya" >
                 <MenuItem Header="Kapat" />
             </MenuItem>
-            <MenuItem Header="Müşteri İşlemleri" >
-                <MenuItem Header="Müşteri Ekle"/>
-            </MenuItem>
-            <MenuItem Header="Ürün İşlemleri" />
+            <MenuItem Header="Raporlar" />
             <MenuItem Header="Yardım" >
                 <MenuItem Header="Hakkında" />
             </MenuItem>
         </Menu>
-        <ToolBar Name="toolBar1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Margin="0,23,0,0" />
+        <ToolBar Name="toolBar1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Margin="0,23,0,0" >
+            <Button Content="Ürün Satışı" Height="23" HorizontalAlignment="Left" Name="productSaleButton" VerticalAlignment="Top" Width="75" Click="ProductSaleButton_Click" />
+        </ToolBar>
         <TabControl Name="tabControl1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,48,0,0">
             <!--Adding the user controls in XAML causes a strange entity framework error in the designer, thus they are added in codebehind-->
             <TabItem Header="Müşteriler" Name="customersTabItem">

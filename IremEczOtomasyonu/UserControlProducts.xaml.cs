@@ -26,11 +26,10 @@ namespace IremEczOtomasyonu
         private ICollectionView _currentView;
         private ObservableCollection<Product> Products { get; set; }
 
-        public UserControlProducts()
+        public UserControlProducts(Model1Container dbContext)
         {
             InitializeComponent();
-
-            _dbContext = new Model1Container();
+            _dbContext = dbContext;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

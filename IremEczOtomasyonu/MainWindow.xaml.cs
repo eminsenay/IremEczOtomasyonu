@@ -25,13 +25,15 @@ namespace IremEczOtomasyonu
     {
         private readonly UserControlCustomers _customersUserControl;
         private readonly UserControlProducts _productsUserControl;
+        private readonly Model1Container _dbContext;
 
         public MainWindow()
         {
             InitializeComponent();
-            _customersUserControl = new UserControlCustomers();
+            _dbContext = new Model1Container();
+            _customersUserControl = new UserControlCustomers(_dbContext);
             customersTabItem.Content = _customersUserControl;
-            _productsUserControl = new UserControlProducts();
+            _productsUserControl = new UserControlProducts(_dbContext);
             productsTabItem.Content = _productsUserControl;
 
             _customersUserControl.searchFirstNameInfoTextBox.Focus();
@@ -55,6 +57,17 @@ namespace IremEczOtomasyonu
             {
                 e.Cancel = true;
             }
+        }
+
+        private void ProductSaleButton_Click(object sender, RoutedEventArgs e)
+        {
+            SaleWindow saleWindow = new SaleWindow(_dbContext)
+                                    {
+                                        Owner = Parent as Window,
+                                        WindowStartupLocation = WindowStartupLocation.CenterOwner
+                                    };
+
+            saleWindow.ShowDialog();
         }
 
         
