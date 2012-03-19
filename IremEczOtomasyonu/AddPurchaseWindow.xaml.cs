@@ -106,23 +106,9 @@ namespace IremEczOtomasyonu
             Close();
         }
 
-        /// <summary>
-        /// Opens the decade mode for easy selection of the expiration date.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ExpirationDateDatePicker_CalendarOpened(object sender, RoutedEventArgs e)
         {
-            var datepicker = sender as DatePicker;
-            if (datepicker == null)
-            {
-                return;
-            }
-            var popup = datepicker.Template.FindName("PART_Popup", datepicker) as Popup;
-            if (popup != null && popup.Child is Calendar)
-            {
-                ((Calendar)popup.Child).DisplayMode = CalendarMode.Decade;
-            }
+            Utilities.DatePickerSelectDecade(sender as DatePicker);
         }
     }
 }

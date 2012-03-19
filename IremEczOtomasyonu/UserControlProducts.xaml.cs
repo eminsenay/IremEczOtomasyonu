@@ -41,7 +41,6 @@ namespace IremEczOtomasyonu
             productsViewSource.Source = Products;
 
             _currentView = productsViewSource.View;
-            _currentView.GroupDescriptions.Add(new PropertyGroupDescription("Brand"));
         }
 
         private void AddNewProduct_Click(object sender, RoutedEventArgs e)
@@ -184,6 +183,20 @@ namespace IremEczOtomasyonu
                 return;
             }
             OpenPurchaseDialog(currProduct.Barcode);
+        }
+
+        private void DatagridDetailsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Product product = productsDataGrid.SelectedItem as Product;
+            ProductDetailsWindow productDetailsWindow = new ProductDetailsWindow(product, _dbContext)
+            {
+                Owner = Parent as Window,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            if (productDetailsWindow.ShowDialog() == true)
+            {
+               _currentView.Refresh(); 
+            }
         }
     }
 }
