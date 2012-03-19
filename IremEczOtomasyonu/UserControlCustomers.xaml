@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
+             d:DesignHeight="600" d:DesignWidth="1100" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
              Loaded="UserControl_Loaded" xmlns:my="clr-namespace:IremEczOtomasyonu">
     <UserControl.Resources>
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
@@ -20,16 +20,16 @@
             <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="132,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Soyisim" />
             <lib:InfoTextBox Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="258,6,87,0" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Detaylı Bilgi" />
             <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="210" ItemsSource="{Binding}" Margin="6,35,6,0" Name="customersDataGrid" 
-                      RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" HorizontalAlignment="Stretch" SelectionChanged="CustomersDataGrid_SelectionChanged" 
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,35,486,213" Name="customersDataGrid" 
+                      RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="CustomersDataGrid_SelectionChanged" 
                       SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding Path=FirstName}" Header="İsim" Width="4*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Path=LastName}" Header="Soyisim" Width="4*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="birthdayColumn" Binding="{Binding Path=Birthday, StringFormat={}{0:d}}" Header="Doğum Tarihi" Width="3*" IsReadOnly="True" />
                     <DataGridTextColumn x:Name="skinTypeColumn" Binding="{Binding Path=SkinType}" Header="Cilt Tipi" Width="2*" IsReadOnly="True" />
-                    <DataGridTextColumn x:Name="maritalStatusColumn" Binding="{Binding Path=MaritalStatus}" Header="Medeni Hal" Width="3*" IsReadOnly="True" />
-                    <DataGridTextColumn x:Name="jobColumn" Binding="{Binding Path=Job}" Header="Meslek" Width="3*" IsReadOnly="True" />
+                    <!--<DataGridTextColumn x:Name="maritalStatusColumn" Binding="{Binding Path=MaritalStatus}" Header="Medeni Hal" Width="3*" IsReadOnly="True" />-->
+                    <!--<DataGridTextColumn x:Name="jobColumn" Binding="{Binding Path=Job}" Header="Meslek" Width="3*" IsReadOnly="True" />-->
                     <DataGridTextColumn x:Name="detailedInfoColumn" Binding="{Binding Path=DetailedInfo}" Header="Detaylı Bilgi" Width="6*" IsReadOnly="True" />
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
@@ -39,96 +39,89 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
+            <GroupBox Header="Müşterinin Aldığı Ürünler" Margin="0,35,12,213" Name="productsGroupBox" HorizontalAlignment="Right" Width="468">
+                <Grid>
+                    <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource saleItemsViewSource}}" Margin="0,0,0,0" CanUserAddRows="False">
+                        <DataGrid.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Path=Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="{x:Type GroupItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                    <Expander IsExpanded="True">
+                                                        <Expander.Header>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="{Binding Path=Items, Converter={StaticResource saleItemListToHeaderConverter}}" />
+                                                            </StackPanel>
+                                                        </Expander.Header>
+                                                        <ItemsPresenter />
+                                                    </Expander>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                            </GroupStyle>
+                        </DataGrid.GroupStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Path=Product.Name}" Header="Ürün Adı" MinWidth="200" />
+                            <DataGridTextColumn Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" MinWidth="200" />
+                            <DataGridTextColumn Binding="{Binding Path=NumSold}" Header="Miktar" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Detaylar" Margin="6,0,6,6" Name="detailsGroupBox" Height="201" VerticalAlignment="Bottom">
+                <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" MinWidth="200" />
+                        <ColumnDefinition Width="102*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Image Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" Height="150" HorizontalAlignment="Center" Margin="3" Name="photoImage" Stretch="Uniform" VerticalAlignment="Center" Width="150">
+                        <Image.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Name="photoImgDeleteMenuItem" Header="Sil" Click="PhotoImgDeleteMenuItem_Click" />
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
+                    <Button Content="Fotoğraf Ekle" Grid.RowSpan="5" Grid.Column="6" Height="23" HorizontalAlignment="Center" Name="addPhotoButton" VerticalAlignment="Center" Width="75" Click="AddPhotoButton_Click" />
+                    <Label Content="İsim:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Grid.Row="0" Height="23" Margin="3,3,0,3" Name="firstNameTextBox" VerticalAlignment="Center" Width="197" HorizontalAlignment="Left" Text="{Binding Path=FirstName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Soyisim:" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="3" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="lastNameTextBox" VerticalAlignment="Center" Width="197" Text="{Binding Path=LastName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Doğum Tarihi:" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <DatePicker Grid.Column="5" Grid.Row="0" Height="25" HorizontalAlignment="Left" Margin="3,3,0,3" Name="birthdayDatePicker" VerticalAlignment="Center" Width="197" SelectedDate="{Binding Path=Birthday, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Cilt Tipi:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="skinTypeTextBox" VerticalAlignment="Center" Width="197" Text="{Binding Path=SkinType, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Medeni Durumu:" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="3" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="maritalStatusTextBox" VerticalAlignment="Center" Width="197" Text="{Binding Path=MaritalStatus, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Mesleği:" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="5" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="jobTextBox" VerticalAlignment="Center" Width="197" Text="{Binding Path=Job, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Detaylı Bilgi:" Grid.Row="2" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
+                    <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="5" Grid.Row="2" Grid.Column="1" Height="80" Name="detailedInfoTextBox" Text="{Binding Path=DetailedInfo, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" Margin="3,1,0,1" Width="793" />
+                    <Button Grid.Column="5" Content="Değişiklikleri Kaydet" Grid.Row="3" Height="23" HorizontalAlignment="Right" Name="saveChangesButton" VerticalAlignment="Center" Width="124" Click="SaveChangesButton_Click" />
+                </Grid>
+            </GroupBox>
         </Grid>
-        <GroupBox Header="Detaylar" Margin="6,251,6,0" Name="detailsGroupBox" Height="268" VerticalAlignment="Top">
-            <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" MinWidth="200" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="30" />
-                </Grid.RowDefinitions>
-                <Image Grid.Column="4" Grid.Row="0" Grid.RowSpan="5" Height="150" HorizontalAlignment="Center" Margin="3" Name="photoImage" Stretch="Uniform" VerticalAlignment="Center" Width="150">
-                    <Image.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Name="photoImgDeleteMenuItem" Header="Sil" Click="PhotoImgDeleteMenuItem_Click"/>
-                        </ContextMenu>
-                    </Image.ContextMenu>
-                </Image>
-                <Button Content="Fotoğraf Ekle" Grid.RowSpan="5" Grid.Column="4" Height="23" HorizontalAlignment="Center" Name="addPhotoButton" VerticalAlignment="Center" Width="75" Click="AddPhotoButton_Click" />
-                <Label Content="İsim:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <TextBox Grid.Column="1" Grid.Row="0" Height="23" Margin="3,3,0,3" Name="firstNameTextBox" VerticalAlignment="Center" Width="197" HorizontalAlignment="Left"
-                         Text="{Binding Path=FirstName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified"/>
-                <Label Content="Soyisim:" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <TextBox Grid.Column="3" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="lastNameTextBox" VerticalAlignment="Center" Width="197"
-                         Text="{Binding Path=LastName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                <Label Content="Doğum Tarihi:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <DatePicker Grid.Column="1" Grid.Row="1" Height="25" HorizontalAlignment="Left" Margin="3,3,0,3" Name="birthdayDatePicker" VerticalAlignment="Center" Width="197"
-                            SelectedDate="{Binding Path=Birthday, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                <Label Content="Cilt Tipi:" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <TextBox Grid.Column="3" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="skinTypeTextBox" VerticalAlignment="Center" Width="197"
-                         Text="{Binding Path=SkinType, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                <Label Content="Medeni Durumu:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="maritalStatusTextBox" VerticalAlignment="Center" Width="197"
-                         Text="{Binding Path=MaritalStatus, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                <Label Content="Mesleği:" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-                <TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="jobTextBox" VerticalAlignment="Center" Width="197"
-                         Text="{Binding Path=Job, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                <Label Content="Detaylı Bilgi:" Grid.Row="3" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-                <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="4" Grid.Row="4" Height="80" Name="detailedInfoTextBox" Margin="6,0,0,0" Width="559"
-                         Text="{Binding Path=DetailedInfo, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                <Button Grid.Column="4" Content="Değişiklikleri Kaydet" Grid.Row="5" Height="23" HorizontalAlignment="Center" Name="saveChangesButton" VerticalAlignment="Center" Width="124" Click="SaveChangesButton_Click" />
-            </Grid>
-        </GroupBox>
-        <GroupBox Header="Müşterinin Aldığı Ürünler" Margin="6,525,6,12" Name="productsGroupBox">
-            <Grid>
-                <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" 
-                          ItemsSource="{Binding Source={StaticResource saleItemsViewSource}}" Margin="6,6,0,6" CanUserAddRows="False">
-                    <DataGrid.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Path=Name}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                            <GroupStyle.ContainerStyle>
-                                <Style TargetType="{x:Type GroupItem}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                <Expander IsExpanded="True">
-                                                    <Expander.Header>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="{Binding Path=Items, Converter={StaticResource saleItemListToHeaderConverter}}"/>
-                                                        </StackPanel>
-                                                    </Expander.Header>
-                                                    <ItemsPresenter />
-                                                </Expander>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </GroupStyle.ContainerStyle>
-                        </GroupStyle>
-                    </DataGrid.GroupStyle>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Product.Name}" Header="Ürün Adı" MinWidth="250" />
-                        <DataGridTextColumn Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" MinWidth="250" />
-                        <DataGridTextColumn Binding="{Binding Path=NumSold}" Header="Miktar" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </GroupBox>
     </Grid>
 </UserControl>
