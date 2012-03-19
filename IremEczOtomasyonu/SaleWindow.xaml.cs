@@ -42,11 +42,16 @@ namespace IremEczOtomasyonu
             _dbContext = dbContext;
 
             CurrentProductSale = new ProductSale
-                                 {SaleItems = new EntityCollection<SaleItem>(), SaleDate = DateTime.Now};
+                                 {
+                                     SaleItems = new EntityCollection<SaleItem>(),
+                                     SaleDate = DateTime.Now, 
+                                     TotalPrice = 0
+                                 };
 
             saleGrid.DataContext = CurrentProductSale;
             productSaleDataGrid.ItemsSource = CurrentProductSale.SaleItems;
-            UpdateTotalPriceTextBlock();
+
+            UpdateTotalPriceTextBox();
         }
 
         /// <summary>
@@ -86,7 +91,7 @@ namespace IremEczOtomasyonu
                                                  ProductSale = CurrentProductSale,
                                                  ExpDate = newProduct.ExpirationDates.FirstOrDefault()
                                              });
-            UpdateTotalPriceTextBlock();
+            UpdateTotalPriceTextBox();
 
             barcodeTextBox.Text = string.Empty;
             barcodeTextBox.Focus();
@@ -108,7 +113,7 @@ namespace IremEczOtomasyonu
             _isManualEditCommit = true;
             productSaleDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             _isManualEditCommit = false;
-            UpdateTotalPriceTextBlock();
+            UpdateTotalPriceTextBox();
         }
 
         /// <summary>
@@ -147,22 +152,36 @@ namespace IremEczOtomasyonu
             }
 
             CurrentProductSale.SaleItems.Remove(saleItem);
-            UpdateTotalPriceTextBlock();
+            UpdateTotalPriceTextBox();
         }
 
         /// <summary>
         /// Updates the total price text block with the sum of the purchases.
         /// </summary>
-        private void UpdateTotalPriceTextBlock()
+        private void UpdateTotalPriceTextBox()
         {
             decimal totalPrice = (decimal)CurrentProductSale.SaleItems.Sum(
                 x => (x.NumSold * x.Product.CurrentSellingPrice));
-            totalPriceTextBlock.Text = totalPrice.ToString(CultureInfo.CurrentCulture);
-            CurrentProductSale.TotalPrice = totalPrice;
+            totalPriceTextBox.Text = totalPrice.ToString(CultureInfo.CurrentCulture);
+            //CurrentProductSale.TotalPrice = totalPrice;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
+            // validation check
+            if (Validation.GetHasError(totalPriceTextBox))
+            {
+                MessageBox.Show("Girdiğiniz toplam fiyat bilgisi hatalı. \n Lütfen düzeltip tekrar deneyin.",
+                                "Fiyat giriş uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (CurrentProductSale.SaleItems.Count == 0)
+            {
+                DialogResult = true;
+                Close();
+                return;
+            }
+
             // Entity framework sql explorer compact hack
             ProductSale lastProductSale = _dbContext.ProductSales.OrderByDescending(o => o.Id).FirstOrDefault();
             long productSaleId = lastProductSale != null ? lastProductSale.Id + 1 : 1;

@@ -62,7 +62,15 @@
             </TextBlock.Text>
         </TextBlock>
         <Label Content="Toplam:" Height="28" HorizontalAlignment="Left" Margin="663,247,0,0" Name="totalPriceLabel" VerticalAlignment="Top" />
-        <TextBlock Height="23" Margin="0,252,12,0" Name="totalPriceTextBlock" VerticalAlignment="Top" HorizontalAlignment="Right" Width="141" />
+        <TextBox Height="23" Margin="0,252,12,0" Name="totalPriceTextBox" VerticalAlignment="Top" HorizontalAlignment="Right" Width="141">
+            <TextBox.Text>
+                <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True">
+                    <Binding.ValidationRules>
+                        <my:MoneyValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
         <Button Content="Tamam" HorizontalAlignment="Right" Margin="0,0,93,11" Name="okButton" Width="75" Height="23" VerticalAlignment="Bottom" Click="OkButton_Click" />
         <Button Content="İptal" HorizontalAlignment="Right" Margin="0,0,12,11" Name="cancalButton" Width="75" Height="23" VerticalAlignment="Bottom" IsCancel="True" />
     </Grid>
