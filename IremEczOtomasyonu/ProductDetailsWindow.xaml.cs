@@ -35,7 +35,22 @@ namespace IremEczOtomasyonu
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Validation
+            if (Validation.GetHasError(barcodeTextBox) || Validation.GetHasError(nameTextBox) ||
+                Validation.GetHasError(brandTextBox) || Validation.GetHasError(currentBuyingPriceTextBox) ||
+                Validation.GetHasError(currentSellingPriceTextBox))
+            {
+                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
+                                "Ürün değiştirme uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            string detailedValidationMessage = _product.Validate();
+            if (!string.IsNullOrEmpty(detailedValidationMessage))
+            {
+                MessageBox.Show(detailedValidationMessage, "Ürün değiştirme uyarısı", MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+                return;
+            }
+
             _dbContext.SaveChanges();
             DialogResult = true;
             Close();

@@ -26,22 +26,32 @@
             </Grid.RowDefinitions>
             <Label Content="Barkod:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Height="23" Margin="3" Name="barcodeTextBox" VerticalAlignment="Center" Width="185"
-                     Text="{Binding Path=Barcode, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                     Text="{Binding Path=Barcode, Mode=TwoWay, ValidatesOnDataErrors=True}" />
             <Label Content="Ürün Adı:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="1" Height="23" Margin="3" Name="nameTextBox" VerticalAlignment="Center" Width="185" 
-                     Text="{Binding Path=Name, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                     Text="{Binding Path=Name, Mode=TwoWay, ValidatesOnDataErrors=True}" />
             <Label Content="Ürün Markası:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="2" Height="23" Margin="3,3,5,3" Name="brandTextBox" VerticalAlignment="Center" Width="185" 
-                     Text="{Binding Path=Brand, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+                     Text="{Binding Path=Brand, Mode=TwoWay, ValidatesOnDataErrors=True}" />
             <Label Content="Stoktaki Adedi:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="3" Height="23" Margin="3,3,5,3" Name="numItemsTextBox" VerticalAlignment="Center" Width="185" IsReadOnly="True"
                      Text="{Binding Path=NumItems, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
             <Label Content="Güncel Alış Fiyatı:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Width="185" 
-                     Text="{Binding Path=CurrentBuyingPrice, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+            <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Width="185">
+                <Binding Path="CurrentBuyingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
+                    <Binding.ValidationRules>
+                        <my:MoneyValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
             <Label Content="Güncel Satış Fiyatı:" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="5" Height="23" Margin="3,3,5,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Width="185" 
-                     Text="{Binding Path=CurrentSellingPrice, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
+            <TextBox Grid.Column="1" Grid.Row="5" Height="23" Margin="3,3,5,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Width="185">
+                <Binding Path="CurrentSellingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
+                    <Binding.ValidationRules>
+                        <my:MoneyValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox>
             <Grid DataContext="{StaticResource expirationDatesViewSource}" Grid.ColumnSpan="2" Grid.Row="6" Width="300" Margin="3" Height="200">
                 <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" 
                           Margin="0" Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" CanUserAddRows="True">
@@ -49,7 +59,7 @@
                         <DataGridTemplateColumn x:Name="exDateColumn" Header="Son Kullanma Tarihi" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <DatePicker Margin="0" CalendarOpened="DatePicker_CalendarOpened">
+                                    <DatePicker Style="{StaticResource DatePickerInsideDataGrid}" Margin="0" CalendarOpened="DatePicker_CalendarOpened">
                                         <DatePicker.SelectedDate>
                                             <Binding Path="ExDate" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
