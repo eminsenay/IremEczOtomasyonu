@@ -8,6 +8,11 @@ namespace IremEczOtomasyonu
 {
     partial class ExpirationDate: IDataErrorInfo
     {
+        public ExpirationDate()
+        {
+            ExDate = DateTime.Today;
+        }
+
         public string this[string columnName]
         {
             get

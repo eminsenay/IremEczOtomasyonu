@@ -71,6 +71,10 @@
             <!-- The error is displayed at the beginning of the row. No need to display it again. -->
             <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="TextBlockInsideDataGrid">            
+            <!-- The error is displayed at the beginning of the row. No need to display it again. -->
+            <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
+        </Style>
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="ValidationErrorTemplate">
                 <Setter.Value>
