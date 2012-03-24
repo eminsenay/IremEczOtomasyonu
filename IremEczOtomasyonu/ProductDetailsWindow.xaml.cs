@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -59,6 +61,24 @@ namespace IremEczOtomasyonu
         private void DatePicker_CalendarOpened(object sender, RoutedEventArgs e)
         {
             Utilities.DatePickerSelectDecade(sender as DatePicker);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DialogResult == true)
+            {
+                return;
+            }
+            
+            // Remove possibly added expiration dates
+            foreach (var entry in _dbContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added))
+            {
+                if (entry.Entity != null)
+                {
+                    _dbContext.DeleteObject(entry.Entity);
+                }
+            }
+            _dbContext.AcceptAllChanges();
         }
     }
 }

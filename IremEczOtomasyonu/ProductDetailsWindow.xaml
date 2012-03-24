@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="Ürün Detayları" Height="490" Width="350" mc:Ignorable="d" xmlns:my="clr-namespace:IremEczOtomasyonu">
+        Title="Ürün Detayları" Height="450" Width="350" mc:Ignorable="d" xmlns:my="clr-namespace:IremEczOtomasyonu"
+        Closing="Window_Closing">
     <Window.Resources>
         <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource expirationDatesViewSource}" HorizontalAlignment="Stretch">
-        <Grid Name="productDetailsGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="451" Margin="0,0,6,0">
+        <Grid Name="productDetailsGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="410" Margin="0,0,6,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -20,7 +21,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition MinHeight="200" Height="*" />
+                <RowDefinition MinHeight="160" Height="*" />
                 <RowDefinition MinHeight="46" Height="Auto" />
             </Grid.RowDefinitions>
             <Label Content="Barkod:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
@@ -51,7 +52,7 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
-            <Grid DataContext="{StaticResource expirationDatesViewSource}" Grid.ColumnSpan="2" Grid.Row="6" Margin="6,0,3,0" MinHeight="200" VerticalAlignment="Stretch">
+            <Grid DataContext="{StaticResource expirationDatesViewSource}" Grid.ColumnSpan="2" Grid.Row="6" Margin="6,0,3,0" MinHeight="160" VerticalAlignment="Stretch">
                 <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" 
                           Margin="0" Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" CanUserAddRows="True">
                     <DataGrid.Columns>

@@ -54,7 +54,7 @@ namespace IremEczOtomasyonu
         {
             // check sum of the items which have an expiration date and compare it with the item count
             return NumItems == ExpirationDates.Sum(x => x.NumItems) ? null : 
-                "Son kullanma tarihi belirtilmiş ürünlerin toplam sayısı stoktaki ürün sayısından farklı.";
+                "Son kullanma tarihi listesindeki ürünlerin sayısı stoktaki toplam ürün sayısından farklı.\nLütfen düzeltip tekrar deneyin.";
         }
     }
 }
