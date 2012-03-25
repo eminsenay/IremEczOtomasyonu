@@ -1541,6 +1541,30 @@ namespace IremEczOtomasyonu
         private global::System.DateTime _ExDate;
         partial void OnExDateChanging(global::System.DateTime value);
         partial void OnExDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> UnitPrice
+        {
+            get
+            {
+                return _UnitPrice;
+            }
+            set
+            {
+                OnUnitPriceChanging(value);
+                ReportPropertyChanging("UnitPrice");
+                _UnitPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UnitPrice");
+                OnUnitPriceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _UnitPrice;
+        partial void OnUnitPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnUnitPriceChanged();
 
         #endregion
     

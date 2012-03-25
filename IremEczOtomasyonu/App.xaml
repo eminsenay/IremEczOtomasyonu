@@ -65,16 +65,14 @@
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="b:DatePickerWatermarkBehaviour.Watermark" Value="Seçiniz"/>
         </Style>
+
+        <!-- For the controls inside a datagrid, the error is displayed at the beginning of the row. 
+        No need to add * again, the default error template should suffice. -->
         <Style TargetType="DatePicker" x:Key="DatePickerInsideDataGrid">
             <Setter Property="Margin" Value="10,5"/>
             <Setter Property="b:DatePickerWatermarkBehaviour.Watermark" Value="Seçiniz"/>
-            <!-- The error is displayed at the beginning of the row. No need to display it again. -->
-            <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         </Style>
-        <Style TargetType="TextBlock" x:Key="TextBlockInsideDataGrid">            
-            <!-- The error is displayed at the beginning of the row. No need to display it again. -->
-            <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
-        </Style>
+        <Style TargetType="TextBlock" x:Key="TextBlockInsideDataGrid"/>
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="ValidationErrorTemplate">
                 <Setter.Value>

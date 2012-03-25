@@ -39,7 +39,8 @@ namespace IremEczOtomasyonu
         {
             if (Validation.GetHasError(barcodeTextBox) || Validation.GetHasError(nameTextBox) ||
                 Validation.GetHasError(brandTextBox) || Validation.GetHasError(currentBuyingPriceTextBox) ||
-                Validation.GetHasError(currentSellingPriceTextBox))
+                Validation.GetHasError(currentSellingPriceTextBox) || 
+                Utilities.HasDataGridErrors(expirationDatesDataGrid))
             {
                 MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
                                 "Ürün değiştirme uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);

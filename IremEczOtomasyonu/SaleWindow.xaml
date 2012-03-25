@@ -21,8 +21,15 @@
                                     Binding="{Binding Path=Product.Brand, Mode=OneWay}"/>
                 <DataGridTextColumn x:Name="nameColumn" Header="İsim" MinWidth="150" Width="*" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Name, Mode=OneWay}"/>
-                <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="SizeToHeader"
-                                    Binding="{Binding Path=NumSold, Mode=TwoWay}"/>
+                <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="SizeToHeader">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="NumSold" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <my:IntegerValidationRule Min="1"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -37,11 +44,20 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn x:Name="priceColumn" Header="Fiyat" MinWidth="150" IsReadOnly="True">
+                <DataGridTextColumn x:Name="unitPriceColumn" Header="Birim Fiyat" MinWidth="100"> 
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <my:MoneyValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="totalPriceColumn" Header="Toplam Fiyat" MinWidth="100" IsReadOnly="True">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource saleItemToPriceConverter}">
                             <Binding Path="NumSold"/>
-                            <Binding Path="Product.CurrentSellingPrice"/>
+                            <Binding Path="UnitPrice"/>
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>

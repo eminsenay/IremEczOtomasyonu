@@ -89,7 +89,8 @@ namespace IremEczOtomasyonu
                                                  Product = newProduct,
                                                  NumSold = 1,
                                                  ProductSale = CurrentProductSale,
-                                                 ExpDate = newProduct.ExpirationDates.FirstOrDefault()
+                                                 ExpDate = newProduct.ExpirationDates.FirstOrDefault(),
+                                                 UnitPrice = newProduct.CurrentSellingPrice
                                              });
             UpdateTotalPriceTextBox();
 
@@ -160,8 +161,7 @@ namespace IremEczOtomasyonu
         /// </summary>
         private void UpdateTotalPriceTextBox()
         {
-            decimal totalPrice = (decimal)CurrentProductSale.SaleItems.Sum(
-                x => (x.NumSold * x.Product.CurrentSellingPrice));
+            decimal totalPrice = (decimal)CurrentProductSale.SaleItems.Sum(x => (x.NumSold * x.UnitPrice));
             totalPriceTextBox.Text = totalPrice.ToString(CultureInfo.CurrentCulture);
             //CurrentProductSale.TotalPrice = totalPrice;
         }
@@ -169,10 +169,10 @@ namespace IremEczOtomasyonu
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             // validation check
-            if (Validation.GetHasError(totalPriceTextBox))
+            if (Validation.GetHasError(totalPriceTextBox) || Utilities.HasDataGridErrors(productSaleDataGrid))
             {
-                MessageBox.Show("Girdiğiniz toplam fiyat bilgisi hatalı. \n Lütfen düzeltip tekrar deneyin.",
-                                "Fiyat giriş uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
+                                "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             if (CurrentProductSale.SaleItems.Count == 0)

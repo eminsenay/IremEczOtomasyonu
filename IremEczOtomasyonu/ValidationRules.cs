@@ -138,69 +138,14 @@ namespace IremEczOtomasyonu
 
             if (num < Min)
             {
-                string suffix = GetNumSuffixForTurkish(Min);
-                return new ValidationResult(false, string.Format("Lütfen {0}'{1} büyük bir değer giriniz.", 
-                    Min, suffix));
+                return new ValidationResult(false, string.Format("Bu değer en küçük {0} olabilir.", Min));
             }
             if (num > Max)
             {
-                string suffix = GetNumSuffixForTurkish(Min);
-                return new ValidationResult(false, string.Format("Lütfen {0}'{1} küçük bir değer giriniz.",
-                    Max, suffix));
+                return new ValidationResult(false, string.Format("Bu değer en büyük {0} olabilir.", Max));
             }
 
             return new ValidationResult(true, null);
-        }
-
-        private string GetNumSuffixForTurkish(int number)
-        {
-            if (number == 0 || number%1000000 == 0) // milyon, milyar, trilyon, katrilyon...
-            {
-                return "dan";
-            }
-            int lastDigit = number%10;
-            string suffix = string.Empty;
-            switch (lastDigit)
-            {
-                case 1:
-                case 2:
-                case 7:
-                case 8:
-                    suffix = "den";
-                    break;
-                case 3:
-                case 4:
-                case 5:
-                    suffix = "ten";
-                    break;
-                case 6:
-                case 9:
-                    suffix = "dan";
-                    break;
-                case 0:
-                    int tens = Min%100;
-                    switch (tens)
-                    {
-                        case 0: // yüz, bin
-                        case 20:
-                        case 50:
-                        case 70:
-                        case 80:
-                            suffix = "den";
-                            break;
-                        case 10:
-                        case 30:
-                        case 90:
-                            suffix = "dan";
-                            break;
-                        case 40:
-                        case 60:
-                            suffix = "tan";
-                            break;
-                    }
-                    break;
-            }
-            return suffix;
         }
     }
 }

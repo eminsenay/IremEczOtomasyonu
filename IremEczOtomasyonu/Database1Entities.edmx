@@ -98,6 +98,7 @@
           <Property Name="ProductSaleId" Type="bigint" Nullable="false" />
           <Property Name="NumSold" Type="int" Nullable="false" />
           <Property Name="ExDate" Type="datetime" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" />
         </EntityType>
         <Association Name="ProductPurchases_Products">
           <End Role="Products" Type="Model1.Store.Products" Multiplicity="1">
@@ -274,6 +275,7 @@
           <Property Type="DateTime" Name="ExDate" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Model1.SaleItem_Product" FromRole="SaleItem" ToRole="Product" />
           <NavigationProperty Name="ProductSale" Relationship="Model1.SaleItem_ProductSale" FromRole="SaleItem" ToRole="ProductSale" />
+          <Property Type="Decimal" Name="UnitPrice" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="ProductSale_Customer">
           <End Type="Model1.Customer" Role="Customer" Multiplicity="0..1" />
@@ -416,6 +418,7 @@
           <EntitySetMapping Name="SaleItems">
             <EntityTypeMapping TypeName="Model1.SaleItem">
               <MappingFragment StoreEntitySet="SaleItems">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="ExDate" ColumnName="ExDate" />
                 <ScalarProperty Name="NumSold" ColumnName="NumSold" />
                 <ScalarProperty Name="ProductSaleId" ColumnName="ProductSaleId" />
