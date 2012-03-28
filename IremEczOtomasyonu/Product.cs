@@ -56,5 +56,39 @@ namespace IremEczOtomasyonu
             return NumItems == ExpirationDates.Sum(x => x.NumItems) ? null : 
                 "Son kullanma tarihi listesindeki ürünlerin sayısı stoktaki toplam ürün sayısından farklı.\nLütfen düzeltip tekrar deneyin.";
         }
+
+        public List<Deal> GetAllDeals()
+        {
+            List<Deal> deals = new List<Deal>();
+            foreach (ProductPurchase purchase in ProductPurchases)
+            {
+                Deal deal = new Deal
+                            {
+                                Details = purchase.Remarks,
+                                NumItems = purchase.NumItems,
+                                TotalPrice = purchase.Price,
+                                TransactionDate = purchase.PurchaseDate,
+                                TransactionType = DealType.Purchase
+                            };
+                deals.Add(deal);
+            }
+
+            foreach (SaleItem saleItem in SaleItems)
+            {
+                Deal deal = new Deal
+                            {
+                                Details = saleItem.ProductSale.Remarks,
+                                NumItems = saleItem.NumSold,
+                                TotalPrice = saleItem.NumSold * saleItem.UnitPrice,
+                                TransactionDate = saleItem.ProductSale.SaleDate,
+                                TransactionType = DealType.Sale
+                            };
+                deals.Add(deal);
+            }
+
+            deals.Sort((deal1, deal2) => deal1.TransactionDate.CompareTo(deal2.TransactionDate));
+
+            return deals;
+        }
     }
 }

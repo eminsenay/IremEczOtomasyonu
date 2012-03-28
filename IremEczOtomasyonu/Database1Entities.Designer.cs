@@ -1405,7 +1405,8 @@ namespace IremEczOtomasyonu
         /// <param name="productSaleId">Initial value of the ProductSaleId property.</param>
         /// <param name="numSold">Initial value of the NumSold property.</param>
         /// <param name="exDate">Initial value of the ExDate property.</param>
-        public static SaleItem CreateSaleItem(global::System.Int64 id, global::System.Int64 productId, global::System.Int64 productSaleId, global::System.Int32 numSold, global::System.DateTime exDate)
+        /// <param name="unitPrice">Initial value of the UnitPrice property.</param>
+        public static SaleItem CreateSaleItem(global::System.Int64 id, global::System.Int64 productId, global::System.Int64 productSaleId, global::System.Int32 numSold, global::System.DateTime exDate, global::System.Decimal unitPrice)
         {
             SaleItem saleItem = new SaleItem();
             saleItem.Id = id;
@@ -1413,6 +1414,7 @@ namespace IremEczOtomasyonu
             saleItem.ProductSaleId = productSaleId;
             saleItem.NumSold = numSold;
             saleItem.ExDate = exDate;
+            saleItem.UnitPrice = unitPrice;
             return saleItem;
         }
 
@@ -1545,9 +1547,9 @@ namespace IremEczOtomasyonu
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> UnitPrice
+        public global::System.Decimal UnitPrice
         {
             get
             {
@@ -1562,8 +1564,8 @@ namespace IremEczOtomasyonu
                 OnUnitPriceChanged();
             }
         }
-        private Nullable<global::System.Decimal> _UnitPrice;
-        partial void OnUnitPriceChanging(Nullable<global::System.Decimal> value);
+        private global::System.Decimal _UnitPrice;
+        partial void OnUnitPriceChanging(global::System.Decimal value);
         partial void OnUnitPriceChanged();
 
         #endregion

@@ -90,7 +90,7 @@ namespace IremEczOtomasyonu
                                                  NumSold = 1,
                                                  ProductSale = CurrentProductSale,
                                                  ExpDate = newProduct.ExpirationDates.FirstOrDefault(),
-                                                 UnitPrice = newProduct.CurrentSellingPrice
+                                                 UnitPrice = newProduct.CurrentSellingPrice ?? 0
                                              });
             UpdateTotalPriceTextBox();
 
