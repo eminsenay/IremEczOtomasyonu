@@ -13,5 +13,6 @@ namespace IremEczOtomasyonu
         public decimal TotalPrice { get; set; }
         public int NumItems { get; set; }
         public string Details { get; set; }
+        public Customer Buyer { get; set; }
     }
 }

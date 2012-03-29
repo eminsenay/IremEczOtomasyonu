@@ -89,6 +89,7 @@
     <Compile Include="AddPurchaseWindow.xaml.cs">
       <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Customer.cs" />
     <Compile Include="DatePickerWatermarkBehaviour.cs" />
     <Compile Include="Deal.cs" />
     <Compile Include="Product.cs" />

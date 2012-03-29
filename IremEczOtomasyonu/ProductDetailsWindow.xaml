@@ -7,6 +7,7 @@
         Closing="Window_Closing" Height="550" Width="700">
     <Window.Resources>
         <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
+        <my:DealTypeToNiceStringConverter x:Key="dealItemToNiceStringConverter" />
     </Window.Resources>
     <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -102,7 +103,31 @@
             </Grid>
         </GroupBox>
         <Grid Name="productBuySellGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Grid.Row="1">
-            <GroupBox Name="productBuySellGroupBox" Header="Alım Satım Bilgileri" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,6,3"></GroupBox>
+            <GroupBox Name="productBuySellGroupBox" Header="Alım Satım Bilgileri" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,6,3">
+                <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" Name="dealsDataGrid" 
+                          RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="dealDateColumn" Header="Tarih" Width="150"
+                                            Binding="{Binding Path=TransactionDate}"/>
+                        <DataGridTextColumn x:Name="dealTypeColumn" Header="Tip" Width="75"
+                                            Binding="{Binding Path=TransactionType, Converter={StaticResource dealItemToNiceStringConverter}}"/>
+                        <DataGridTextColumn x:Name="dealPriceColumn" Header="Toplam Fiyat" Width="SizeToHeader"
+                                            Binding="{Binding Path=TotalPrice, StringFormat={}{0:0.00}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn x:Name="dealNumItemsColumn" Header="Adet" Width="75"
+                                            Binding="{Binding Path=NumItems}"/>
+                        <DataGridTextColumn x:Name="dealBuyerColumn" Header="Alıcı" Width="75"
+                                            Binding="{Binding Path=Buyer.FullName}"/>
+                        <DataGridTextColumn x:Name="dealRemarksColumn" Header="Detaylar" Width="*"
+                                            Binding="{Binding Path=Details}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
         </Grid>
         <Button Content="Kaydet" Grid.Row="2" Height="23" HorizontalAlignment="Right" Name="saveButton" VerticalAlignment="Bottom" Width="75" 
                     Margin="0,0,6,8" IsDefault="True" Click="SaveButton_Click" />

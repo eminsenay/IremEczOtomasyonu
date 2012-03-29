@@ -81,7 +81,8 @@ namespace IremEczOtomasyonu
                                 NumItems = saleItem.NumSold,
                                 TotalPrice = saleItem.NumSold * saleItem.UnitPrice,
                                 TransactionDate = saleItem.ProductSale.SaleDate,
-                                TransactionType = DealType.Sale
+                                TransactionType = DealType.Sale,
+                                Buyer = saleItem.ProductSale.Customer
                             };
                 deals.Add(deal);
             }

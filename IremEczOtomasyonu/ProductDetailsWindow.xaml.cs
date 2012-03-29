@@ -33,6 +33,8 @@ namespace IremEczOtomasyonu
 
             CollectionViewSource expirationDatesViewSource = ((CollectionViewSource)(FindResource("expirationDatesViewSource")));
             expirationDatesViewSource.Source = _product.ExpirationDates;
+
+            dealsDataGrid.ItemsSource = _product.GetAllDeals();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

@@ -85,4 +85,26 @@ namespace IremEczOtomasyonu
             throw new NotImplementedException();
         }
     }
+
+    internal class DealTypeToNiceStringConverter: IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DealType dealType = (DealType) value;
+            switch (dealType)
+            {
+                case DealType.Purchase:
+                    return "Alış";
+                case DealType.Sale:
+                    return "Satış";
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
