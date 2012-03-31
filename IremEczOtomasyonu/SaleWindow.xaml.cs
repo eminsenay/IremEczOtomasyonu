@@ -205,5 +205,20 @@ namespace IremEczOtomasyonu
             DialogResult = true;
             Close();
         }
+
+        private void CustomerFindButton_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerListWindow customerListWindow = new CustomerListWindow(_dbContext)
+                                                    {
+                                                        SelectedCustomer = CurrentProductSale.Customer,
+                                                        Owner = this,
+                                                        WindowStartupLocation = WindowStartupLocation.CenterOwner
+                                                    };
+            customerListWindow.ShowDialog();
+            if (customerListWindow.DialogResult == true)
+            {
+                CurrentProductSale.Customer = customerListWindow.SelectedCustomer;
+            }
+        }
     }
 }

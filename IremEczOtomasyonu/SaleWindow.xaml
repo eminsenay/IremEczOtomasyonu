@@ -10,11 +10,10 @@
     </Window.Resources>
     <Grid Name="saleGrid">
         <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,9,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="68,9,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="120" />
-        <Button Content="Ekle" Height="23" HorizontalAlignment="Left" Margin="194,8,0,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
-        <DataGrid AutoGenerateColumns="False" Height="209" Margin="12,37,12,0" Name="productSaleDataGrid" VerticalAlignment="Top" 
-                  CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
-                  CanUserAddRows="False">
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="68,9,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="150" />
+        <Button Content="Ekle" Height="23" HorizontalAlignment="Left" Margin="224,8,0,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
+        <DataGrid AutoGenerateColumns="False" Margin="12,37,12,85" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
+                  CanUserAddRows="False" VerticalAlignment="Stretch">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
@@ -22,7 +21,7 @@
                                     Binding="{Binding Path=Product.Brand, Mode=OneWay}"/>
                 <DataGridTextColumn x:Name="nameColumn" Header="İsim" MinWidth="150" Width="*" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Name, Mode=OneWay}"/>
-                <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="SizeToHeader">
+                <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="40">
                     <DataGridTextColumn.Binding>
                         <Binding Path="NumSold" Mode="TwoWay" ValidatesOnDataErrors="True">
                             <Binding.ValidationRules>
@@ -31,7 +30,7 @@
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="SizeToHeader">
+                <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox Name="expirationDateComboBox" DisplayMemberPath="ExDate" ItemStringFormat="{}{0:d}">
@@ -69,17 +68,11 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Left" Margin="12,247,0,0" Name="customerNameLabel" VerticalAlignment="Top" />
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="71,252,0,0" Name="customerNameTextBlock" VerticalAlignment="Top" >
-            <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0} {1}">
-                    <Binding Path="Customer.FirstName" TargetNullValue="Belirtilmemiş"/>
-                    <Binding Path="Customer.LastName" TargetNullValue=" " />
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
-        <Label Content="Toplam:" Height="28" HorizontalAlignment="Left" Margin="663,247,0,0" Name="totalPriceLabel" VerticalAlignment="Top" />
-        <TextBox Height="23" Margin="0,252,12,0" Name="totalPriceTextBox" VerticalAlignment="Top" HorizontalAlignment="Right" Width="141">
+        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,53" Name="customerNameLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Width="150" HorizontalAlignment="Left" Margin="68,0,0,56" Name="customerNameTextBlock" VerticalAlignment="Bottom"
+                 Text="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş, Mode=OneWay}" IsEnabled="False"/>
+        <Label Content="Toplam:" Height="28" HorizontalAlignment="Right" Margin="0,0,168,53" Name="totalPriceLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Margin="0,0,12,56" Name="totalPriceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150">
             <TextBox.Text>
                 <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -90,5 +83,8 @@
         </TextBox>
         <Button Content="Tamam" HorizontalAlignment="Right" Margin="0,0,93,11" Name="okButton" Width="75" Height="23" VerticalAlignment="Bottom" Click="OkButton_Click" />
         <Button Content="İptal" HorizontalAlignment="Right" Margin="0,0,12,11" Name="cancalButton" Width="75" Height="23" VerticalAlignment="Bottom" IsCancel="True" />
+        <Button Height="23" HorizontalAlignment="Left" Margin="224,0,0,56" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="Images/magnifying_glass.ico" />
+        </Button>
     </Grid>
 </Window>

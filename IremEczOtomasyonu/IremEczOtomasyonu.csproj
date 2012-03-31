@@ -95,6 +95,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="BL\ProductSale.cs" />
+    <Compile Include="CustomerListWindow.xaml.cs">
+      <DependentUpon>CustomerListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DatePickerWatermarkBehaviour.cs" />
     <Compile Include="BL\Deal.cs" />
     <Compile Include="BL\Product.cs" />
@@ -126,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddPurchaseWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomerListWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -195,6 +203,7 @@
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\magnifying_glass.ico" />
     <Resource Include="Images\eczane_logo.gif" />
   </ItemGroup>
   <ItemGroup>
