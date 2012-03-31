@@ -108,7 +108,13 @@
     </Compile>
     <Compile Include="BL\ProductPurchase.cs" />
     <Compile Include="BL\SaleItem.cs" />
+    <Compile Include="SaleListWindow.xaml.cs">
+      <DependentUpon>SaleListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIUtilities.cs" />
+    <Compile Include="UserControlSales.xaml.cs">
+      <DependentUpon>UserControlSales.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters.cs" />
     <Compile Include="SaleWindow.xaml.cs">
       <DependentUpon>SaleWindow.xaml</DependentUpon>
@@ -153,6 +159,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SaleListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SaleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControlProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControlSales.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,6 +206,7 @@
       <LastGenOutput>Database1Entities.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Properties\DataSources\Database1Context.datasource" />
+    <None Include="Properties\DataSources\IremEczOtomasyonu.BL.Model1Container.datasource" />
     <None Include="Properties\DataSources\Model1Container.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
