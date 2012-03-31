@@ -70,6 +70,22 @@ namespace IremEczOtomasyonu
             saleWindow.ShowDialog();
         }
 
-        
+        private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ProductTotalPriceMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Many different queries are not the optimal way of doing it, but it works. 
+            // Consider changing it if its performance is not satisifactory
+            int numDifferentBrands = (from p in _dbContext.Products select p.Brand).Distinct().Count();
+            int productCount = _dbContext.Products.Sum(x => x.NumItems);
+            decimal totalSalePrice = _dbContext.Products.Sum(x => (x.NumItems*x.CurrentSellingPrice)) ?? 0;
+            string messageToShow = string.Format(
+                "Stoktaki {0} farklı markanın toplam {1} ürününün güncel satış fiyatı toplamı {2:0.00} TL'dir.",
+                numDifferentBrands, productCount, totalSalePrice);
+            MessageBox.Show(messageToShow, "Stok değeri");
+        }
     }
 }

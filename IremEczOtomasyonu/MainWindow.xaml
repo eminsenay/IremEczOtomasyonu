@@ -10,9 +10,15 @@
     <Grid>
         <Menu Height="23" Name="menu1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <MenuItem Header="Dosya" >
-                <MenuItem Header="Kapat" />
+                <MenuItem Header="Kapat" Name="closeMenuItem" Click="CloseMenuItem_Click" />
             </MenuItem>
-            <MenuItem Header="Raporlar" />
+            <MenuItem Header="Ekstra">
+                <MenuItem Header="Kaç Paralık Ürünüm Var?" Name="productTotalPriceMenuItem" Click="ProductTotalPriceMenuItem_Click" />
+                <MenuItem Header="Geçmiş Satış Görüntüleme" Name="productSaleDisplayMenuItem" />
+                <MenuItem Header="Geçmiş Alış Görüntüleme" Name="productPurchaseDisplayMenuItem" />
+                <MenuItem Header="Ürün Satış Miktarları" Name="productSaleCountMenuItem" />
+                <MenuItem Header="Son Kullanma Tarihleri Yaklaşan Ürünler" Name="productExpirationDatesMenuItem" />
+            </MenuItem>
             <MenuItem Header="Yardım" >
                 <MenuItem Header="Hakkında" />
             </MenuItem>
