@@ -77,20 +77,13 @@ namespace IremEczOtomasyonu
                 }
             }
 
-            ProductPurchase lastPurchase = _dbContext.ProductPurchases.OrderByDescending(pu => pu.Id).FirstOrDefault();
-            long purchaseId = lastPurchase != null ? lastPurchase.Id + 1 : 1;
-
             // check the curr. expiration date in db
             ExpirationDate expirationDate = _dbContext.ExpirationDates.FirstOrDefault(
                 x => x.ProductId == CurrentProduct.Id && x.ExDate == _currExpirationDate.ExDate);
             if (expirationDate == null)
             {
-                ExpirationDate lastExpDate =
-                    _dbContext.ExpirationDates.OrderByDescending(x => x.Id).FirstOrDefault();
-                long expDateId = lastExpDate != null ? lastExpDate.Id + 1 : 1;
-
                 _currExpirationDate.NumItems = CurrentPurchase.NumItems;
-                _currExpirationDate.Id = expDateId;
+                _currExpirationDate.Id = Guid.NewGuid();
                 _dbContext.AddToExpirationDates(_currExpirationDate);
             }
             else
@@ -98,7 +91,7 @@ namespace IremEczOtomasyonu
                 expirationDate.NumItems += CurrentPurchase.NumItems;
             }
 
-            CurrentPurchase.Id = purchaseId;
+            CurrentPurchase.Id = Guid.NewGuid();
             CurrentPurchase.Product.NumItems += CurrentPurchase.NumItems;
             _dbContext.AddToProductPurchases(CurrentPurchase);
 

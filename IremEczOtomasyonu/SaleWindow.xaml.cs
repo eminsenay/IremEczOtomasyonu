@@ -1,23 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data;
 using System.Data.Objects.DataClasses;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
@@ -183,21 +170,16 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            // Entity framework sql explorer compact hack
-            ProductSale lastProductSale = _dbContext.ProductSales.OrderByDescending(o => o.Id).FirstOrDefault();
-            long productSaleId = lastProductSale != null ? lastProductSale.Id + 1 : 1;
-            CurrentProductSale.Id = productSaleId;
+            CurrentProductSale.Id = Guid.NewGuid();
 
             // Set entity expiration dates and ids manually
-            SaleItem lastSaleItem = _dbContext.SaleItems.OrderByDescending(o => o.Id).FirstOrDefault();
-            long saleItemId = lastSaleItem != null ? lastSaleItem.Id + 1 : 1;
             foreach (SaleItem saleItem in CurrentProductSale.SaleItems)
             {
                 saleItem.ExDate = saleItem.ExpDate.ExDate;
                 // Decrease the item count from products & expiration date tables
                 saleItem.Product.NumItems -= saleItem.NumSold;
                 saleItem.ExpDate.NumItems -= saleItem.NumSold;
-                saleItem.Id = saleItemId++;
+                saleItem.Id = Guid.NewGuid();
             }
             
             _dbContext.AddToProductSales(CurrentProductSale);

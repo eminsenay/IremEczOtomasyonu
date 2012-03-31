@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.Objects;
 using System.Linq;
@@ -23,19 +25,32 @@ namespace IremEczOtomasyonu
     {
         private readonly Model1Container _dbContext;
         private readonly Product _product;
+        private readonly ObservableCollection<ExpirationDate> _expirationDates;
 
         public ProductDetailsWindow(Product product, Model1Container dbContext)
         {
             InitializeComponent();
             _dbContext = dbContext;
             _product = product;
+            _expirationDates = new ObservableCollection<ExpirationDate>(_product.ExpirationDates);
+            _expirationDates.CollectionChanged += ExpirationDates_CollectionChanged;
 
             productDetailsGrid.DataContext = _product;
 
             CollectionViewSource expirationDatesViewSource = ((CollectionViewSource)(FindResource("expirationDatesViewSource")));
-            expirationDatesViewSource.Source = _product.ExpirationDates;
+            expirationDatesViewSource.Source = _expirationDates;
 
             dealsDataGrid.ItemsSource = _product.GetAllDeals();
+        }
+
+        private void ExpirationDates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            foreach (ExpirationDate expirationDate in e.NewItems)
+            {
+                expirationDate.Id = Guid.NewGuid();
+                _product.ExpirationDates.Add(expirationDate);
+                //_dbContext.AddToExpirationDates(expirationDate);
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

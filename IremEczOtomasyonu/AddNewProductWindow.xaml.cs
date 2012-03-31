@@ -32,18 +32,12 @@ namespace IremEczOtomasyonu
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //_dbContext = new Model1Container();
             ObjectDataProvider currentProductDataProvider = ((ObjectDataProvider)(FindResource("currentProduct")));
             CurrentProduct = currentProductDataProvider.Data as Product;
         }
 
         private void ButtonOk_Click(object sender, RoutedEventArgs e)
         {
-            //BindingExpression expression = barcodeTextBox.GetBindingExpression(TextBox.TextProperty);
-            //if (expression != null)
-            //{
-            //    expression.UpdateSource();
-            //}
             if (Validation.GetHasError(barcodeTextBox) || Validation.GetHasError(nameTextBox) ||
                 Validation.GetHasError(brandTextBox) || Validation.GetHasError(currentBuyingPriceTextBox) || 
                 Validation.GetHasError(currentSellingPriceTextBox))
@@ -53,9 +47,8 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            Product lastProduct = _dbContext.Products.OrderByDescending(o => o.Id).FirstOrDefault();
-            long productId = lastProduct != null ? lastProduct.Id + 1 : 1;
-            CurrentProduct.Id = productId;
+
+            CurrentProduct.Id = Guid.NewGuid();
 
             _dbContext.AddToProducts(CurrentProduct);
             _dbContext.SaveChanges();

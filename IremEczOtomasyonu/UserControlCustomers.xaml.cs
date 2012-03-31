@@ -74,9 +74,8 @@ namespace IremEczOtomasyonu
                 LastName = lastName,
                 DetailedInfo = detailedInfo
             };
-            Customer lastCustomer = _dbContext.Customers.OrderByDescending(o => o.Id).FirstOrDefault();
-
-            newCustomer.Id = lastCustomer == null ? 1 : lastCustomer.Id + 1;
+            
+            newCustomer.Id = Guid.NewGuid();
             Customers.Add(newCustomer);
             _dbContext.AddToCustomers(newCustomer);
             _dbContext.SaveChanges();
