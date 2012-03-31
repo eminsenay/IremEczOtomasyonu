@@ -8,7 +8,7 @@ using System.Windows.Controls.Primitives;
 
 namespace IremEczOtomasyonu
 {
-    class Utilities
+    class UIUtilities
     {
         /// <summary>
         /// Opens the decade mode for easy selection of the expiration date.

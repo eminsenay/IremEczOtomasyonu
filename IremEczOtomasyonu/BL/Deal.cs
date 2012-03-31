@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace IremEczOtomasyonu
+namespace IremEczOtomasyonu.BL
 {
     public enum DealType { Purchase, Sale }
     public class Deal

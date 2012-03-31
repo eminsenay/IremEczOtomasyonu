@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" mc:Ignorable="d" 
+             xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
              d:DesignHeight="600" d:DesignWidth="1100" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
              Loaded="UserControl_Loaded" xmlns:my="clr-namespace:IremEczOtomasyonu">
     <UserControl.Resources>
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
         <!--<CollectionViewSource x:Key="productSalesViewSource" d:DesignSource="{d:DesignInstance my:ProductSale, CreateList=True}" 
                               Source="{Binding Source={StaticResource customersViewSource}, Path=ProductSales}" />-->
-        <CollectionViewSource x:Key="saleItemsViewSource" d:DesignSource="{d:DesignInstance my:SaleItem, CreateList=True}"
+        <CollectionViewSource x:Key="saleItemsViewSource" d:DesignSource="{d:DesignInstance BL:SaleItem, CreateList=True}"
                               Filter="SaleItems_Filter" CollectionViewType="{x:Type ListCollectionView}"/>
         <my:SaleItemListToHeaderConverter x:Key="saleItemListToHeaderConverter" />
     </UserControl.Resources>

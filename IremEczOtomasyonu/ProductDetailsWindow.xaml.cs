@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
 {
@@ -42,7 +43,7 @@ namespace IremEczOtomasyonu
             if (Validation.GetHasError(barcodeTextBox) || Validation.GetHasError(nameTextBox) ||
                 Validation.GetHasError(brandTextBox) || Validation.GetHasError(currentBuyingPriceTextBox) ||
                 Validation.GetHasError(currentSellingPriceTextBox) || 
-                Utilities.HasDataGridErrors(expirationDatesDataGrid))
+                UIUtilities.HasDataGridErrors(expirationDatesDataGrid))
             {
                 MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
                                 "Ürün değiştirme uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -63,7 +64,7 @@ namespace IremEczOtomasyonu
 
         private void DatePicker_CalendarOpened(object sender, RoutedEventArgs e)
         {
-            Utilities.DatePickerSelectDecade(sender as DatePicker);
+            UIUtilities.DatePickerSelectDecade(sender as DatePicker);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
 {
@@ -108,7 +109,7 @@ namespace IremEczOtomasyonu
 
         private void ExpirationDateDatePicker_CalendarOpened(object sender, RoutedEventArgs e)
         {
-            Utilities.DatePickerSelectDecade(sender as DatePicker);
+            UIUtilities.DatePickerSelectDecade(sender as DatePicker);
         }
     }
 }

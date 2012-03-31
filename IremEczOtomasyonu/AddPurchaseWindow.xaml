@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:my="clr-namespace:IremEczOtomasyonu"
+        xmlns:BL="clr-namespace:IremEczOtomasyonu.BL" 
         Title="Ürün Alımı" Height="510" Width="340" mc:Ignorable="d" Loaded="Window_Loaded">
     <Window.Resources>
         <CollectionViewSource x:Key="productPurchasesViewSource" />
@@ -52,7 +52,7 @@
             <TextBox Grid.Column="1" Grid.Row="6" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="numItemsBoughtTextBox" VerticalAlignment="Center" Width="180">
                 <Binding Path="NumItems" Mode="OneWayToSource" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
-                        <my:IntegerValidationRule Min="1"/>
+                        <BL:IntegerValidationRule Min="1"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -60,7 +60,7 @@
             <TextBox Grid.Column="1" Grid.Row="7" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="priceTextBox" VerticalAlignment="Center" Width="180" >
                 <Binding Path="Price" Mode="OneWayToSource" ValidatesOnDataErrors="True" TargetNullValue="0" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <my:MoneyValidationRule/>
+                        <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -69,7 +69,7 @@
                 <DatePicker.SelectedDate>
                     <Binding Path="PurchaseDate" Mode="TwoWay" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
-                            <my:NotEmptyValidationRule/>
+                            <BL:NotEmptyValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </DatePicker.SelectedDate>
@@ -79,7 +79,7 @@
                 <DatePicker.SelectedDate>
                     <Binding Path="ExDate" Mode="OneWayToSource" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
-                            <my:NotEmptyValidationRule/>
+                            <BL:NotEmptyValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </DatePicker.SelectedDate>

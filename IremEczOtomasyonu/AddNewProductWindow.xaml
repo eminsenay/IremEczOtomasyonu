@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:my="clr-namespace:IremEczOtomasyonu" 
+        xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
         Title="Yeni Ürün Girişi" Height="240" Width="400" mc:Ignorable="d" Loaded="Window_Loaded" FocusManager.FocusedElement="{Binding ElementName=barcodeTextBox}">
     <Window.Resources>
-        <ObjectDataProvider x:Key="currentProduct" ObjectType="{x:Type my:Product}"/>
+        <ObjectDataProvider x:Key="currentProduct" ObjectType="{x:Type BL:Product}"/>
     </Window.Resources>
     <Grid>
         <Grid HorizontalAlignment="Stretch" Name="grid1" DataContext="{Binding Source={StaticResource currentProduct}}" VerticalAlignment="Top">
@@ -28,7 +28,7 @@
                      GotFocus="ProductTextBox_GotFocus">
                 <Binding Path="Barcode" Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
-                        <my:UniqueBarcodeRule/>
+                        <BL:UniqueBarcodeRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -45,7 +45,7 @@
                      GotFocus="ProductTextBox_GotFocus">
                 <Binding Path="CurrentBuyingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                     <Binding.ValidationRules>
-                        <my:MoneyValidationRule/>
+                        <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -54,7 +54,7 @@
                      GotFocus="ProductTextBox_GotFocus">
                 <Binding Path="CurrentSellingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                     <Binding.ValidationRules>
-                        <my:MoneyValidationRule/>
+                        <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>

@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="Ürün Detayları" mc:Ignorable="d" xmlns:my="clr-namespace:IremEczOtomasyonu"
+        xmlns:BL="clr-namespace:IremEczOtomasyonu.BL" 
         Closing="Window_Closing" Height="550" Width="700">
     <Window.Resources>
-        <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
+        <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance BL:ExpirationDate, CreateList=True}" />
         <my:DealTypeToNiceStringConverter x:Key="dealItemToNiceStringConverter" />
     </Window.Resources>
     <Grid HorizontalAlignment="Stretch">
@@ -48,7 +49,7 @@
                 <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center">
                     <Binding Path="CurrentBuyingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                         <Binding.ValidationRules>
-                            <my:MoneyValidationRule/>
+                            <BL:MoneyValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -56,7 +57,7 @@
                 <TextBox Grid.Column="1" Grid.Row="5" Height="23" Margin="3" Name="currentSellingPriceTextBox" VerticalAlignment="Center">
                     <Binding Path="CurrentSellingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
                         <Binding.ValidationRules>
-                            <my:MoneyValidationRule/>
+                            <BL:MoneyValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox>
@@ -79,7 +80,7 @@
                                         <DatePicker.SelectedDate>
                                             <Binding Path="ExDate" Mode="TwoWay" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged">
                                                 <Binding.ValidationRules>
-                                                    <my:NotEmptyValidationRule/>
+                                                    <BL:NotEmptyValidationRule/>
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </DatePicker.SelectedDate>
@@ -91,7 +92,7 @@
                             <DataGridTextColumn.Binding>
                                 <Binding Path="NumItems" ValidatesOnDataErrors="True">
                                     <Binding.ValidationRules>
-                                        <my:IntegerValidationRule/>
+                                        <BL:IntegerValidationRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </DataGridTextColumn.Binding>

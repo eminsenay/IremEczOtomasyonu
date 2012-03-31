@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 
-namespace IremEczOtomasyonu
+namespace IremEczOtomasyonu.BL
 {
     /// <summary>
     /// Validates if the input field is empty.

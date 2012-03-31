@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Data;
+using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
 {

@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using IremEczOtomasyonu.BL;
 using Microsoft.Win32;
 using System.IO;
 using System.Collections.ObjectModel;

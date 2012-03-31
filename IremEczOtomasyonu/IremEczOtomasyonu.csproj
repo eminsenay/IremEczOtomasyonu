@@ -89,22 +89,27 @@
     <Compile Include="AddPurchaseWindow.xaml.cs">
       <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Customer.cs" />
+    <Compile Include="BL\Customer.cs" />
+    <Compile Include="BL\Database1Entities.Designer.cs">
+      <DependentUpon>Database1Entities.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="DatePickerWatermarkBehaviour.cs" />
-    <Compile Include="Deal.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="ExpirationDate.cs" />
+    <Compile Include="BL\Deal.cs" />
+    <Compile Include="BL\Product.cs" />
+    <Compile Include="BL\ExpirationDate.cs" />
     <Compile Include="ProductDetailsWindow.xaml.cs">
       <DependentUpon>ProductDetailsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProductPurchase.cs" />
-    <Compile Include="SaleItem.cs" />
-    <Compile Include="Utilities.cs" />
+    <Compile Include="BL\ProductPurchase.cs" />
+    <Compile Include="BL\SaleItem.cs" />
+    <Compile Include="UIUtilities.cs" />
     <Compile Include="ValueConverters.cs" />
     <Compile Include="SaleWindow.xaml.cs">
       <DependentUpon>SaleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ValidationRules.cs" />
+    <Compile Include="BL\ValidationRules.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UserControlCustomers.xaml.cs">
       <DependentUpon>UserControlCustomers.xaml</DependentUpon>
@@ -154,11 +159,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database1Entities.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Database1Entities.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -179,7 +179,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="Database1Entities.edmx">
+    <EntityDeploy Include="BL\Database1Entities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Database1Entities.Designer.cs</LastGenOutput>
     </EntityDeploy>
