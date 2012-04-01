@@ -34,5 +34,18 @@ namespace IremEczOtomasyonu.BL
         {
             get { return null; }
         }
+
+        public override bool Equals(object obj)
+        {
+            ExpirationDate expirationDate = obj as ExpirationDate;
+// ReSharper disable BaseObjectEqualsIsObjectEquals
+            return expirationDate == null ? base.Equals(obj) : ExDate.Equals(expirationDate.ExDate);
+// ReSharper restore BaseObjectEqualsIsObjectEquals
+        }
+
+        public override int GetHashCode()
+        {
+            return ExDate.GetHashCode();
+        }
     }
 }

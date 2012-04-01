@@ -296,22 +296,7 @@ namespace IremEczOtomasyonu
         private void DatagridSaleMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Customer currCustomer = customersDataGrid.SelectedItem as Customer;
-            SaleWindow saleWindow = new SaleWindow(_dbContext, currCustomer)
-                                    {
-                                        Owner = Parent as Window,
-                                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                                    };
-
-            if (saleWindow.ShowDialog() == true)
-            {
-                // Refresh the sale items
-                _saleItems.Clear();
-                ObjectResult<SaleItem> objectResult = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
-                foreach (SaleItem saleItem in objectResult)
-                {
-                    _saleItems.Add(saleItem);
-                }
-            }
+            ExecuteCustomerSale(currCustomer);
         }
 
         private void SaleItems_Filter(object sender, FilterEventArgs e)
@@ -329,6 +314,26 @@ namespace IremEczOtomasyonu
                 return;
             }
             e.Accepted = false;
+        }
+
+        public void ExecuteCustomerSale(Customer customer)
+        {
+            SaleWindow saleWindow = new SaleWindow(_dbContext, customer)
+            {
+                Owner = Parent as Window,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            if (saleWindow.ShowDialog() == true)
+            {
+                // Refresh the sale items
+                _saleItems.Clear();
+                ObjectResult<SaleItem> objectResult = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
+                foreach (SaleItem saleItem in objectResult)
+                {
+                    _saleItems.Add(saleItem);
+                }
+            }
         }
     }
 }

@@ -62,13 +62,7 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleButton_Click(object sender, RoutedEventArgs e)
         {
-            SaleWindow saleWindow = new SaleWindow(_dbContext)
-                                    {
-                                        Owner = Parent as Window,
-                                        WindowStartupLocation = WindowStartupLocation.CenterOwner
-                                    };
-
-            saleWindow.ShowDialog();
+            _customersUserControl.ExecuteCustomerSale(null);
         }
 
         private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
@@ -87,6 +81,16 @@ namespace IremEczOtomasyonu
                 "Stoktaki {0} farklı markanın toplam {1} ürününün güncel satış fiyatı toplamı {2:0.00} TL'dir.",
                 numDifferentBrands, productCount, totalSalePrice);
             MessageBox.Show(messageToShow, "Stok değeri");
+        }
+
+        private void ProductSaleDisplayMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaleListWindow saleListWindow = new SaleListWindow(_dbContext)
+                                            {
+                                                Owner = this,
+                                                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                                            };
+            saleListWindow.ShowDialog();
         }
     }
 }

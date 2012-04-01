@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" mc:Ignorable="d" 
              xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
+             xmlns:my="clr-namespace:IremEczOtomasyonu"
              d:DesignHeight="600" d:DesignWidth="1100" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
-             Loaded="UserControl_Loaded" xmlns:my="clr-namespace:IremEczOtomasyonu">
+             Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
         <!--<CollectionViewSource x:Key="productSalesViewSource" d:DesignSource="{d:DesignInstance my:ProductSale, CreateList=True}" 
@@ -73,8 +74,8 @@
                             </GroupStyle>
                         </DataGrid.GroupStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=Product.Name}" Header="Ürün Adı" MinWidth="200" />
-                            <DataGridTextColumn Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" MinWidth="200" />
+                            <DataGridTextColumn Binding="{Binding Path=Product.Name}" Header="Ürün Adı" MinWidth="190" />
+                            <DataGridTextColumn Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" MinWidth="190" />
                             <DataGridTextColumn Binding="{Binding Path=NumSold}" Header="Miktar" />
                         </DataGrid.Columns>
                     </DataGrid>

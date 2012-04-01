@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.Globalization;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace IremEczOtomasyonu
             InitializeComponent();
             _dbContext = dbContext;
             
-            userControlSales.DbContext = dbContext;
+            userControlSales.DbContext = _dbContext;
             userControlSales.CurrentProductSale = new ProductSale
                                                   {
                                                       SaleItems = new EntityCollection<SaleItem>(),
@@ -33,6 +34,7 @@ namespace IremEczOtomasyonu
                                                       TotalPrice = 0
                                                   };
 
+            userControlSales.barcodeTextBox.Focus();
         }
 
         /// <summary>
@@ -79,6 +81,15 @@ namespace IremEczOtomasyonu
             _dbContext.SaveChanges();
             DialogResult = true;
             Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (DialogResult != true)
+            {
+                // detach the current product sale since window is closed without any actual sale
+                _dbContext.Detach(userControlSales.CurrentProductSale);
+            }
         }
     }
 }

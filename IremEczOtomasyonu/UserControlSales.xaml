@@ -5,17 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
-             d:DesignHeight="330" d:DesignWidth="900" 
-             xmlns:IremEczOtomasyonu="clr-namespace:IremEczOtomasyonu">
+             xmlns:my="clr-namespace:IremEczOtomasyonu"
+             d:DesignHeight="330" d:DesignWidth="900" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <IremEczOtomasyonu:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
+        <my:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
     </UserControl.Resources>
     <Grid Name="saleGrid">
         <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="68,12,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="150" />
         <Button Content="Ekle" Height="23" HorizontalAlignment="Left" Margin="224,12,0,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
         <DataGrid AutoGenerateColumns="False" Margin="12,41,12,43" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
-                  CanUserAddRows="False" VerticalAlignment="Stretch">
+                  CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
@@ -36,12 +36,12 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <ComboBox Name="expirationDateComboBox" DisplayMemberPath="ExDate" ItemStringFormat="{}{0:d}">
-                                <ComboBox.SelectedItem>
-                                    <Binding Path="ExpDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
-                                </ComboBox.SelectedItem>
                                 <ComboBox.ItemsSource>
                                     <Binding Path="Product.ExpirationDates" />
                                 </ComboBox.ItemsSource>
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="ExpDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                                </ComboBox.SelectedItem>
                             </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

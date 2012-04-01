@@ -8,6 +8,12 @@ namespace IremEczOtomasyonu.BL
 {
     partial class SaleItem
     {
-        public ExpirationDate ExpDate { get; set; }
+        private ExpirationDate _expDate;
+        
+        public ExpirationDate ExpDate
+        {
+            get { return _expDate ?? new ExpirationDate {ExDate = ExDate}; }
+            set { _expDate = value; }
+        }
     }
 }

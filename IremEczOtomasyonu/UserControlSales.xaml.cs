@@ -23,7 +23,6 @@ namespace IremEczOtomasyonu
     public partial class UserControlSales : UserControl
     {
         private bool _isManualEditCommit;
-        private ProductSale _currentProductSale;
         private Model1Container _dbContext;
 
         public Model1Container DbContext
@@ -31,29 +30,18 @@ namespace IremEczOtomasyonu
             get { return _dbContext ?? (_dbContext = new Model1Container()); }
             set { _dbContext = value; }
         }
-        public ProductSale CurrentProductSale
-        {
-            get { return _currentProductSale; }
-            set 
-            { 
-                _currentProductSale = value;
-                saleGrid.DataContext = CurrentProductSale;
-                productSaleDataGrid.ItemsSource = CurrentProductSale.SaleItems;
-                UpdateTotalPriceTextBox();
-            }
-        }
+
+        public ProductSale CurrentProductSale { get; set; }
 
         public UserControlSales()
         {
             InitializeComponent();
         }
-
-        public UserControlSales(Model1Container dbContext, ProductSale productSale)
+        
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-
-            DbContext = dbContext;
-            CurrentProductSale = productSale;
+            saleGrid.DataContext = CurrentProductSale;
+            UpdateTotalPrice();
         }
 
         /// <summary>
@@ -83,7 +71,7 @@ namespace IremEczOtomasyonu
                 ExpDate = newProduct.ExpirationDates.FirstOrDefault(),
                 UnitPrice = newProduct.CurrentSellingPrice ?? 0
             });
-            UpdateTotalPriceTextBox();
+            UpdateTotalPrice();
 
             barcodeTextBox.Text = string.Empty;
             barcodeTextBox.Focus();
@@ -105,7 +93,7 @@ namespace IremEczOtomasyonu
             _isManualEditCommit = true;
             productSaleDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             _isManualEditCommit = false;
-            UpdateTotalPriceTextBox();
+            UpdateTotalPrice();
         }
 
         /// <summary>
@@ -144,16 +132,19 @@ namespace IremEczOtomasyonu
             }
 
             CurrentProductSale.SaleItems.Remove(saleItem);
-            UpdateTotalPriceTextBox();
+            UpdateTotalPrice();
         }
 
         /// <summary>
         /// Updates the total price text block with the sum of the purchases.
         /// </summary>
-        private void UpdateTotalPriceTextBox()
+        private void UpdateTotalPrice()
         {
-            decimal totalPrice = CurrentProductSale.SaleItems.Sum(x => (x.NumSold * x.UnitPrice));
-            totalPriceTextBox.Text = totalPrice.ToString(CultureInfo.CurrentCulture);
+            if (CurrentProductSale == null)
+            {
+                return;
+            }
+            CurrentProductSale.TotalPrice = CurrentProductSale.SaleItems.Sum(x => (x.NumSold * x.UnitPrice));
         }
 
         private void CustomerFindButton_Click(object sender, RoutedEventArgs e)
