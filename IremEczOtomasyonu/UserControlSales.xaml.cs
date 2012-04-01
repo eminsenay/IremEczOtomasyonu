@@ -68,7 +68,7 @@ namespace IremEczOtomasyonu
                 Product = newProduct,
                 NumSold = 1,
                 ProductSale = CurrentProductSale,
-                ExpDate = newProduct.ExpirationDates.FirstOrDefault(),
+                ExDate = newProduct.ExpirationDates.Select(x => x.ExDate).FirstOrDefault(),
                 UnitPrice = newProduct.CurrentSellingPrice ?? 0
             });
             UpdateTotalPrice();

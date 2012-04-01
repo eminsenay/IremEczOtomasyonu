@@ -108,4 +108,19 @@ namespace IremEczOtomasyonu
             throw new NotImplementedException();
         }
     }
+
+    internal class ExpirationDatesToDateTimeListConverter: IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            IEnumerable<ExpirationDate> expirationDates = value as IEnumerable<ExpirationDate>;
+            return expirationDates == null ? null : 
+                expirationDates.Select(expirationDate => expirationDate.ExDate).ToList();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }    
 }

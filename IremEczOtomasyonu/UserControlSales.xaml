@@ -9,6 +9,7 @@
              d:DesignHeight="330" d:DesignWidth="900" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <my:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
+        <my:ExpirationDatesToDateTimeListConverter x:Key="expDatesToDateTimeListConverter" />
     </UserControl.Resources>
     <Grid Name="saleGrid">
         <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
@@ -35,12 +36,12 @@
                 <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Name="expirationDateComboBox" DisplayMemberPath="ExDate" ItemStringFormat="{}{0:d}">
+                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:d}">
                                 <ComboBox.ItemsSource>
-                                    <Binding Path="Product.ExpirationDates" />
+                                    <Binding Path="Product.ExpirationDates" Converter="{StaticResource expDatesToDateTimeListConverter}" />
                                 </ComboBox.ItemsSource>
                                 <ComboBox.SelectedItem>
-                                    <Binding Path="ExpDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="ExDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
                                 </ComboBox.SelectedItem>
                             </ComboBox>
                         </DataTemplate>

@@ -70,10 +70,14 @@ namespace IremEczOtomasyonu
             // Set entity expiration dates and ids manually
             foreach (SaleItem saleItem in userControlSales.CurrentProductSale.SaleItems)
             {
-                saleItem.ExDate = saleItem.ExpDate.ExDate;
                 // Decrease the item count from products & expiration date tables
                 saleItem.Product.NumItems -= saleItem.NumSold;
-                saleItem.ExpDate.NumItems -= saleItem.NumSold;
+                ExpirationDate selectedExpDate = saleItem.Product.ExpirationDates.FirstOrDefault(
+                    x => x.ExDate == saleItem.ExDate);
+                if (selectedExpDate != null)
+                {
+                    selectedExpDate.NumItems -= saleItem.NumSold;
+                }
                 saleItem.Id = Guid.NewGuid();
             }
             
