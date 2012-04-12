@@ -33,6 +33,7 @@ namespace IremEczOtomasyonu
                                                       SaleDate = DateTime.Now,
                                                       TotalPrice = 0
                                                   };
+            userControlSales.saleGrid.DataContext = userControlSales.CurrentProductSale;
 
             userControlSales.barcodeTextBox.Focus();
         }

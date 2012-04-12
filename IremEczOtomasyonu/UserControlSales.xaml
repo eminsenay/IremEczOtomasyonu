@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
              xmlns:my="clr-namespace:IremEczOtomasyonu"
-             d:DesignHeight="330" d:DesignWidth="900" Loaded="UserControl_Loaded">
+             d:DesignHeight="330" d:DesignWidth="900">
     <UserControl.Resources>
         <my:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
         <my:ExpirationDatesToDateTimeListConverter x:Key="expDatesToDateTimeListConverter" />

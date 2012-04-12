@@ -17,6 +17,9 @@ using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
 {
+    // A delegate type for hooking up change notifications.
+    public delegate void ChangedEventHandler();
+
     /// <summary>
     /// Interaction logic for UserControlSales.xaml
     /// </summary>
@@ -24,6 +27,7 @@ namespace IremEczOtomasyonu
     {
         private bool _isManualEditCommit;
         private Model1Container _dbContext;
+        public event ChangedEventHandler CurrentProductSaleChanged;
 
         public Model1Container DbContext
         {
@@ -37,11 +41,13 @@ namespace IremEczOtomasyonu
         {
             InitializeComponent();
         }
-        
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+
+        public void OnCurrentProductSaleChanged()
         {
-            saleGrid.DataContext = CurrentProductSale;
-            UpdateTotalPrice();
+            if (CurrentProductSaleChanged != null)
+            {
+                CurrentProductSaleChanged();
+            }
         }
 
         /// <summary>
@@ -75,6 +81,8 @@ namespace IremEczOtomasyonu
 
             barcodeTextBox.Text = string.Empty;
             barcodeTextBox.Focus();
+
+            OnCurrentProductSaleChanged();
         }
 
         /// <summary>
@@ -94,6 +102,8 @@ namespace IremEczOtomasyonu
             productSaleDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             _isManualEditCommit = false;
             UpdateTotalPrice();
+
+            OnCurrentProductSaleChanged();
         }
 
         /// <summary>
@@ -133,6 +143,7 @@ namespace IremEczOtomasyonu
 
             CurrentProductSale.SaleItems.Remove(saleItem);
             UpdateTotalPrice();
+            OnCurrentProductSaleChanged();
         }
 
         /// <summary>
@@ -159,6 +170,7 @@ namespace IremEczOtomasyonu
             if (customerListWindow.DialogResult == true)
             {
                 CurrentProductSale.Customer = customerListWindow.SelectedCustomer;
+                OnCurrentProductSaleChanged();
             }
         }
 

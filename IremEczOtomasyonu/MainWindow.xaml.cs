@@ -85,7 +85,7 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleDisplayMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaleListWindow saleListWindow = new SaleListWindow(_dbContext)
+            SaleListWindow saleListWindow = new SaleListWindow()
                                             {
                                                 Owner = this,
                                                 WindowStartupLocation = WindowStartupLocation.CenterOwner

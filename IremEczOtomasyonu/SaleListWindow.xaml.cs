@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using IremEczOtomasyonu.BL;
+using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.Data.Objects;
 
 namespace IremEczOtomasyonu
 {
@@ -22,35 +25,138 @@ namespace IremEczOtomasyonu
     public partial class SaleListWindow : Window
     {
         private readonly Model1Container _dbContext;
+        private ObservableCollection<ProductSale> _productSaleColl;
+        private readonly List<ProductSale> _changedProductSales;
 
-        public SaleListWindow(Model1Container dbContext)
+        public SaleListWindow()
         {
             InitializeComponent();
-            _dbContext = dbContext;
+            _changedProductSales = new List<ProductSale>();
+            _dbContext = new Model1Container();
             userControlSales.DbContext = _dbContext;
+
+            userControlSales.CurrentProductSaleChanged += OnCurrentProductSaleChanged;
+        }
+
+        void OnCurrentProductSaleChanged()
+        {
+            _changedProductSales.Add(userControlSales.CurrentProductSale);
+            applyButton.IsEnabled = true;
+            DataGridRow dataGridRow = productSalesDataGrid.ItemContainerGenerator.ContainerFromIndex(
+                productSalesDataGrid.SelectedIndex) as DataGridRow;
+            if (dataGridRow == null)
+            {
+                return;
+            }
+            dataGridRow.Background = Brushes.Aquamarine;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Load data into ProductSales. You can modify this code as needed.
-            CollectionViewSource productSalesViewSource = ((CollectionViewSource)(FindResource("productSalesViewSource")));
-            productSalesViewSource.Source = _dbContext.ProductSales.Execute(
-                System.Data.Objects.MergeOption.AppendOnly);
+            CollectionViewSource productSalesViewSource = ((CollectionViewSource)(
+                FindResource("productSalesViewSource")));
+            _productSaleColl = new ObservableCollection<ProductSale>(_dbContext.ProductSales.OrderByDescending(
+                x => x.SaleDate));
+            productSalesViewSource.Source = _productSaleColl;
 
-            Binding binding = new Binding
-                              {
-                                  Source = userControlSales.CurrentProductSale, Mode = BindingMode.OneWayToSource
-                              };
-            productSalesDataGrid.SetBinding(Selector.SelectedItemProperty, binding);
+            userControlSales.saleGrid.DataContext = productSalesViewSource;
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void ProductSalesDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DialogResult != true)
+            // The following binding doesn't work properly. 
+            // CurrentProductSale keeps being null, so update the CurrentProductSale by hand
+
+            //Binding binding = new Binding
+            //                  {
+            //                      Source = userControlSales.CurrentProductSale,
+            //                      Mode = BindingMode.OneWayToSource
+            //                  };
+            //productSalesDataGrid.SetBinding(Selector.SelectedItemProperty, binding);
+
+            userControlSales.CurrentProductSale = productSalesDataGrid.SelectedItem as ProductSale;
+
+        }
+
+        private void ProductSalesDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
             {
-                // detach the current product sale since window is closed without any actual sale
-                _dbContext.Detach(userControlSales.CurrentProductSale);
+                DeleteSelectedProductSale();
+                e.Handled = true;
             }
+        }
+
+        private void DatagridDeleteProductSaleMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteSelectedProductSale();
+        }
+
+        private void DeleteSelectedProductSale()
+        {
+            ProductSale selectedSale = productSalesDataGrid.SelectedItem as ProductSale;
+            if (selectedSale == null)
+            {
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show("Seçili satışı silmek istediğinizden emin misiniz?",
+                "Satış silme onayı", MessageBoxButton.YesNo);
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
+            // Add the Sale Items to the stock again.
+            foreach (SaleItem saleItem in new List<SaleItem>(selectedSale.SaleItems))
+            {
+                saleItem.Product.NumItems += saleItem.NumSold;
+                ExpirationDate exDateObj = saleItem.Product.ExpirationDates.FirstOrDefault(
+                    x => x.ExDate == saleItem.ExDate);
+                if (exDateObj != null)
+                {
+                    exDateObj.NumItems++;
+                }
+                else
+                {
+                    Debug.Fail("Expiration Date of the sale item cannot be found.");
+                }
+
+                _dbContext.SaleItems.DeleteObject(saleItem);
+            }
+
+            // Delete the product sale
+            _productSaleColl.Remove(selectedSale);
+            _dbContext.DeleteObject(selectedSale);
+
+            applyButton.IsEnabled = true;
+        }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dbContext.SaveChanges();
+
+            foreach (ProductSale productSale in _changedProductSales)
+            {
+                DataGridRow dataGridRow = productSalesDataGrid.ItemContainerGenerator.ContainerFromItem(
+                    productSale) as DataGridRow;
+                if (dataGridRow == null)
+                {
+                    continue;
+                }
+                dataGridRow.Background = Brushes.White;
+            }
+
+            _changedProductSales.Clear();
+            
+            applyButton.IsEnabled = false;
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            _dbContext.SaveChanges();
+            DialogResult = true;
+            Close();
         }
     }
 }
