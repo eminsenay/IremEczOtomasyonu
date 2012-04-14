@@ -28,11 +28,11 @@ namespace IremEczOtomasyonu
         private ObservableCollection<ProductSale> _productSaleColl;
         private readonly List<ProductSale> _changedProductSales;
 
-        public SaleListWindow()
+        public SaleListWindow(Model1Container dbContext)
         {
             InitializeComponent();
             _changedProductSales = new List<ProductSale>();
-            _dbContext = new Model1Container();
+            _dbContext = dbContext;
             userControlSales.DbContext = _dbContext;
 
             userControlSales.CurrentProductSaleChanged += OnCurrentProductSaleChanged;

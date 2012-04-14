@@ -61,26 +61,14 @@ namespace IremEczOtomasyonu
             
             if (userControlSales.CurrentProductSale.SaleItems.Count == 0)
             {
+                // detach the current product sale since window is closed without any actual sale
+                _dbContext.Detach(userControlSales.CurrentProductSale);
                 DialogResult = true;
                 Close();
                 return;
             }
 
             userControlSales.CurrentProductSale.Id = Guid.NewGuid();
-
-            // Set entity expiration dates and ids manually
-            foreach (SaleItem saleItem in userControlSales.CurrentProductSale.SaleItems)
-            {
-                // Decrease the item count from products & expiration date tables
-                saleItem.Product.NumItems -= saleItem.NumSold;
-                ExpirationDate selectedExpDate = saleItem.Product.ExpirationDates.FirstOrDefault(
-                    x => x.ExDate == saleItem.ExDate);
-                if (selectedExpDate != null)
-                {
-                    selectedExpDate.NumItems -= saleItem.NumSold;
-                }
-                saleItem.Id = Guid.NewGuid();
-            }
             
             _dbContext.AddToProductSales(userControlSales.CurrentProductSale);
             _dbContext.SaveChanges();
@@ -92,6 +80,8 @@ namespace IremEczOtomasyonu
         {
             if (DialogResult != true)
             {
+                // Remove all added sale items.
+                userControlSales.RevertProductSale();
                 // detach the current product sale since window is closed without any actual sale
                 _dbContext.Detach(userControlSales.CurrentProductSale);
             }

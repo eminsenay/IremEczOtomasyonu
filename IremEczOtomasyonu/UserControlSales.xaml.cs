@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Objects.DataClasses;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -69,14 +70,30 @@ namespace IremEczOtomasyonu
                 barcodeTextBox.SelectAll();
                 return;
             }
-            CurrentProductSale.SaleItems.Add(new SaleItem
+
+            SaleItem newItem = new SaleItem
+                               {
+                                   Id = Guid.NewGuid(),
+                                   Product = newProduct,
+                                   NumSold = 1,
+                                   ProductSale = CurrentProductSale,
+                                   ExDate = newProduct.ExpirationDates.Select(x => x.ExDate).FirstOrDefault(),
+                                   UnitPrice = newProduct.CurrentSellingPrice ?? 0
+                               };
+            CurrentProductSale.SaleItems.Add(newItem);
+            newItem.Product.NumItems -= newItem.NumSold;
+
+            ExpirationDate selectedExpDate = newItem.Product.ExpirationDates.FirstOrDefault(
+                    x => x.ExDate == newItem.ExDate);
+            Debug.Assert(selectedExpDate != null, "Expiration Date of the sale item cannot be found.");
+            if (selectedExpDate != null)
             {
-                Product = newProduct,
-                NumSold = 1,
-                ProductSale = CurrentProductSale,
-                ExDate = newProduct.ExpirationDates.Select(x => x.ExDate).FirstOrDefault(),
-                UnitPrice = newProduct.CurrentSellingPrice ?? 0
-            });
+                selectedExpDate.NumItems -= newItem.NumSold;
+            }
+
+            // Make prevnumsold equal. Values should only be different when the user manually changes the numsold.
+            newItem.PrevNumSold = newItem.NumSold;
+            
             UpdateTotalPrice();
 
             barcodeTextBox.Text = string.Empty;
@@ -100,6 +117,23 @@ namespace IremEczOtomasyonu
             }
             _isManualEditCommit = true;
             productSaleDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
+            SaleItem currItem = e.Row.Item as SaleItem;
+            Debug.Assert(currItem != null, "Associated sale item cannot be retrieved.");
+            if (currItem != null && currItem.PrevNumSold != currItem.NumSold)
+            {
+                int diff = currItem.NumSold - currItem.PrevNumSold;
+
+                currItem.Product.NumItems -= diff;
+                ExpirationDate selectedExpDate = currItem.Product.ExpirationDates.FirstOrDefault(
+                    x => x.ExDate == currItem.ExDate);
+                Debug.Assert(selectedExpDate != null, "Expiration Date of the sale item cannot be found.");
+                if (selectedExpDate != null)
+                {
+                    selectedExpDate.NumItems -= diff;
+                }
+                currItem.PrevNumSold = currItem.NumSold;
+            }
+
             _isManualEditCommit = false;
             UpdateTotalPrice();
 
@@ -136,12 +170,33 @@ namespace IremEczOtomasyonu
         private void DeleteSelectedSaleItem()
         {
             SaleItem saleItem = productSaleDataGrid.SelectedItem as SaleItem;
+            DeleteSaleItem(saleItem);
+        }
+
+        /// <summary>
+        /// Deletes the given sale item from the datagrid.
+        /// </summary>
+        private void DeleteSaleItem(SaleItem saleItem)
+        {
             if (saleItem == null)
             {
                 return;
             }
 
             CurrentProductSale.SaleItems.Remove(saleItem);
+
+            Product product = saleItem.Product;
+            product.NumItems += saleItem.NumSold;
+            ExpirationDate selectedExpDate = product.ExpirationDates.FirstOrDefault(
+                    x => x.ExDate == saleItem.ExDate);
+            Debug.Assert(selectedExpDate != null, "Expiration Date of the sale item cannot be found.");
+            if (selectedExpDate != null)
+            {
+                selectedExpDate.NumItems += saleItem.NumSold;
+            }
+            product.SaleItems.Remove(saleItem);
+            DbContext.Detach(saleItem);
+
             UpdateTotalPrice();
             OnCurrentProductSaleChanged();
         }
@@ -181,6 +236,17 @@ namespace IremEczOtomasyonu
                 return "Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.";
             }
             return null;
+        }
+
+        /// <summary>
+        /// Removes all added sale items from the product sale.
+        /// </summary>
+        public void RevertProductSale()
+        {
+            foreach (SaleItem saleItem in productSaleDataGrid.Items)
+            {
+                DeleteSaleItem(saleItem);
+            }
         }
     }
 }

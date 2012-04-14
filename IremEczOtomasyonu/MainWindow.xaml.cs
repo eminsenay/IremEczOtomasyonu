@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -85,7 +87,7 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleDisplayMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaleListWindow saleListWindow = new SaleListWindow()
+            SaleListWindow saleListWindow = new SaleListWindow(_dbContext)
                                             {
                                                 Owner = this,
                                                 WindowStartupLocation = WindowStartupLocation.CenterOwner
