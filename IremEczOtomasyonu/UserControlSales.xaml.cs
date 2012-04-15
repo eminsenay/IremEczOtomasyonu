@@ -241,5 +241,11 @@ namespace IremEczOtomasyonu
                 DeleteSaleItem(saleItem);
             }
         }
+
+        private void CustomerNameTextBoxDeleteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentProductSale.Customer = null;
+            OnCurrentProductSaleChanged();
+        }
     }
 }

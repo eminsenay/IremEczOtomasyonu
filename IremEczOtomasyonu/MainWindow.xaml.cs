@@ -85,6 +85,12 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleDisplayMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            if (!_customersUserControl.AllChangesSaved)
+            {
+                MessageBox.Show("Bu işlemden önce yaptığınız değişiklikleri kaydetmeniz gerekmektedir.",
+                                "Değişiklik uyarısı", MessageBoxButton.OK);
+                return;
+            }
             SaleListWindow saleListWindow = new SaleListWindow
                                             {
                                                 Owner = this,
@@ -96,6 +102,10 @@ namespace IremEczOtomasyonu
                 _customersUserControl.Reload();
                 _productsUserControl.Reload();
             }
+            //else
+            //{
+            //    _customersUserControl._saleItemsView.Refresh();
+            //}
         }
     }
 }
