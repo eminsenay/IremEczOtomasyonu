@@ -109,6 +109,9 @@
     </Compile>
     <Compile Include="BL\ProductPurchase.cs" />
     <Compile Include="BL\SaleItem.cs" />
+    <Compile Include="ProductSaleCountWindow.xaml.cs">
+      <DependentUpon>ProductSaleCountWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaleListWindow.xaml.cs">
       <DependentUpon>SaleListWindow.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ProductDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProductSaleCountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

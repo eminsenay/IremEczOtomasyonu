@@ -112,5 +112,16 @@ namespace IremEczOtomasyonu
             //    _customersUserControl._saleItemsView.Refresh();
             //}
         }
+
+        private void ProductSaleCountMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ProductSaleCountWindow productSaleCountWindow = new ProductSaleCountWindow
+                                                            {
+                                                                Owner = this,
+                                                                WindowStartupLocation =
+                                                                    WindowStartupLocation.CenterOwner
+                                                            };
+            productSaleCountWindow.ShowDialog();
+        }
     }
 }
