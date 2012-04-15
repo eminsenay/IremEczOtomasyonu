@@ -122,5 +122,29 @@ namespace IremEczOtomasyonu
         {
             throw new NotImplementedException();
         }
-    }    
+    }
+
+    internal class ProductSalesToSaleItemsConverter: IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            IEnumerable<ProductSale> productSales = value as IEnumerable<ProductSale>;
+            if (productSales == null)
+            {
+                return null;
+            }
+            
+            ObservableCollection<SaleItem> saleItems = new ObservableCollection<SaleItem>();
+            foreach (SaleItem saleItem in productSales.SelectMany(productSale => productSale.SaleItems))
+            {
+                saleItems.Add(saleItem);
+            }
+            return saleItems;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -28,11 +28,9 @@ namespace IremEczOtomasyonu
     public partial class UserControlCustomers : UserControl
     {
         private ICollectionView _customerView;
-        private ICollectionView _saleItemsView;
 
         public bool AllChangesSaved { get; private set; }
         private ObservableCollection<Customer> Customers { get; set; }
-        private ObservableCollection<SaleItem> _saleItems;
 
         public UserControlCustomers()
         {
@@ -46,14 +44,6 @@ namespace IremEczOtomasyonu
             customersViewSource.Source = Customers;
             _customerView = customersViewSource.View;
             AllChangesSaved = true;
-
-            CollectionViewSource saleItemsViewSource = ((CollectionViewSource)(FindResource("saleItemsViewSource")));
-            //saleItemsViewSource.Source = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
-            _saleItems = new ObservableCollection<SaleItem>(ObjectCtx.Context.SaleItems.Execute(MergeOption.AppendOnly));
-            saleItemsViewSource.Source = _saleItems;
-            _saleItemsView = saleItemsViewSource.View;
-
-            _saleItemsView.GroupDescriptions.Add(new PropertyGroupDescription("ProductSale.Id"));
         }
 
         public void Reload()
@@ -62,12 +52,6 @@ namespace IremEczOtomasyonu
             foreach (Customer customer in ObjectCtx.Context.Customers)
             {
                 Customers.Add(customer);
-            }
-
-            _saleItems.Clear();
-            foreach (SaleItem saleItem in ObjectCtx.Context.SaleItems.Execute(MergeOption.AppendOnly))
-            {
-                _saleItems.Add(saleItem);
             }
         }
 
@@ -154,10 +138,6 @@ namespace IremEczOtomasyonu
                 return;
             }
             ShowCustomerPhoto(selectedCustomer);
-            if (_saleItemsView != null)
-            {
-                _saleItemsView.Refresh();
-            }
         }
 
         /// <summary>
@@ -232,10 +212,6 @@ namespace IremEczOtomasyonu
                 return;
             }
             _customerView.Refresh();
-            if (_saleItemsView != null)
-            {
-                _saleItemsView.Refresh();
-            }
         }
 
         private void CustomerCollection_Filter(object sender, FilterEventArgs e)
@@ -312,23 +288,6 @@ namespace IremEczOtomasyonu
             ExecuteCustomerSale(currCustomer);
         }
 
-        private void SaleItems_Filter(object sender, FilterEventArgs e)
-        {
-            SaleItem s = e.Item as SaleItem;
-            Customer selectedCustomer = customersDataGrid.SelectedItem as Customer;
-            if (s == null || selectedCustomer == null)
-            {
-                e.Accepted = false;
-                return;
-            }
-            if (s.ProductSale.Customer == selectedCustomer)
-            {
-                e.Accepted = true;
-                return;
-            }
-            e.Accepted = false;
-        }
-
         public void ExecuteCustomerSale(Customer customer)
         {
             SaleWindow saleWindow = new SaleWindow(customer)
@@ -337,16 +296,7 @@ namespace IremEczOtomasyonu
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
 
-            if (saleWindow.ShowDialog() == true)
-            {
-                // Refresh the sale items
-                _saleItems.Clear();
-                ObjectResult<SaleItem> objectResult = ObjectCtx.Context.SaleItems.Execute(MergeOption.AppendOnly);
-                foreach (SaleItem saleItem in objectResult)
-                {
-                    _saleItems.Add(saleItem);
-                }
-            }
+            saleWindow.ShowDialog();
         }
     }
 }
