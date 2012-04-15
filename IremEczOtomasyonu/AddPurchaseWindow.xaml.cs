@@ -22,16 +22,15 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class AddPurchaseWindow : Window
     {
-        private readonly Model1Container _dbContext;
+        //private readonly Model1Container _dbContext;
         public ProductPurchase CurrentPurchase { get; private set; }
         public Product CurrentProduct { get; private set; }
         private readonly ExpirationDate _currExpirationDate;
 
-        public AddPurchaseWindow(Product product, Model1Container dbContext)
+        public AddPurchaseWindow(Product product)
         {
             InitializeComponent();
             CurrentProduct = product;
-            _dbContext = dbContext;
 
             _currExpirationDate = new ExpirationDate { ProductId = CurrentProduct.Id };
             expirationDateDatePicker.DataContext = _currExpirationDate;
@@ -78,13 +77,13 @@ namespace IremEczOtomasyonu
             }
 
             // check the curr. expiration date in db
-            ExpirationDate expirationDate = _dbContext.ExpirationDates.FirstOrDefault(
+            ExpirationDate expirationDate = ObjectCtx.Context.ExpirationDates.FirstOrDefault(
                 x => x.ProductId == CurrentProduct.Id && x.ExDate == _currExpirationDate.ExDate);
             if (expirationDate == null)
             {
                 _currExpirationDate.NumItems = CurrentPurchase.NumItems;
                 _currExpirationDate.Id = Guid.NewGuid();
-                _dbContext.AddToExpirationDates(_currExpirationDate);
+                ObjectCtx.Context.AddToExpirationDates(_currExpirationDate);
             }
             else
             {
@@ -93,9 +92,9 @@ namespace IremEczOtomasyonu
 
             CurrentPurchase.Id = Guid.NewGuid();
             CurrentPurchase.Product.NumItems += CurrentPurchase.NumItems;
-            _dbContext.AddToProductPurchases(CurrentPurchase);
+            ObjectCtx.Context.AddToProductPurchases(CurrentPurchase);
 
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
         }

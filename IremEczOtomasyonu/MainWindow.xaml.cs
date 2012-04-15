@@ -28,15 +28,13 @@ namespace IremEczOtomasyonu
     {
         private readonly UserControlCustomers _customersUserControl;
         private readonly UserControlProducts _productsUserControl;
-        private readonly Model1Container _dbContext;
 
         public MainWindow()
         {
             InitializeComponent();
-            _dbContext = new Model1Container();
-            _customersUserControl = new UserControlCustomers(_dbContext);
+            _customersUserControl = new UserControlCustomers();
             customersTabItem.Content = _customersUserControl;
-            _productsUserControl = new UserControlProducts(_dbContext);
+            _productsUserControl = new UserControlProducts();
             productsTabItem.Content = _productsUserControl;
 
             _customersUserControl.searchFirstNameInfoTextBox.Focus();
@@ -76,9 +74,9 @@ namespace IremEczOtomasyonu
         {
             // Many different queries are not the optimal way of doing it, but it works. 
             // Consider changing it if its performance is not satisifactory
-            int numDifferentBrands = (from p in _dbContext.Products select p.Brand).Distinct().Count();
-            int productCount = _dbContext.Products.Sum(x => x.NumItems);
-            decimal totalSalePrice = _dbContext.Products.Sum(x => (x.NumItems*x.CurrentSellingPrice)) ?? 0;
+            int numDifferentBrands = (from p in ObjectCtx.Context.Products select p.Brand).Distinct().Count();
+            int productCount = ObjectCtx.Context.Products.Sum(x => x.NumItems);
+            decimal totalSalePrice = ObjectCtx.Context.Products.Sum(x => (x.NumItems * x.CurrentSellingPrice)) ?? 0;
             string messageToShow = string.Format(
                 "Stoktaki {0} farklı markanın toplam {1} ürününün güncel satış fiyatı toplamı {2:0.00} TL'dir.",
                 numDifferentBrands, productCount, totalSalePrice);
@@ -87,12 +85,17 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleDisplayMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            SaleListWindow saleListWindow = new SaleListWindow(_dbContext)
+            SaleListWindow saleListWindow = new SaleListWindow
                                             {
                                                 Owner = this,
                                                 WindowStartupLocation = WindowStartupLocation.CenterOwner
                                             };
-            saleListWindow.ShowDialog();
+            if (saleListWindow.ShowDialog() != true)
+            {
+                ObjectCtx.Reload();
+                _customersUserControl.Reload();
+                _productsUserControl.Reload();
+            }
         }
     }
 }

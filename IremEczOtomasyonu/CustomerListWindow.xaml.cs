@@ -21,17 +21,16 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class CustomerListWindow : Window
     {
-        private readonly Model1Container _dbContext;
         private readonly ICollectionView _customerView;
         public Customer SelectedCustomer { get; set; }
 
-        public CustomerListWindow(Model1Container dbContext)
+        public CustomerListWindow()
         {
             InitializeComponent();
-            _dbContext = dbContext;
+            //_dbContext = dbContext;
 
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
-            customersViewSource.Source = _dbContext.Customers;
+            customersViewSource.Source = ObjectCtx.Context.Customers;
             _customerView = customersViewSource.View;
         }
 

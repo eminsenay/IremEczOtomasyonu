@@ -24,16 +24,15 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class SaleListWindow : Window
     {
-        private readonly Model1Container _dbContext;
         private ObservableCollection<ProductSale> _productSaleColl;
         private readonly List<ProductSale> _changedProductSales;
+        public List<ProductSale> ChangedProductSalesPersistent { get; private set; }
 
-        public SaleListWindow(Model1Container dbContext)
+        public SaleListWindow()
         {
             InitializeComponent();
             _changedProductSales = new List<ProductSale>();
-            _dbContext = dbContext;
-            userControlSales.DbContext = _dbContext;
+            ChangedProductSalesPersistent = new List<ProductSale>();
 
             userControlSales.CurrentProductSaleChanged += OnCurrentProductSaleChanged;
         }
@@ -41,6 +40,7 @@ namespace IremEczOtomasyonu
         void OnCurrentProductSaleChanged()
         {
             _changedProductSales.Add(userControlSales.CurrentProductSale);
+            ChangedProductSalesPersistent.Add(userControlSales.CurrentProductSale);
             applyButton.IsEnabled = true;
             DataGridRow dataGridRow = productSalesDataGrid.ItemContainerGenerator.ContainerFromIndex(
                 productSalesDataGrid.SelectedIndex) as DataGridRow;
@@ -56,7 +56,7 @@ namespace IremEczOtomasyonu
             // Load data into ProductSales. You can modify this code as needed.
             CollectionViewSource productSalesViewSource = ((CollectionViewSource)(
                 FindResource("productSalesViewSource")));
-            _productSaleColl = new ObservableCollection<ProductSale>(_dbContext.ProductSales.OrderByDescending(
+            _productSaleColl = new ObservableCollection<ProductSale>(ObjectCtx.Context.ProductSales.OrderByDescending(
                 x => x.SaleDate));
             productSalesViewSource.Source = _productSaleColl;
 
@@ -122,19 +122,19 @@ namespace IremEczOtomasyonu
                     Debug.Fail("Expiration Date of the sale item cannot be found.");
                 }
 
-                _dbContext.SaleItems.DeleteObject(saleItem);
+                ObjectCtx.Context.SaleItems.DeleteObject(saleItem);
             }
 
             // Delete the product sale
             _productSaleColl.Remove(selectedSale);
-            _dbContext.DeleteObject(selectedSale);
+            ObjectCtx.Context.DeleteObject(selectedSale);
 
             applyButton.IsEnabled = true;
         }
 
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.SaveChanges();
 
             foreach (ProductSale productSale in _changedProductSales)
             {
@@ -154,7 +154,7 @@ namespace IremEczOtomasyonu
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
         }

@@ -21,13 +21,11 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class AddNewProductWindow : Window
     {
-        private readonly Model1Container _dbContext;
         public Product CurrentProduct { get; private set; }
 
-        public AddNewProductWindow(Model1Container dbContext)
+        public AddNewProductWindow()
         {
             InitializeComponent();
-            _dbContext = dbContext;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -50,8 +48,8 @@ namespace IremEczOtomasyonu
 
             CurrentProduct.Id = Guid.NewGuid();
 
-            _dbContext.AddToProducts(CurrentProduct);
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.AddToProducts(CurrentProduct);
+            ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
         }

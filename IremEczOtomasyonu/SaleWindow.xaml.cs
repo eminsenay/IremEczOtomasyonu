@@ -15,18 +15,15 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class SaleWindow : Window
     {
-        private readonly Model1Container _dbContext;
+        //private readonly Model1Container _dbContext;
 
         /// <summary>
         /// Initializes a new sale window
         /// </summary>
-        /// <param name="dbContext">Database context to use.</param>
-        public SaleWindow(Model1Container dbContext)
+        public SaleWindow()
         {
             InitializeComponent();
-            _dbContext = dbContext;
             
-            userControlSales.DbContext = _dbContext;
             userControlSales.CurrentProductSale = new ProductSale
                                                   {
                                                       SaleItems = new EntityCollection<SaleItem>(),
@@ -41,9 +38,8 @@ namespace IremEczOtomasyonu
         /// <summary>
         /// Initializes a new sale window for the given customer.
         /// </summary>
-        /// <param name="dbContext">Database context to use.</param>
         /// <param name="customer">Customer who is buying the products</param>
-        public SaleWindow(Model1Container dbContext, Customer customer): this(dbContext)
+        public SaleWindow(Customer customer): this()
         {
             userControlSales.CurrentProductSale.Customer = customer;
         }
@@ -62,16 +58,16 @@ namespace IremEczOtomasyonu
             if (userControlSales.CurrentProductSale.SaleItems.Count == 0)
             {
                 // detach the current product sale since window is closed without any actual sale
-                _dbContext.Detach(userControlSales.CurrentProductSale);
+                ObjectCtx.Context.Detach(userControlSales.CurrentProductSale);
                 DialogResult = true;
                 Close();
                 return;
             }
 
             userControlSales.CurrentProductSale.Id = Guid.NewGuid();
-            
-            _dbContext.AddToProductSales(userControlSales.CurrentProductSale);
-            _dbContext.SaveChanges();
+
+            ObjectCtx.Context.AddToProductSales(userControlSales.CurrentProductSale);
+            ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
         }
@@ -83,7 +79,7 @@ namespace IremEczOtomasyonu
                 // Remove all added sale items.
                 userControlSales.RevertProductSale();
                 // detach the current product sale since window is closed without any actual sale
-                _dbContext.Detach(userControlSales.CurrentProductSale);
+                ObjectCtx.Context.Detach(userControlSales.CurrentProductSale);
             }
         }
     }

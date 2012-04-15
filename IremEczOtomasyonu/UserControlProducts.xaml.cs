@@ -23,30 +23,37 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class UserControlProducts : UserControl
     {
-        private readonly Model1Container _dbContext;
         private ICollectionView _currentView;
-        private ObservableCollection<Product> Products { get; set; }
+        public ObservableCollection<Product> Products { get; private set; }
 
-        public UserControlProducts(Model1Container dbContext)
+        public UserControlProducts()
         {
             InitializeComponent();
-            _dbContext = dbContext;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
             Products = new ObservableCollection<Product>(
-                _dbContext.Products.Include("ProductPurchases").Include("SaleItems"));
+                ObjectCtx.Context.Products.Include("ProductPurchases").Include("SaleItems"));
 
             productsViewSource.Source = Products;
 
             _currentView = productsViewSource.View;
         }
 
+        public void Reload()
+        {
+            Products.Clear();
+            foreach (Product product in ObjectCtx.Context.Products.Include("ProductPurchases").Include("SaleItems"))
+            {
+                Products.Add(product);
+            }
+        }
+
         private void AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            AddNewProductWindow addProductWindow = new AddNewProductWindow(_dbContext)
+            AddNewProductWindow addProductWindow = new AddNewProductWindow
                                                 {
                                                     Owner = Parent as Window,
                                                     WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -90,7 +97,7 @@ namespace IremEczOtomasyonu
         private void OpenPurchaseDialog(string barcode)
         {
             Product product = Products.First(p => p.Barcode == barcode);
-            AddPurchaseWindow addPurchaseWindow = new AddPurchaseWindow(product, _dbContext)
+            AddPurchaseWindow addPurchaseWindow = new AddPurchaseWindow(product)
                                                   {
                                                       Owner = Parent as Window,
                                                       WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -167,8 +174,8 @@ namespace IremEczOtomasyonu
             }
 
             Products.Remove(currProduct);
-            _dbContext.DeleteObject(currProduct);
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.DeleteObject(currProduct);
+            ObjectCtx.Context.SaveChanges();
         }
 
         private void DatagridDeleteProductMenuItem_Click(object sender, RoutedEventArgs e)
@@ -189,7 +196,7 @@ namespace IremEczOtomasyonu
         private void DatagridDetailsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Product product = productsDataGrid.SelectedItem as Product;
-            ProductDetailsWindow productDetailsWindow = new ProductDetailsWindow(product, _dbContext)
+            ProductDetailsWindow productDetailsWindow = new ProductDetailsWindow(product)
             {
                 Owner = Parent as Window,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner

@@ -95,6 +95,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="BL\ObjectCtx.cs" />
     <Compile Include="BL\ProductSale.cs" />
     <Compile Include="CustomerListWindow.xaml.cs">
       <DependentUpon>CustomerListWindow.xaml</DependentUpon>

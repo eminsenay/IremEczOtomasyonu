@@ -27,7 +27,6 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class UserControlCustomers : UserControl
     {
-        private readonly Model1Container _dbContext;
         private ICollectionView _customerView;
         private ICollectionView _saleItemsView;
 
@@ -35,27 +34,41 @@ namespace IremEczOtomasyonu
         private ObservableCollection<Customer> Customers { get; set; }
         private ObservableCollection<SaleItem> _saleItems;
 
-        public UserControlCustomers(Model1Container dbContext)
+        public UserControlCustomers()
         {
             InitializeComponent();
-            _dbContext = dbContext;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
-            Customers = new ObservableCollection<Customer>(_dbContext.Customers);
+            Customers = new ObservableCollection<Customer>(ObjectCtx.Context.Customers);
             customersViewSource.Source = Customers;
             _customerView = customersViewSource.View;
             AllChangesSaved = true;
 
             CollectionViewSource saleItemsViewSource = ((CollectionViewSource)(FindResource("saleItemsViewSource")));
             //saleItemsViewSource.Source = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
-            _saleItems = new ObservableCollection<SaleItem>(_dbContext.SaleItems.Execute(MergeOption.AppendOnly));
+            _saleItems = new ObservableCollection<SaleItem>(ObjectCtx.Context.SaleItems.Execute(MergeOption.AppendOnly));
             saleItemsViewSource.Source = _saleItems;
             _saleItemsView = saleItemsViewSource.View;
 
             _saleItemsView.GroupDescriptions.Add(new PropertyGroupDescription("ProductSale.Id"));
+        }
+
+        public void Reload()
+        {
+            Customers.Clear();
+            foreach (Customer customer in ObjectCtx.Context.Customers)
+            {
+                Customers.Add(customer);
+            }
+
+            _saleItems.Clear();
+            foreach (SaleItem saleItem in ObjectCtx.Context.SaleItems.Execute(MergeOption.AppendOnly))
+            {
+                _saleItems.Add(saleItem);
+            }
         }
 
         private void AddCustomerButton_Click(object sender, RoutedEventArgs e)
@@ -72,18 +85,18 @@ namespace IremEczOtomasyonu
             {
                 FirstName = firstName,
                 LastName = lastName,
-                DetailedInfo = detailedInfo
+                DetailedInfo = detailedInfo,
+                Id = Guid.NewGuid()
             };
             
-            newCustomer.Id = Guid.NewGuid();
             Customers.Add(newCustomer);
-            _dbContext.AddToCustomers(newCustomer);
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.AddToCustomers(newCustomer);
+            ObjectCtx.Context.SaveChanges();
         }
 
         private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
         {
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.SaveChanges();
             DataGridRow selectedRow = customersDataGrid.ItemContainerGenerator.ContainerFromIndex(
                 customersDataGrid.SelectedIndex) as DataGridRow;
             if (selectedRow == null)
@@ -276,8 +289,8 @@ namespace IremEczOtomasyonu
             if (result == MessageBoxResult.Yes)
             {
                 Customers.Remove(currCustomer);
-                _dbContext.DeleteObject(currCustomer);
-                _dbContext.SaveChanges();
+                ObjectCtx.Context.DeleteObject(currCustomer);
+                ObjectCtx.Context.SaveChanges();
             }
 
             // TODO: Purchases of the customer
@@ -318,7 +331,7 @@ namespace IremEczOtomasyonu
 
         public void ExecuteCustomerSale(Customer customer)
         {
-            SaleWindow saleWindow = new SaleWindow(_dbContext, customer)
+            SaleWindow saleWindow = new SaleWindow(customer)
             {
                 Owner = Parent as Window,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
@@ -328,7 +341,7 @@ namespace IremEczOtomasyonu
             {
                 // Refresh the sale items
                 _saleItems.Clear();
-                ObjectResult<SaleItem> objectResult = _dbContext.SaleItems.Execute(MergeOption.AppendOnly);
+                ObjectResult<SaleItem> objectResult = ObjectCtx.Context.SaleItems.Execute(MergeOption.AppendOnly);
                 foreach (SaleItem saleItem in objectResult)
                 {
                     _saleItems.Add(saleItem);

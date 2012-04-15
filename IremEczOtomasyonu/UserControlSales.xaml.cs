@@ -27,14 +27,7 @@ namespace IremEczOtomasyonu
     public partial class UserControlSales : UserControl
     {
         private bool _isManualEditCommit;
-        private Model1Container _dbContext;
         public event ChangedEventHandler CurrentProductSaleChanged;
-
-        public Model1Container DbContext
-        {
-            get { return _dbContext ?? (_dbContext = new Model1Container()); }
-            set { _dbContext = value; }
-        }
 
         public ProductSale CurrentProductSale { get; set; }
 
@@ -62,7 +55,7 @@ namespace IremEczOtomasyonu
             {
                 return;
             }
-            Product newProduct = DbContext.Products.FirstOrDefault(p => p.Barcode == barcodeTextBox.Text);
+            Product newProduct = ObjectCtx.Context.Products.FirstOrDefault(p => p.Barcode == barcodeTextBox.Text);
             if (newProduct == null)
             {
                 MessageBox.Show("Girmiş olduğunuz barkod sistemde kayıtlı değil.", "Ürün uyarısı", MessageBoxButton.OK,
@@ -195,7 +188,7 @@ namespace IremEczOtomasyonu
                 selectedExpDate.NumItems += saleItem.NumSold;
             }
             product.SaleItems.Remove(saleItem);
-            DbContext.Detach(saleItem);
+            ObjectCtx.Context.Detach(saleItem);
 
             UpdateTotalPrice();
             OnCurrentProductSaleChanged();
@@ -215,7 +208,7 @@ namespace IremEczOtomasyonu
 
         private void CustomerFindButton_Click(object sender, RoutedEventArgs e)
         {
-            CustomerListWindow customerListWindow = new CustomerListWindow(DbContext)
+            CustomerListWindow customerListWindow = new CustomerListWindow
             {
                 SelectedCustomer = CurrentProductSale.Customer,
                 Owner = Parent as Window,

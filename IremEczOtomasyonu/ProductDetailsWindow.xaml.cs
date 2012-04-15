@@ -23,14 +23,12 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class ProductDetailsWindow : Window
     {
-        private readonly Model1Container _dbContext;
         private readonly Product _product;
         private readonly ObservableCollection<ExpirationDate> _expirationDates;
 
-        public ProductDetailsWindow(Product product, Model1Container dbContext)
+        public ProductDetailsWindow(Product product)
         {
             InitializeComponent();
-            _dbContext = dbContext;
             _product = product;
             _expirationDates = new ObservableCollection<ExpirationDate>(_product.ExpirationDates);
             _expirationDates.CollectionChanged += ExpirationDates_CollectionChanged;
@@ -72,7 +70,7 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            _dbContext.SaveChanges();
+            ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
         }
@@ -90,14 +88,14 @@ namespace IremEczOtomasyonu
             }
             
             // Remove possibly added expiration dates
-            foreach (var entry in _dbContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added))
+            foreach (var entry in ObjectCtx.Context.ObjectStateManager.GetObjectStateEntries(EntityState.Added))
             {
                 if (entry.Entity != null)
                 {
-                    _dbContext.DeleteObject(entry.Entity);
+                    ObjectCtx.Context.DeleteObject(entry.Entity);
                 }
             }
-            _dbContext.AcceptAllChanges();
+            ObjectCtx.Context.AcceptAllChanges();
         }
     }
 }
