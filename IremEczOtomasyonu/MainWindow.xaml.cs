@@ -62,6 +62,11 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleButton_Click(object sender, RoutedEventArgs e)
         {
+            _customersUserControl.ExecuteCustomerSale(_customersUserControl.customersDataGrid.SelectedItem as Customer);
+        }
+
+        private void ProductSaleWithoutCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
             _customersUserControl.ExecuteCustomerSale(null);
         }
 
