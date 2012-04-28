@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("IremEczOtomasyonu")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("İrem Eczanesi Dermokozmetik Sistemi")]
+[assembly: AssemblyDescription("Bu uygulama Emin Şenay tarafından Nazilli İrem Eczanesi için özel olarak geliştirilmiştir. Emin Şenay'dan yazılı izin alınmadıkça ürünün kopyalanması, dağıtılması veya İrem Eczanesi haricinde kullanılması yasaktır. Bilgi için eminsenay@gmail.com adresini kullanabilirsiniz.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("IremEczOtomasyonu")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyProduct("İrem Eczanesi Dermokozmetik Sistemi")]
+[assembly: AssemblyCopyright("Copyright © Emin Şenay  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -53,3 +53,4 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("tr")]

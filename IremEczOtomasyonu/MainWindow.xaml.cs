@@ -123,5 +123,11 @@ namespace IremEczOtomasyonu
                                                             };
             productSaleCountWindow.ShowDialog();
         }
+
+        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox(this);
+            aboutBox.ShowDialog();
+        }
     }
 }

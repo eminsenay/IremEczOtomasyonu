@@ -20,7 +20,7 @@
                 <MenuItem Header="Son Kullanma Tarihleri Yaklaşan Ürünler" Name="productExpirationDatesMenuItem" />
             </MenuItem>
             <MenuItem Header="Yardım" >
-                <MenuItem Header="Hakkında" />
+                <MenuItem Header="Hakkında" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
             </MenuItem>
         </Menu>
         <ToolBar Name="toolBar1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="28" Margin="0,23,0,0" >
