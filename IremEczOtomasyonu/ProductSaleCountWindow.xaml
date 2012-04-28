@@ -41,8 +41,8 @@
         <DataGrid AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="6,145,6,6" Name="saleCountDataGrid" VerticalAlignment="Stretch" IsReadOnly="True"
                   CanUserSortColumns="True" ItemsSource="{Binding}">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=ProductName}" Header="Marka" Width="*" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Brand}" Header="İsim" Width="*" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=ProductName}" Header="İsim" Width="*" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" Width="*" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="numSoldColumn" Binding="{Binding Path=TotalNumSold}" Header="Satış Adedi" Width="SizeToHeader" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
