@@ -54,6 +54,12 @@ namespace IremEczOtomasyonu
                 MessageBox.Show(validationMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            string stockControlMsg = userControlSales.StockControl();
+            if (stockControlMsg != null)
+            {
+                MessageBox.Show(stockControlMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             
             if (userControlSales.CurrentProductSale.SaleItems.Count == 0)
             {

@@ -134,6 +134,20 @@ namespace IremEczOtomasyonu
 
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
+            // validation check
+            string validationMsg = userControlSales.Validate();
+            if (validationMsg != null)
+            {
+                MessageBox.Show(validationMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string stockControlMsg = userControlSales.StockControl();
+            if (stockControlMsg != null)
+            {
+                MessageBox.Show(stockControlMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
             ObjectCtx.Context.SaveChanges();
 
             foreach (ProductSale productSale in _changedProductSales)
@@ -154,6 +168,20 @@ namespace IremEczOtomasyonu
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
+            // validation check
+            string validationMsg = userControlSales.Validate();
+            if (validationMsg != null)
+            {
+                MessageBox.Show(validationMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            string stockControlMsg = userControlSales.StockControl();
+            if (stockControlMsg != null)
+            {
+                MessageBox.Show(stockControlMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
             ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
