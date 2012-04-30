@@ -232,6 +232,41 @@ namespace IremEczOtomasyonu
         }
 
         /// <summary>
+        /// Checks the number of bought items in the stock and produces an error message if stock of the items are
+        /// below 0.
+        /// </summary>
+        /// <returns></returns>
+        public string StockControl()
+        {
+            StringBuilder errorMsg = null;
+            foreach (SaleItem saleItem in CurrentProductSale.SaleItems)
+            {
+                if (saleItem.Product.NumItems - saleItem.NumSold >= 0)
+                {
+                    continue;
+                }
+
+                if (errorMsg == null)
+                {
+                    errorMsg = new StringBuilder(
+                        "Şu ürünlerin stok miktarı 0'ın altında: " + saleItem.Product.Name);
+                }
+                else
+                {
+                    errorMsg.Append(", " + saleItem.Product.Name);
+                }
+            }
+            if (errorMsg == null)
+            {
+                return null;
+            }
+            errorMsg.AppendLine();
+            errorMsg.AppendLine("Lütfen bunların sistemdeki stoğunu tekrar kontrol edin.");
+            return errorMsg.ToString();
+        }
+        
+
+        /// <summary>
         /// Removes all added sale items from the product sale.
         /// </summary>
         public void RevertProductSale()

@@ -15,7 +15,7 @@
         <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="68,12,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="150" />
         <Button Content="Ekle" Height="23" HorizontalAlignment="Left" Margin="224,12,0,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
-        <DataGrid AutoGenerateColumns="False" Margin="12,41,12,43" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
+        <DataGrid AutoGenerateColumns="False" Margin="12,41,12,68" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
                   CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
@@ -71,8 +71,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,9" Name="customerNameLabel" VerticalAlignment="Bottom" />
-        <TextBox Height="23" Width="150" HorizontalAlignment="Left" Margin="68,0,0,12" Name="customerNameTextBox" VerticalAlignment="Bottom"
+        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Right" Margin="0,0,190,5" Name="customerNameLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Width="150" HorizontalAlignment="Right" Margin="0,0,34,8" Name="customerNameTextBox" VerticalAlignment="Bottom"
                  Text="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş, Mode=OneWay}" IsReadOnly="True">
             <TextBox.ContextMenu>
                 <ContextMenu>
@@ -80,8 +80,11 @@
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>
-        <Label Content="Toplam:" Height="28" HorizontalAlignment="Right" Margin="0,0,168,9" Name="totalPriceLabel" VerticalAlignment="Bottom" />
-        <TextBox Height="23" Margin="0,0,12,12" Name="totalPriceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150">
+        <Label Content="Detaylar:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,34" Name="detailsLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="48" HorizontalAlignment="Left" Margin="68,0,0,12" Name="textBoxRemarks" VerticalAlignment="Bottom" Width="231"
+                 VerticalScrollBarVisibility="Auto" Text="{Binding Mode=TwoWay, Path=Remarks, ValidatesOnDataErrors=True}"/>
+        <Label Content="Toplam:" Height="28" HorizontalAlignment="Right" Margin="0,0,168,34" Name="totalPriceLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Margin="0,0,12,37" Name="totalPriceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150">
             <TextBox.Text>
                 <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
@@ -90,8 +93,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Height="23" HorizontalAlignment="Left" Margin="224,0,0,12" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,8" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="Images/magnifying_glass.ico" />
         </Button>
+
     </Grid>
 </UserControl>
