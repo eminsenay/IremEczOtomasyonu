@@ -129,5 +129,26 @@ namespace IremEczOtomasyonu
             AboutBox aboutBox = new AboutBox(this);
             aboutBox.ShowDialog();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Check the expiration dates
+            DateTime oneMonthLater = DateTime.Today + new TimeSpan(30, 0, 0, 0);
+            if (ObjectCtx.Context.ExpirationDates.Any(x => x.NumItems > 0 && oneMonthLater >= x.ExDate))
+            {
+                MessageBox.Show(
+                    "Son kullanma tarihi 30 gün içinde dolacak olan ürünleriniz var. Detaylı bilgi için: Ekstra --> Son Kullanma Tarihleri Yaklaşan Ürünler");
+            }
+        }
+
+        private void ProductExpirationDatesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            IncomingExpirationsWindow incomingExpirationsWindow = new IncomingExpirationsWindow
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            incomingExpirationsWindow.ShowDialog();
+        }
     }
 }
