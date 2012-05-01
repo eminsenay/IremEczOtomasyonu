@@ -66,6 +66,7 @@
           <Property Name="NumItems" Type="int" Nullable="false" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ProductId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ExDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -236,6 +237,7 @@
           <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Guid" Name="ProductId" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Model1.ProductPurchase_Product" FromRole="ProductPurchas" ToRole="Product" />
+          <Property Type="DateTime" Name="ExDate" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -373,6 +375,7 @@
           <EntitySetMapping Name="ProductPurchases">
             <EntityTypeMapping TypeName="Model1.ProductPurchase">
               <MappingFragment StoreEntitySet="ProductPurchases">
+                <ScalarProperty Name="ExDate" ColumnName="ExDate" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NumItems" ColumnName="NumItems" />
@@ -441,7 +444,7 @@
       <Diagram Name="Model1" >
         <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="0.625" PointY="0.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="Model1.ExpirationDate" Width="1.5" PointX="7.25" PointY="4.125" Height="1.9802864583333317" />
-        <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="5" PointY="4" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="5" PointY="4" Height="2.5571907552083317" />
         <EntityTypeShape EntityType="Model1.Product" Width="1.5" PointX="6.875" PointY="0.5" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="Model1.ProductSale" Width="1.5" PointX="2.875" PointY="0.875" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="Model1.SaleItem" Width="1.5" PointX="4.875" PointY="0.75" Height="2.5571907552083317" />

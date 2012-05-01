@@ -6,6 +6,10 @@ using System.Text;
 namespace IremEczOtomasyonu.BL
 {
     public enum DealType { Purchase, Sale }
+    
+    /// <summary>
+    /// Collects the purchases and sales together.
+    /// </summary>
     public class Deal
     {
         public DateTime TransactionDate { get; set; }

@@ -963,7 +963,8 @@ namespace IremEczOtomasyonu.BL
         /// <param name="numItems">Initial value of the NumItems property.</param>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="productId">Initial value of the ProductId property.</param>
-        public static ProductPurchase CreateProductPurchase(global::System.Decimal price, global::System.DateTime purchaseDate, global::System.Int32 numItems, global::System.Guid id, global::System.Guid productId)
+        /// <param name="exDate">Initial value of the ExDate property.</param>
+        public static ProductPurchase CreateProductPurchase(global::System.Decimal price, global::System.DateTime purchaseDate, global::System.Int32 numItems, global::System.Guid id, global::System.Guid productId, global::System.DateTime exDate)
         {
             ProductPurchase productPurchase = new ProductPurchase();
             productPurchase.Price = price;
@@ -971,6 +972,7 @@ namespace IremEczOtomasyonu.BL
             productPurchase.NumItems = numItems;
             productPurchase.Id = id;
             productPurchase.ProductId = productId;
+            productPurchase.ExDate = exDate;
             return productPurchase;
         }
 
@@ -1123,6 +1125,30 @@ namespace IremEczOtomasyonu.BL
         private global::System.Guid _ProductId;
         partial void OnProductIdChanging(global::System.Guid value);
         partial void OnProductIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ExDate
+        {
+            get
+            {
+                return _ExDate;
+            }
+            set
+            {
+                OnExDateChanging(value);
+                ReportPropertyChanging("ExDate");
+                _ExDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExDate");
+                OnExDateChanged();
+            }
+        }
+        private global::System.DateTime _ExDate;
+        partial void OnExDateChanging(global::System.DateTime value);
+        partial void OnExDateChanged();
 
         #endregion
     

@@ -91,6 +91,7 @@ namespace IremEczOtomasyonu
             }
 
             CurrentPurchase.Id = Guid.NewGuid();
+            CurrentPurchase.ExDate = _currExpirationDate.ExDate;
             CurrentPurchase.Product.NumItems += CurrentPurchase.NumItems;
             ObjectCtx.Context.AddToProductPurchases(CurrentPurchase);
 
