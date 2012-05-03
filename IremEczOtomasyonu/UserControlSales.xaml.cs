@@ -64,25 +64,24 @@ namespace IremEczOtomasyonu
                 return;
             }
 
+            ExpirationDate selectedExpDate = newProduct.ExpirationDates.FirstOrDefault();
+            if (selectedExpDate == null)
+            {
+                Debug.Fail("No Expiration date can be found for the product.");
+                return;
+            }
             SaleItem newItem = new SaleItem
                                {
                                    Id = Guid.NewGuid(),
                                    Product = newProduct,
                                    NumSold = 1,
                                    ProductSale = CurrentProductSale,
-                                   ExDate = newProduct.ExpirationDates.Select(x => x.ExDate).FirstOrDefault(),
+                                   ExDate = selectedExpDate.ExDate,
                                    UnitPrice = newProduct.CurrentSellingPrice ?? 0
                                };
             CurrentProductSale.SaleItems.Add(newItem);
             newItem.Product.NumItems -= newItem.NumSold;
-
-            ExpirationDate selectedExpDate = newItem.Product.ExpirationDates.FirstOrDefault(
-                    x => x.ExDate == newItem.ExDate);
-            Debug.Assert(selectedExpDate != null, "Expiration Date of the sale item cannot be found.");
-            if (selectedExpDate != null)
-            {
-                selectedExpDate.NumItems -= newItem.NumSold;
-            }
+            selectedExpDate.NumItems -= newItem.NumSold;
 
             // Make prevnumsold equal. Values should only be different when the user manually changes the numsold.
             newItem.PrevNumSold = newItem.NumSold;
@@ -119,10 +118,28 @@ namespace IremEczOtomasyonu
                 currItem.Product.NumItems -= diff;
                 ExpirationDate selectedExpDate = currItem.Product.ExpirationDates.FirstOrDefault(
                     x => x.ExDate == currItem.ExDate);
-                Debug.Assert(selectedExpDate != null, "Expiration Date of the sale item cannot be found.");
                 if (selectedExpDate != null)
                 {
                     selectedExpDate.NumItems -= diff;
+                }
+                else
+                {
+                    // User has modified the product's expiration date after selling it
+                    // We don't track expiration date modifications, so create a new expirationDate object with 
+                    // the original date and notify the user.
+
+                    MessageBox.Show("Ürünü sisteme girdikten sonra son kullanma tarihlerini değiştirmişsiniz.\n" +
+                        "Eklenen/çıkarılan ürünler yine de orijinal son kullanma tarihini kullanacaklardır.\n" +
+                        "Bu penceredeki işinizin bitiminden sonra ürün detaylarına girip son kullanma tarihlerini " +
+                        "kontrol etmeniz faydalı olabilir.", "Ürün son kullanma tarihi uyarısı", MessageBoxButton.OK);
+                    ExpirationDate orgExpirationDate = new ExpirationDate
+                    {
+                        Id = Guid.NewGuid(),
+                        ExDate = currItem.ExDate,
+                        NumItems = -diff,
+                        Product = currItem.Product
+                    };
+                    currItem.Product.ExpirationDates.Add(orgExpirationDate);
                 }
                 currItem.PrevNumSold = currItem.NumSold;
             }
@@ -182,10 +199,28 @@ namespace IremEczOtomasyonu
             product.NumItems += saleItem.NumSold;
             ExpirationDate selectedExpDate = product.ExpirationDates.FirstOrDefault(
                     x => x.ExDate == saleItem.ExDate);
-            Debug.Assert(selectedExpDate != null, "Expiration Date of the sale item cannot be found.");
             if (selectedExpDate != null)
             {
                 selectedExpDate.NumItems += saleItem.NumSold;
+            }
+            else
+            {
+                // User has modified the product's expiration date after selling it
+                // We don't track expiration date modifications, so create a new expirationDate object with 
+                // the original date and notify the user.
+
+                MessageBox.Show("Ürünü sisteme girdikten sonra son kullanma tarihlerini değiştirmişsiniz.\n" +
+                    "Eklenen/çıkarılan ürünler yine de orijinal son kullanma tarihini kullanacaklardır.\n" +
+                    "Bu penceredeki işinizin bitiminden sonra ürün detaylarına girip son kullanma tarihlerini " +
+                    "kontrol etmeniz faydalı olabilir.", "Ürün son kullanma tarihi uyarısı", MessageBoxButton.OK);
+                ExpirationDate orgExpirationDate = new ExpirationDate
+                {
+                    Id = Guid.NewGuid(),
+                    ExDate = saleItem.ExDate,
+                    NumItems = saleItem.NumSold,
+                    Product = product
+                };
+                product.ExpirationDates.Add(orgExpirationDate);
             }
             product.SaleItems.Remove(saleItem);
             ObjectCtx.Context.Detach(saleItem);
