@@ -16,7 +16,7 @@
             <MenuItem Header="Ekstra">
                 <MenuItem Header="Kaç Paralık Ürünüm Var?" Name="productTotalPriceMenuItem" Click="ProductTotalPriceMenuItem_Click" />
                 <MenuItem Header="Geçmiş Satış Görüntüleme" Name="productSaleDisplayMenuItem" Click="ProductSaleDisplayMenuItem_Click" />
-                <MenuItem Header="Geçmiş Alış Görüntüleme" Name="productPurchaseDisplayMenuItem" />
+                <MenuItem Header="Geçmiş Alış Görüntüleme" Name="productPurchaseDisplayMenuItem" Click="ProductPurchaseDisplayMenuItem_Click" />
                 <MenuItem Header="Ürün Satış Miktarları" Name="productSaleCountMenuItem" Click="ProductSaleCountMenuItem_Click" />
                 <MenuItem Header="Son Kullanma Tarihleri Yaklaşan Ürünler" Name="productExpirationDatesMenuItem" Click="ProductExpirationDatesMenuItem_Click" />
             </MenuItem>

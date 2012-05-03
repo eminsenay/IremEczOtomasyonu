@@ -150,5 +150,26 @@ namespace IremEczOtomasyonu
             };
             incomingExpirationsWindow.ShowDialog();
         }
+
+        private void ProductPurchaseDisplayMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_customersUserControl.AllChangesSaved)
+            {
+                MessageBox.Show("Bu işlemden önce yaptığınız değişiklikleri kaydetmeniz gerekmektedir.",
+                                "Değişiklik uyarısı", MessageBoxButton.OK);
+                return;
+            }
+            PurchaseListWindow purchaseListWindow = new PurchaseListWindow
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            if (purchaseListWindow.ShowDialog() != true)
+            {
+                ObjectCtx.Reload();
+                _customersUserControl.Reload();
+                _productsUserControl.Reload();
+            }
+        }
     }
 }

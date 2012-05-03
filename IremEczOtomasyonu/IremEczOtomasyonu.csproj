@@ -118,6 +118,9 @@
     <Compile Include="ProductSaleCountWindow.xaml.cs">
       <DependentUpon>ProductSaleCountWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PurchaseListWindow.xaml.cs">
+      <DependentUpon>PurchaseListWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaleListWindow.xaml.cs">
       <DependentUpon>SaleListWindow.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PurchaseListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SaleListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,6 +244,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="TextFile1.txt" />
     <Resource Include="Images\IremEczAboutBox.gif" />
     <Content Include="Database1.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
