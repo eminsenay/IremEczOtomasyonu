@@ -36,7 +36,7 @@ namespace IremEczOtomasyonu
         /// </summary>
         /// <param name="sender">Object the sent the event.</param>
         /// <param name="e">Navigation events arguments.</param>
-        private void hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             if (e.Uri != null && string.IsNullOrEmpty(e.Uri.OriginalString) == false)
             {
@@ -91,18 +91,9 @@ namespace IremEczOtomasyonu
         {
             get
             {
-                string result = string.Empty;
                 // first, try to get the version string from the assembly.
-                Version version = Assembly.GetExecutingAssembly().GetName().Version;
-                if (version != null)
-                {
-                    result = version.ToString();
-                }
-                else
-                {
-                    // if that fails, try to get the version from a resource in the Application.
-                    result = GetLogicalResourceString(xPathVersion);
-                }
+                Version version1 = Assembly.GetExecutingAssembly().GetName().Version;
+                string result = version1 != null ? version1.ToString() : GetLogicalResourceString(xPathVersion);
                 return result;
             }
         }
