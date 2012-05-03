@@ -9,11 +9,11 @@
         <CollectionViewSource x:Key="productPurchasesViewSource" />
     </Window.Resources>
     <Grid>
-        <Grid HorizontalAlignment="Stretch" Name="grid1" DataContext="{Binding Source={StaticResource productPurchasesViewSource}}" VerticalAlignment="Top">
+        <Grid HorizontalAlignment="Stretch" Name="grid1" DataContext="{Binding Source={StaticResource productPurchasesViewSource}}" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="*" />
+                <!--<ColumnDefinition Width="25*" />-->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -28,28 +28,24 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="25" />
             </Grid.RowDefinitions>
             <Label Content="Barkod:" Grid.Row="0" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="barcodeTextBox" VerticalAlignment="Center" Width="180" IsEnabled="False"
+            <TextBox Grid.Column="1" Height="23" Margin="3,3,5,3" Name="barcodeTextBox" VerticalAlignment="Center" IsEnabled="False"
                      Text="{Binding Path=Product.Barcode, Mode=OneWay}" />
             <Label Content="Ürün Adı:" Grid.Row="1" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="nameTextBox" VerticalAlignment="Center" Width="180"
-                     Text="{Binding Path=Product.Name, Mode=OneWay}" IsEnabled="False"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Height="23" Margin="3,3,5,3" Name="nameTextBox" VerticalAlignment="Center" Text="{Binding Path=Product.Name, Mode=OneWay}" IsEnabled="False"/>
             <Label Content="Ürün Markası:" Grid.Row="2" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="brandTextBox" VerticalAlignment="Center" Width="180"
-                     Text="{Binding Path=Product.Brand, Mode=OneWay}" IsEnabled="False" />
+            <TextBox Grid.Column="1" Grid.Row="2" Height="23" Margin="3,3,5,3" Name="brandTextBox" VerticalAlignment="Center" Text="{Binding Path=Product.Brand, Mode=OneWay}" IsEnabled="False" />
             <Label Content="Stoktaki Adedi:" Grid.Row="3" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="numItemsInStockTextBox" 
-                     Text="{Binding Path=Product.NumItems, Mode=OneWay}" VerticalAlignment="Center" Width="180" IsEnabled="False" />
+            <TextBox Grid.Column="1" Grid.Row="3" Height="23" Margin="3,3,5,3" Name="numItemsInStockTextBox" 
+                     Text="{Binding Path=Product.NumItems, Mode=OneWay}" VerticalAlignment="Center" IsEnabled="False" />
             <Label Content="Güncel Alış Fiyatı:" Grid.Row="4" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="4" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Width="180"
-                     Text="{Binding Path=Product.CurrentBuyingPrice, Mode=OneWay}" IsEnabled="False"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3,3,5,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Text="{Binding Path=Product.CurrentBuyingPrice, Mode=OneWay}" IsEnabled="False"/>
             <Label Content="Güncel Satış Fiyatı:" Grid.Row="5" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="5" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Width="180"
-                     Text="{Binding Path=Product.CurrentSellingPrice, Mode=OneWay}" IsEnabled="False"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Height="23" Margin="3,3,5,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Text="{Binding Path=Product.CurrentSellingPrice, Mode=OneWay}" IsEnabled="False"/>
             <Label Content="Kaç Adet Alındı:" Grid.Row="6" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="6" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="numItemsBoughtTextBox" VerticalAlignment="Center" Width="180">
+            <TextBox Grid.Column="1" Grid.Row="6" Height="23" Margin="3,3,5,3" Name="numItemsBoughtTextBox" VerticalAlignment="Center">
                 <Binding Path="NumItems" Mode="OneWayToSource" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <BL:IntegerValidationRule Min="1"/>
@@ -57,7 +53,7 @@
                 </Binding>
             </TextBox>
             <Label Content="Alış Fiyatı:" Grid.Row="7" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="7" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="priceTextBox" VerticalAlignment="Center" Width="180" >
+            <TextBox Grid.Column="1" Grid.Row="7" Height="23" Margin="3,3,5,3" Name="priceTextBox" VerticalAlignment="Center">
                 <Binding Path="Price" Mode="OneWayToSource" ValidatesOnDataErrors="True" TargetNullValue="0" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <BL:MoneyValidationRule/>
@@ -65,7 +61,7 @@
                 </Binding>
             </TextBox>
             <Label Content="Alış Tarihi:" Grid.Row="8" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <DatePicker Grid.Column="1" Grid.Row="8" Height="25" HorizontalAlignment="Left" Margin="3,3,0,3" Name="purchaseDateDatePicker" VerticalAlignment="Center" Width="175">
+            <DatePicker Grid.Column="1" Grid.Row="8" Height="25" Margin="3,3,5,3" Name="purchaseDateDatePicker" VerticalAlignment="Center">
                 <DatePicker.SelectedDate>
                     <Binding Path="PurchaseDate" Mode="TwoWay" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
@@ -75,7 +71,7 @@
                 </DatePicker.SelectedDate>
             </DatePicker>
             <Label Content="Son Kullanma Tarihi:" Grid.Row="9" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <DatePicker Grid.Column="1" Grid.Row="9" Height="25" HorizontalAlignment="Left" Margin="3,3,0,3" Name="expirationDateDatePicker" VerticalAlignment="Center" Width="175" CalendarOpened="ExpirationDateDatePicker_CalendarOpened">
+            <DatePicker Grid.Column="1" Grid.Row="9" Height="25" Margin="3,3,5,3" Name="expirationDateDatePicker" VerticalAlignment="Center" CalendarOpened="ExpirationDateDatePicker_CalendarOpened">
                 <DatePicker.SelectedDate>
                     <Binding Path="ExDate" Mode="OneWayToSource" ValidatesOnDataErrors="True">
                         <Binding.ValidationRules>
@@ -85,10 +81,10 @@
                 </DatePicker.SelectedDate>
             </DatePicker>
             <Label Content="Alış Notu:" Grid.Row="10" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Row="11" Grid.ColumnSpan="2" Height="80" HorizontalAlignment="Left" Margin="6,3,0,3" Name="remarksTextBox" VerticalAlignment="Center" Width="292" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+            <TextBox Grid.Row="11" Grid.ColumnSpan="2" Height="80" Margin="6,3,5,3" Name="remarksTextBox" VerticalAlignment="Center" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                      Text="{Binding Path=Remarks, Mode=OneWayToSource}"/>
-            <Button Grid.Row="12" Content="Tamam" Height="23" HorizontalAlignment="Right" Margin="3,3,0,3" Name="buttonOk" VerticalAlignment="Top" Width="75" Grid.Column="1" IsDefault="True" Click="ButtonOk_Click" />
-            <Button Grid.Row="12" Content="İptal" Height="23" HorizontalAlignment="Right" Margin="0,3,82,3" Name="buttonCancel" VerticalAlignment="Top" Width="75" Grid.Column="1" IsCancel="True" />
+            <Button Grid.Row="12" Content="Tamam" Height="23" HorizontalAlignment="Right" Margin="0,0,6,6" Name="buttonOk" VerticalAlignment="Bottom" Width="75" Grid.Column="1" IsDefault="True" Click="ButtonOk_Click" />
+            <Button Grid.Row="12" Content="İptal" Height="23" HorizontalAlignment="Right" Margin="0,0,87,6" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" Grid.Column="1" IsCancel="True" />
         </Grid>
         
     </Grid>
