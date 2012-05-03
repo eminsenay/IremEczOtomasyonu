@@ -1,0 +1,11 @@
+﻿xsJ#_14|8[452bZ
+
+
+C:\WINNT\Microsoft.NET\Framework\v4.0.30319\aspnet_regiis (x64 falan klasörünün altinda da olabilir.)
+
+copy App.Config App.Config.original
+rename App.config web.config
+aspnet_regiis -pef connectionStrings . -prov DataProtectionConfigurationProvider
+rename web.config App.config
+
+releasedeyken iremeczotomasyonu.config i bu sifreli config ile degistir. Bu kadar. Afiyet olsun.

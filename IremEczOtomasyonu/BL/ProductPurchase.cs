@@ -29,5 +29,14 @@ namespace IremEczOtomasyonu.BL
         {
             get { return null; }
         }
+
+        public int PrevNumItems { get; set; }
+
+// ReSharper disable UnusedParameter.Local
+        partial void OnNumItemsChanging(int value)
+// ReSharper restore UnusedParameter.Local
+        {
+            PrevNumItems = NumItems;
+        }
     }
 }
