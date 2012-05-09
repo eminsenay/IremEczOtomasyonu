@@ -27,9 +27,23 @@ namespace IremEczOtomasyonu
     public partial class UserControlSales : UserControl
     {
         private bool _isManualEditCommit;
-        public event ChangedEventHandler CurrentProductSaleChanged;
+        private Window _parentWindow;
+
+        private Window ParentWindow
+        {
+            get
+            {
+                if (_parentWindow == null)
+                {
+                    _parentWindow = Window.GetWindow(this);
+                }
+                return _parentWindow;
+            }
+        }
 
         public ProductSale CurrentProductSale { get; set; }
+
+        public event ChangedEventHandler CurrentProductSaleChanged;
 
         public UserControlSales()
         {
@@ -113,6 +127,8 @@ namespace IremEczOtomasyonu
             Debug.Assert(currItem != null, "Associated sale item cannot be retrieved.");
             if (currItem != null && currItem.PrevNumSold != currItem.NumSold)
             {
+                // User has changed the number of items cell.
+
                 int diff = currItem.NumSold - currItem.PrevNumSold;
 
                 currItem.Product.NumItems -= diff;
@@ -121,6 +137,12 @@ namespace IremEczOtomasyonu
                 if (selectedExpDate != null)
                 {
                     selectedExpDate.NumItems -= diff;
+                    if (selectedExpDate.NumItems < 0)
+                    {
+                        MessageBox.Show("Ürünün geçerli son kullanma tarihine sahip stok miktarı sıfırın altına indi. " +
+                            "Lütfen stok bilgilerini tekrar kontrol edin.", "Stok uyarısı",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
                 else
                 {
@@ -144,6 +166,7 @@ namespace IremEczOtomasyonu
                 currItem.PrevNumSold = currItem.NumSold;
             }
 
+            // Set the flag to false for future edits
             _isManualEditCommit = false;
             UpdateTotalPrice();
 
@@ -157,7 +180,7 @@ namespace IremEczOtomasyonu
         /// <param name="e"></param>
         private void ProductSaleDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.OriginalSource is DataGridCell && e.Key == Key.Delete)
             {
                 DeleteSelectedSaleItem();
                 e.Handled = true;
@@ -246,8 +269,7 @@ namespace IremEczOtomasyonu
             CustomerListWindow customerListWindow = new CustomerListWindow
             {
                 SelectedCustomer = CurrentProductSale.Customer,
-                Owner = Parent as Window,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                Owner = ParentWindow
             };
             customerListWindow.ShowDialog();
             if (customerListWindow.DialogResult == true)
@@ -273,6 +295,10 @@ namespace IremEczOtomasyonu
         /// <returns></returns>
         public string StockControl()
         {
+            if (CurrentProductSale == null)
+            {
+                return null;
+            }
             StringBuilder errorMsg = null;
             foreach (SaleItem saleItem in CurrentProductSale.SaleItems)
             {
@@ -306,9 +332,11 @@ namespace IremEczOtomasyonu
         /// </summary>
         public void RevertProductSale()
         {
-            foreach (SaleItem saleItem in productSaleDataGrid.Items)
+            for (int i = 0; i < productSaleDataGrid.Items.Count; i++)
             {
+                SaleItem saleItem = productSaleDataGrid.Items[i] as SaleItem;
                 DeleteSaleItem(saleItem);
+                i--;
             }
         }
 
@@ -316,6 +344,45 @@ namespace IremEczOtomasyonu
         {
             CurrentProductSale.Customer = null;
             OnCurrentProductSaleChanged();
+        }
+
+        private void ExpirationDateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count <= 0 || e.RemovedItems.Count <= 0)
+            {
+                return;
+            }
+            DateTime prevSelection = (DateTime)e.RemovedItems[0];
+            DateTime currSelection = (DateTime)e.AddedItems[0];
+
+            SaleItem currItem = productSaleDataGrid.SelectedItem as SaleItem;
+            if (currItem == null)
+            {
+                return;
+            }
+
+            // User changed the expiration date of the sale item. 
+            // Change associated expiration date objects accordingly.
+
+            ExpirationDate oldExpDate =
+                currItem.Product.ExpirationDates.FirstOrDefault(x => x.ExDate == prevSelection);
+            ExpirationDate newExpDate =
+                currItem.Product.ExpirationDates.FirstOrDefault(x => x.ExDate == currSelection);
+
+            if (oldExpDate == null || newExpDate == null)
+            {
+                // They cannot be null since both of them are selected from the combo box.
+                Debug.Fail("Expiration date of the sale item cannot be found");
+                return;
+            }
+            oldExpDate.NumItems += currItem.NumSold;
+            newExpDate.NumItems -= currItem.NumSold;
+            if (newExpDate.NumItems < 0)
+            {
+                MessageBox.Show("Ürünün geçerli son kullanma tarihine sahip stok miktarı sıfırın altına indi. " +
+                                "Lütfen stok bilgilerini tekrar kontrol edin.", "Stok uyarısı",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
     }
 }

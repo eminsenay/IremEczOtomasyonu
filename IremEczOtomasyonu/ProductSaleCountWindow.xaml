@@ -5,7 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d" 
         xmlns:BL="clr-namespace:IremEczOtomasyonu.BL" xmlns:System="clr-namespace:System;assembly=mscorlib"
-        Title="Ürün Satış Miktarları" Height="400" Width="650">
+        Title="Ürün Satış Miktarları" Height="400" Width="650" WindowStartupLocation="CenterOwner"
+        Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
         <CollectionViewSource x:Key="productSaleCountViewSource" />
     </Window.Resources>

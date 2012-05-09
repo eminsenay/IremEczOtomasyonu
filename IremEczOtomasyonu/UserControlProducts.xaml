@@ -21,6 +21,11 @@
         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="12,41" Name="productsDataGrid" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" PreviewKeyDown="ProductsDataGrid_PreviewKeyDown" SelectionMode="Single"
                   CanUserAddRows="False">
+            <DataGrid.RowStyle>
+                <Style>
+                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="ProductsDataGrid_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

@@ -36,7 +36,7 @@
                 <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:d}">
+                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:d}" SelectionChanged="ExpirationDateComboBox_SelectionChanged">
                                 <ComboBox.ItemsSource>
                                     <Binding Path="Product.ExpirationDates" Converter="{StaticResource expDatesToDateTimeListConverter}" />
                                 </ComboBox.ItemsSource>
@@ -49,7 +49,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="unitPriceColumn" Header="Birim Fiyat" MinWidth="100">
                     <DataGridTextColumn.Binding>
-                        <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True">
+                        <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                             <Binding.ValidationRules>
                                 <BL:MoneyValidationRule/>
                             </Binding.ValidationRules>
@@ -86,7 +86,7 @@
         <Label Content="Toplam:" Height="28" HorizontalAlignment="Right" Margin="0,0,168,34" Name="totalPriceLabel" VerticalAlignment="Bottom" />
         <TextBox Height="23" Margin="0,0,12,37" Name="totalPriceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150">
             <TextBox.Text>
-                <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True">
+                <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                     <Binding.ValidationRules>
                         <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>

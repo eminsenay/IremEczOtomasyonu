@@ -4,17 +4,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:my="clr-namespace:IremEczOtomasyonu.BL" 
-        Loaded="Window_Loaded">
+        xmlns:BL="clr-namespace:IremEczOtomasyonu.BL" 
+        Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" 
+        Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
-        <CollectionViewSource x:Key="productPurchasesViewSource" d:DesignSource="{d:DesignInstance my:ProductPurchase, CreateList=True}" />
+        <CollectionViewSource x:Key="productPurchasesViewSource" d:DesignSource="{d:DesignInstance BL:ProductPurchase, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource productPurchasesViewSource}">
         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Name="productPurchasesDataGrid" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" Margin="0,0,0,41" CanUserAddRows="False" CanUserDeleteRows="True" 
-                  CellEditEnding="ProductPurchasesDataGrid_CellEditEnding">
+                  CellEditEnding="ProductPurchasesDataGrid_CellEditEnding" PreviewKeyDown="ProductPurchasesDataGrid_PreviewKeyDown">
             <DataGrid.Columns>
-                <DataGridTemplateColumn x:Name="purchaseDateColumn" Header="Tarih" Width="120">
+                <DataGridTemplateColumn x:Name="purchaseDateColumn" Header="Tarih" Width="120" CanUserSort="True" SortMemberPath="PurchaseDate">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Margin="0" Style="{StaticResource TextBlockInsideDataGrid}" 
@@ -31,12 +32,33 @@
                                     Width="*" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="productBrandColumn" Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" MinWidth="150" 
                                     Width="*" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Adet" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Path=Price, StringFormat={}{0:0.00}}" Header="Birim Fiyat" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:d}}" Header="Son Kullanma Tarihi" 
+                <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="SizeToHeader">
+                	<DataGridTextColumn.Binding>
+                        <Binding Path="NumItems" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <BL:IntegerValidationRule Min="0"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            	<DataGridTextColumn x:Name="priceColumn" Header="Birim Fiyat" Width="SizeToHeader">
+                	<DataGridTextColumn.Binding>
+                        <Binding Path="Price" StringFormat="{}{0:C}" ConverterCulture="tr-TR" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <BL:MoneyValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            	<DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:d}}" Header="Son Kullanma Tarihi" 
                                     Width="120" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="remarksColumn" Binding="{Binding Path=Remarks}" Header="Detaylar" MinWidth="100" Width="3*" />
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="datagridDeletePurchaseMenuItem" Header="Sil" Click="DatagridDeletePurchaseMenuItem_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <Button Content="İptal" Height="23" HorizontalAlignment="Right" IsCancel="True" Margin="0,0,12,12" Name="cancelButton" VerticalAlignment="Bottom" Width="75" />
         <Button Content="Tamam" Height="23" HorizontalAlignment="Right" IsDefault="True" Margin="0,0,93,12" Name="okButton" VerticalAlignment="Bottom" Width="75" Click="OkButton_Click" />

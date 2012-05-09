@@ -6,7 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:my="clr-namespace:IremEczOtomasyonu.BL" 
         mc:Ignorable="d" 
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" WindowStartupLocation="CenterOwner"
+        Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
         <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
     </Window.Resources>

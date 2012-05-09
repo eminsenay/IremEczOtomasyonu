@@ -66,7 +66,7 @@ namespace IremEczOtomasyonu.BL
                             {
                                 Details = purchase.Remarks,
                                 NumItems = purchase.NumItems,
-                                TotalPrice = purchase.Price,
+                                UnitPrice = purchase.Price,
                                 TransactionDate = purchase.PurchaseDate,
                                 TransactionType = DealType.Purchase
                             };
@@ -79,7 +79,7 @@ namespace IremEczOtomasyonu.BL
                             {
                                 Details = saleItem.ProductSale.Remarks,
                                 NumItems = saleItem.NumSold,
-                                TotalPrice = saleItem.NumSold * saleItem.UnitPrice,
+                                UnitPrice = saleItem.UnitPrice,
                                 TransactionDate = saleItem.ProductSale.SaleDate,
                                 TransactionType = DealType.Sale,
                                 Buyer = saleItem.ProductSale.Customer

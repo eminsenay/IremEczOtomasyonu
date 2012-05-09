@@ -28,9 +28,22 @@ namespace IremEczOtomasyonu
     public partial class UserControlCustomers : UserControl
     {
         private ICollectionView _customerView;
+        private Window _parentWindow;
 
+        private Window ParentWindow
+        {
+            get
+            {
+                if (_parentWindow == null)
+                {
+                    _parentWindow = Window.GetWindow(this);
+                }
+                return _parentWindow;
+            }
+        }
         public bool AllChangesSaved { get; private set; }
         private ObservableCollection<Customer> Customers { get; set; }
+
 
         public UserControlCustomers()
         {
@@ -243,7 +256,7 @@ namespace IremEczOtomasyonu
 
         private void CustomersDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.OriginalSource is DataGridCell && e.Key == Key.Delete)
             {
                 DeleteSelectedCustomer();
                 e.Handled = true;
@@ -252,6 +265,7 @@ namespace IremEczOtomasyonu
 
         /// <summary>
         /// Asks and deletes the selected customer of the datagrid.
+        /// Note: Purchases of the customer are automatically set to the anonymous customer (they are not deleted).
         /// </summary>
         private void DeleteSelectedCustomer()
         {
@@ -268,8 +282,6 @@ namespace IremEczOtomasyonu
                 ObjectCtx.Context.DeleteObject(currCustomer);
                 ObjectCtx.Context.SaveChanges();
             }
-
-            // TODO: Purchases of the customer
         }
 
         private void DatagridDeleteCustomerMenuItem_Click(object sender, RoutedEventArgs e)
@@ -290,12 +302,7 @@ namespace IremEczOtomasyonu
 
         public void ExecuteCustomerSale(Customer customer)
         {
-            SaleWindow saleWindow = new SaleWindow(customer)
-            {
-                Owner = Parent as Window,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
-
+            SaleWindow saleWindow = new SaleWindow(customer) { Owner = ParentWindow };
             saleWindow.ShowDialog();
         }
     }

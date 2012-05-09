@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -25,6 +27,19 @@ namespace IremEczOtomasyonu
     {
         private ICollectionView _currentView;
         public ObservableCollection<Product> Products { get; private set; }
+        private Window _parentWindow;
+
+        private Window ParentWindow
+        {
+            get
+            {
+                if (_parentWindow == null)
+                {
+                    _parentWindow = Window.GetWindow(this);
+                }
+                return _parentWindow;
+            }
+        }
 
         public UserControlProducts()
         {
@@ -53,11 +68,7 @@ namespace IremEczOtomasyonu
 
         private void AddNewProduct_Click(object sender, RoutedEventArgs e)
         {
-            AddNewProductWindow addProductWindow = new AddNewProductWindow
-                                                {
-                                                    Owner = Parent as Window,
-                                                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                                                };
+            AddNewProductWindow addProductWindow = new AddNewProductWindow { Owner = ParentWindow };
             if (addProductWindow.ShowDialog() == true)
             {
                 // A product is added. Refresh the datagrid
@@ -75,11 +86,7 @@ namespace IremEczOtomasyonu
             }
             else
             {
-                BarcodeWindow barcodeWindow = new BarcodeWindow
-                {
-                    Owner = Parent as Window,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                };
+                BarcodeWindow barcodeWindow = new BarcodeWindow { Owner = ParentWindow };
                 if (barcodeWindow.ShowDialog() != true)
                 {
                     return;
@@ -97,12 +104,11 @@ namespace IremEczOtomasyonu
         private void OpenPurchaseDialog(string barcode)
         {
             Product product = Products.First(p => p.Barcode == barcode);
-            AddPurchaseWindow addPurchaseWindow = new AddPurchaseWindow(product)
-                                                  {
-                                                      Owner = Parent as Window,
-                                                      WindowStartupLocation = WindowStartupLocation.CenterOwner
-                                                  };
-            addPurchaseWindow.ShowDialog();
+            AddPurchaseWindow addPurchaseWindow = new AddPurchaseWindow(product) { Owner = ParentWindow };
+            if (addPurchaseWindow.ShowDialog() == true)
+            {
+                _currentView.Refresh();
+            }
         }
 
         private void ProductSearchControl_TextChanged(object sender, TextChangedEventArgs e)
@@ -139,7 +145,7 @@ namespace IremEczOtomasyonu
 
         private void ProductsDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.OriginalSource is DataGridCell && e.Key == Key.Delete)
             {
                 DeleteSelectedProduct();
                 e.Handled = true;
@@ -196,14 +202,30 @@ namespace IremEczOtomasyonu
         private void DatagridDetailsMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Product product = productsDataGrid.SelectedItem as Product;
-            ProductDetailsWindow productDetailsWindow = new ProductDetailsWindow(product)
+            OpenProductDetails(product);
+        }
+
+        private void ProductsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow selectedRow = e.Source as DataGridRow;
+            if (selectedRow == null)
             {
-                Owner = Parent as Window,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+                return;
+            }
+            Product selectedProduct = selectedRow.Item as Product;
+            OpenProductDetails(selectedProduct);
+        }
+
+        private void OpenProductDetails(Product product)
+        {
+            if (product == null)
+            {
+                return;
+            }
+            ProductDetailsWindow productDetailsWindow = new ProductDetailsWindow(product) { Owner = ParentWindow };
             if (productDetailsWindow.ShowDialog() == true)
             {
-               _currentView.Refresh(); 
+                _currentView.Refresh();
             }
         }
     }

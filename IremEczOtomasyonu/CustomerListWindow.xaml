@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" 
-        Title="Müşteri Listesi" Height="300" Width="600" Loaded="Window_Loaded">
+        Title="Müşteri Listesi" Height="300" Width="600" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner"
+        Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
     </Window.Resources>

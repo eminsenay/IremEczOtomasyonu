@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
-        Title="Yeni Ürün Girişi" Height="235" Width="380" mc:Ignorable="d" Loaded="Window_Loaded" FocusManager.FocusedElement="{Binding ElementName=barcodeTextBox}">
+        Title="Yeni Ürün Girişi" Height="235" Width="380" mc:Ignorable="d" Loaded="Window_Loaded" 
+        FocusManager.FocusedElement="{Binding ElementName=barcodeTextBox}" WindowStartupLocation="CenterOwner"
+        Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
         <ObjectDataProvider x:Key="currentProduct" ObjectType="{x:Type BL:Product}"/>
     </Window.Resources>
@@ -43,7 +45,7 @@
             <Label Content="Güncel Alış Fiyatı:" Grid.Row="3" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="3" Height="23" Margin="3,3,3,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center"
                      GotFocus="ProductTextBox_GotFocus">
-                <Binding Path="CurrentBuyingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
+                <Binding Path="CurrentBuyingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                     <Binding.ValidationRules>
                         <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>
@@ -52,7 +54,7 @@
             <Label Content="Güncel Satış Fiyatı:" Grid.Row="4" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3,3,3,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center"
                      GotFocus="ProductTextBox_GotFocus">
-                <Binding Path="CurrentSellingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0">
+                <Binding Path="CurrentSellingPrice" Mode="TwoWay" ValidatesOnDataErrors="True" TargetNullValue="0" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                     <Binding.ValidationRules>
                         <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>

@@ -78,7 +78,7 @@ namespace IremEczOtomasyonu
 
         private void ProductSalesDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.OriginalSource is DataGridCell && e.Key == Key.Delete)
             {
                 DeleteSelectedProductSale();
                 e.Handled = true;

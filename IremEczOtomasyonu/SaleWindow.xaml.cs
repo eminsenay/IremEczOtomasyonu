@@ -33,6 +33,10 @@ namespace IremEczOtomasyonu
             userControlSales.saleGrid.DataContext = userControlSales.CurrentProductSale;
 
             userControlSales.barcodeTextBox.Focus();
+
+            // Attach the product sale to the context so that detach actions on cancel don't cause problems 
+            // Without the line an exception is fired if the user cancels before adding items to the sale.
+            ObjectCtx.Context.AddToProductSales(userControlSales.CurrentProductSale);
         }
 
         /// <summary>

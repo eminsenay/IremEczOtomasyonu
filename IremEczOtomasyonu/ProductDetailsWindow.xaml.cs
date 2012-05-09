@@ -43,11 +43,21 @@ namespace IremEczOtomasyonu
 
         private void ExpirationDates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            foreach (ExpirationDate expirationDate in e.NewItems)
+            if (e.Action == NotifyCollectionChangedAction.Add)
             {
-                expirationDate.Id = Guid.NewGuid();
-                _product.ExpirationDates.Add(expirationDate);
-                //_dbContext.AddToExpirationDates(expirationDate);
+                foreach (ExpirationDate expirationDate in e.NewItems)
+                {
+                    expirationDate.Id = Guid.NewGuid();
+                    _product.ExpirationDates.Add(expirationDate);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (ExpirationDate expirationDate in e.OldItems)
+                {
+                    _product.ExpirationDates.Remove(expirationDate);
+                    ObjectCtx.Context.DeleteObject(expirationDate);
+                }
             }
         }
 
@@ -96,6 +106,17 @@ namespace IremEczOtomasyonu
                 }
             }
             ObjectCtx.Context.AcceptAllChanges();
+        }
+
+        private void DatagridDeleteExpirationDateMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ExpirationDate expirationDate = expirationDatesDataGrid.SelectedItem as ExpirationDate;
+            if (expirationDate == null)
+            {
+                return;
+            }
+
+            _expirationDates.Remove(expirationDate);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace IremEczOtomasyonu
             }
             int numSold = (int) values[0];
             decimal unitPrice = (decimal) values[1];
-            return (numSold*unitPrice).ToString(CultureInfo.CurrentCulture);
+            return string.Format(new CultureInfo("tr-TR"), "{0:C}", numSold*unitPrice);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -29,6 +29,9 @@ namespace IremEczOtomasyonu
         }
     }
 
+    /// <summary>
+    /// Converter class to obtain the total number of the items of a product list.
+    /// </summary>
     class ProductListToItemSumConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

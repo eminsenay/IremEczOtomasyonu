@@ -9,7 +9,6 @@ namespace IremEczOtomasyonu.BL
     partial class SaleItem
     {
         public int PrevNumSold { get; set; }
-
         partial void OnNumSoldChanging(int value)
         {
             PrevNumSold = NumSold;

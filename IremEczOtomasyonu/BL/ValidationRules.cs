@@ -38,6 +38,14 @@ namespace IremEczOtomasyonu.BL
             {
                 return new ValidationResult(false, "Lütfen geçerli bir değer giriniz.");
             }
+
+            // The value can contain the currency symbol
+            RegionInfo info = new RegionInfo("tr-TR");
+            int currencySymbolLocation = moneyValStr.IndexOf(info.CurrencySymbol);
+            if (currencySymbolLocation != -1)
+            {
+                moneyValStr = moneyValStr.Remove(currencySymbolLocation, info.CurrencySymbol.Length);
+            }
             
             decimal moneyVal;
             if (!decimal.TryParse(moneyValStr, out moneyVal) || moneyVal < 0)

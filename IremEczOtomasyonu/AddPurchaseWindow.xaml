@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:BL="clr-namespace:IremEczOtomasyonu.BL" 
-        Title="Ürün Alımı" Height="510" Width="340" mc:Ignorable="d" Loaded="Window_Loaded">
+        Title="Ürün Alımı" Height="510" Width="340" mc:Ignorable="d" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterOwner" Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
         <CollectionViewSource x:Key="productPurchasesViewSource" />
     </Window.Resources>
@@ -41,9 +42,11 @@
             <TextBox Grid.Column="1" Grid.Row="3" Height="23" Margin="3,3,5,3" Name="numItemsInStockTextBox" 
                      Text="{Binding Path=Product.NumItems, Mode=OneWay}" VerticalAlignment="Center" IsEnabled="False" />
             <Label Content="Güncel Alış Fiyatı:" Grid.Row="4" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3,3,5,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" Text="{Binding Path=Product.CurrentBuyingPrice, Mode=OneWay}" IsEnabled="False"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Height="23" Margin="3,3,5,3" Name="currentBuyingPriceTextBox" VerticalAlignment="Center" 
+                     Text="{Binding Path=Product.CurrentBuyingPrice, Mode=OneWay, StringFormat={}{0:C}, ConverterCulture=tr-TR}" IsEnabled="False"/>
             <Label Content="Güncel Satış Fiyatı:" Grid.Row="5" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Grid.Row="5" Height="23" Margin="3,3,5,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" Text="{Binding Path=Product.CurrentSellingPrice, Mode=OneWay}" IsEnabled="False"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Height="23" Margin="3,3,5,3" Name="currentSellingPriceTextBox" VerticalAlignment="Center" 
+                     Text="{Binding Path=Product.CurrentSellingPrice, Mode=OneWay, StringFormat={}{0:C}, ConverterCulture=tr-TR}" IsEnabled="False"/>
             <Label Content="Kaç Adet Alındı:" Grid.Row="6" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="6" Height="23" Margin="3,3,5,3" Name="numItemsBoughtTextBox" VerticalAlignment="Center">
                 <Binding Path="NumItems" Mode="OneWayToSource" ValidatesOnDataErrors="True">
@@ -54,7 +57,8 @@
             </TextBox>
             <Label Content="Alış Fiyatı:" Grid.Row="7" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Grid.Row="7" Height="23" Margin="3,3,5,3" Name="priceTextBox" VerticalAlignment="Center">
-                <Binding Path="Price" Mode="OneWayToSource" ValidatesOnDataErrors="True" TargetNullValue="0" UpdateSourceTrigger="PropertyChanged">
+                <Binding Path="Price" Mode="OneWayToSource" ValidatesOnDataErrors="True" TargetNullValue="0"
+                         StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                     <Binding.ValidationRules>
                         <BL:MoneyValidationRule/>
                     </Binding.ValidationRules>

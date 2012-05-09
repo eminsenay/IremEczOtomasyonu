@@ -54,10 +54,7 @@ namespace IremEczOtomasyonu
             }
 
             ProductDetailsWindow productDetailsWindow = new ProductDetailsWindow(expirationDate.Product)
-            {
-                Owner = Parent as Window,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+                                                            {Owner = Parent as Window};
 
             if (productDetailsWindow.ShowDialog() == true)
             {

@@ -96,11 +96,7 @@ namespace IremEczOtomasyonu
                                 "Değişiklik uyarısı", MessageBoxButton.OK);
                 return;
             }
-            SaleListWindow saleListWindow = new SaleListWindow
-                                            {
-                                                Owner = this,
-                                                WindowStartupLocation = WindowStartupLocation.CenterOwner
-                                            };
+            SaleListWindow saleListWindow = new SaleListWindow { Owner = this };
             if (saleListWindow.ShowDialog() != true)
             {
                 ObjectCtx.Reload();
@@ -115,12 +111,7 @@ namespace IremEczOtomasyonu
 
         private void ProductSaleCountMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ProductSaleCountWindow productSaleCountWindow = new ProductSaleCountWindow
-                                                            {
-                                                                Owner = this,
-                                                                WindowStartupLocation =
-                                                                    WindowStartupLocation.CenterOwner
-                                                            };
+            ProductSaleCountWindow productSaleCountWindow = new ProductSaleCountWindow { Owner = this };
             productSaleCountWindow.ShowDialog();
         }
 
@@ -143,11 +134,7 @@ namespace IremEczOtomasyonu
 
         private void ProductExpirationDatesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            IncomingExpirationsWindow incomingExpirationsWindow = new IncomingExpirationsWindow
-            {
-                Owner = this,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+            IncomingExpirationsWindow incomingExpirationsWindow = new IncomingExpirationsWindow { Owner = this };
             incomingExpirationsWindow.ShowDialog();
         }
 
@@ -159,11 +146,7 @@ namespace IremEczOtomasyonu
                                 "Değişiklik uyarısı", MessageBoxButton.OK);
                 return;
             }
-            PurchaseListWindow purchaseListWindow = new PurchaseListWindow
-            {
-                Owner = this,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
-            };
+            PurchaseListWindow purchaseListWindow = new PurchaseListWindow { Owner = this };
             if (purchaseListWindow.ShowDialog() != true)
             {
                 ObjectCtx.Reload();

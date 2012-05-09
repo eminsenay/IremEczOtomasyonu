@@ -14,7 +14,7 @@ namespace IremEczOtomasyonu.BL
     {
         public DateTime TransactionDate { get; set; }
         public DealType TransactionType { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal UnitPrice { get; set; }
         public int NumItems { get; set; }
         public string Details { get; set; }
         public Customer Buyer { get; set; }
