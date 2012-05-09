@@ -41,7 +41,7 @@ namespace IremEczOtomasyonu.BL
 
             // The value can contain the currency symbol
             RegionInfo info = new RegionInfo("tr-TR");
-            int currencySymbolLocation = moneyValStr.IndexOf(info.CurrencySymbol);
+            int currencySymbolLocation = moneyValStr.IndexOf(info.CurrencySymbol, StringComparison.Ordinal);
             if (currencySymbolLocation != -1)
             {
                 moneyValStr = moneyValStr.Remove(currencySymbolLocation, info.CurrencySymbol.Length);

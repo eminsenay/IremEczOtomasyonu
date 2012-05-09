@@ -32,14 +32,7 @@ namespace IremEczOtomasyonu
 
         private Window ParentWindow
         {
-            get
-            {
-                if (_parentWindow == null)
-                {
-                    _parentWindow = Window.GetWindow(this);
-                }
-                return _parentWindow;
-            }
+            get { return _parentWindow ?? (_parentWindow = Window.GetWindow(this)); }
         }
         public bool AllChangesSaved { get; private set; }
         private ObservableCollection<Customer> Customers { get; set; }
