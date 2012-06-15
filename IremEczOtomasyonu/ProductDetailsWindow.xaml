@@ -19,7 +19,8 @@
         </Grid.RowDefinitions>
         <GroupBox Name="productInformationGroupBox" Header="Ürün Bilgileri" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,6,3"
                   DataContext="{StaticResource expirationDatesViewSource}">
-            <Grid Name="productDetailsGrid" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Grid Name="productDetailsGrid" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                  d:DataContext="{d:DesignInstance Type=BL:Product}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="185" />
@@ -69,7 +70,7 @@
                       DataContext="{StaticResource expirationDatesViewSource}">
                     <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" HorizontalAlignment="Stretch" ItemsSource="{Binding}" 
                           Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Stretch" 
-                          CanUserAddRows="True" CanUserDeleteRows="True">
+                          CanUserAddRows="True" CanUserDeleteRows="True" d:DataContext="{d:DesignInstance Type=BL:ExpirationDate}">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn x:Name="exDateColumn" Header="Son Kullanma Tarihi" Width="*" 
                                                 CanUserSort="True" SortMemberPath="ExDate">

@@ -13,7 +13,8 @@
     </Window.Resources>
     <Grid DataContext="{StaticResource expirationDatesViewSource}">
         <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" 
-                  Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41">
+                  Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41"
+                  d:DataContext="{d:DesignInstance Type=my:ExpirationDate}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:d}}" Header="Son Kullanma Tarihi" Width="2*" MinWidth="100" />
                 <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Adedi" Width="SizeToHeader" />
