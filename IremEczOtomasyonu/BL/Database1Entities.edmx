@@ -46,6 +46,8 @@
           <Property Name="DetailedInfo" Type="nvarchar" MaxLength="100" />
           <Property Name="Photo" Type="image" />
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PhoneHome" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneMobile" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ExpirationDates">
           <Key>
@@ -215,6 +217,8 @@
           <Property Type="Binary" Name="Photo" MaxLength="Max" FixedLength="false" />
           <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="ProductSales" Relationship="Model1.ProductSale_Customer" FromRole="Customer" ToRole="ProductSale" />
+          <Property Type="String" Name="PhoneHome" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneMobile" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ExpirationDate">
           <Key>
@@ -350,6 +354,8 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="Model1.Customer">
               <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="PhoneMobile" ColumnName="PhoneMobile" />
+                <ScalarProperty Name="PhoneHome" ColumnName="PhoneHome" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="DetailedInfo" ColumnName="DetailedInfo" />

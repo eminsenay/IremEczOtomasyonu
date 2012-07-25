@@ -25,12 +25,12 @@
         <my:SaleItemListToHeaderConverter x:Key="saleItemListToHeaderConverter" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource customersViewSource}">
-        <Grid>
+        <Grid Margin="0,0,0,0">
             <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="searchFirstNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="İsim" />
             <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="132,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Soyisim" />
             <lib:InfoTextBox Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="258,6,87,0" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Detaylı Bilgi" />
             <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
-            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,35,486,213" Name="customersDataGrid" 
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,35,486,262" Name="customersDataGrid" 
                       RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="CustomersDataGrid_SelectionChanged" 
                       SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown" CanUserAddRows="False">
                 <DataGrid.Columns>
@@ -49,7 +49,7 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>
-            <GroupBox Header="Müşterinin Aldığı Ürünler" Margin="0,35,6,213" Name="productsGroupBox" HorizontalAlignment="Right" Width="474">
+            <GroupBox Header="Müşterinin Aldığı Ürünler" Margin="0,35,6,262" Name="productsGroupBox" HorizontalAlignment="Right" Width="474">
                 <Grid>
                     <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource saleItemsViewSource}}" Margin="0,0,0,0" CanUserAddRows="False">
                         <DataGrid.GroupStyle>
@@ -89,8 +89,9 @@
                     </DataGrid>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Detaylar" Margin="6,0,6,6" Name="detailsGroupBox" Height="201" VerticalAlignment="Bottom">
-                <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top">
+            <GroupBox Header="Detaylar" Margin="6,0,6,6" Name="detailsGroupBox" Height="250" VerticalAlignment="Bottom">
+                <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top"
+                      d:DataContext="{d:DesignInstance Type=BL:Customer}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -102,6 +103,7 @@
                         <ColumnDefinition Width="102*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -132,11 +134,17 @@
                              Text="{Binding Path=MaritalStatus, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
                     <Label Content="Mesleği:" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox Grid.Column="5" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="jobTextBox" VerticalAlignment="Center" Width="197" 
-                             Text="{Binding Path=Job, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
-                    <Label Content="Detaylı Bilgi:" Grid.Row="2" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
-                    <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="5" Grid.Row="2" Grid.Column="1" Height="80" Name="detailedInfoTextBox" 
+                             Text="{Binding Path=Job, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />                    
+                    <Label Content="Ev Telefonu:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="homePhoneTextBox" VerticalAlignment="Center" Width="197" 
+                             Text="{Binding Path=PhoneHome, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Cep Telefonu:" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+                    <TextBox Grid.Column="3" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="mobilePhoneTextBox" VerticalAlignment="Center" Width="197" 
+                             Text="{Binding Path=PhoneMobile, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
+                    <Label Content="Detaylı Bilgi:" Grid.Row="3" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
+                    <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="5" Grid.Row="3" Grid.Column="1" Height="80" Name="detailedInfoTextBox" 
                              Text="{Binding Path=DetailedInfo, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" Margin="3,1,0,1" Width="793" />
-                    <Button Grid.Column="5" Content="Değişiklikleri Kaydet" Grid.Row="3" Height="23" HorizontalAlignment="Right" Name="saveChangesButton" VerticalAlignment="Center" Width="124" Click="SaveChangesButton_Click" />
+                    <Button Grid.Column="5" Content="Değişiklikleri Kaydet" Grid.Row="4" Height="23" HorizontalAlignment="Right" Name="saveChangesButton" VerticalAlignment="Center" Width="124" Click="SaveChangesButton_Click" />
                 </Grid>
             </GroupBox>
         </Grid>

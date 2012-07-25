@@ -471,6 +471,54 @@ namespace IremEczOtomasyonu.BL
         private global::System.Guid _Id;
         partial void OnIdChanging(global::System.Guid value);
         partial void OnIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PhoneHome
+        {
+            get
+            {
+                return _PhoneHome;
+            }
+            set
+            {
+                OnPhoneHomeChanging(value);
+                ReportPropertyChanging("PhoneHome");
+                _PhoneHome = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PhoneHome");
+                OnPhoneHomeChanged();
+            }
+        }
+        private global::System.String _PhoneHome;
+        partial void OnPhoneHomeChanging(global::System.String value);
+        partial void OnPhoneHomeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PhoneMobile
+        {
+            get
+            {
+                return _PhoneMobile;
+            }
+            set
+            {
+                OnPhoneMobileChanging(value);
+                ReportPropertyChanging("PhoneMobile");
+                _PhoneMobile = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PhoneMobile");
+                OnPhoneMobileChanged();
+            }
+        }
+        private global::System.String _PhoneMobile;
+        partial void OnPhoneMobileChanging(global::System.String value);
+        partial void OnPhoneMobileChanged();
 
         #endregion
     
