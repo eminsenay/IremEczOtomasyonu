@@ -162,17 +162,20 @@ namespace IremEczOtomasyonu
 
             if (currProduct.ProductPurchases.Count > 0 || currProduct.SaleItems.Count > 0)
             {
-                result = MessageBox.Show(
-                    "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmeniz bunları " +
-                    "kaybetmenize neden olacaktır.\nDevam etmek istiyor musunuz?", 
-                    "Ürün silme onayı", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.No)
-                {
-                    return;
-                }
+                MessageBox.Show(
+                    "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmek için önce bu " +
+                    "bilgileri silmeniz gerekmektedir.\n\nÜrün alış ve satışlarına sırasıyla\n\n" + 
+                    "Ekstra -> Geçmiş alış görüntüleme ve \nEkstra -> Geçmiş Satış Görüntüleme\n\n" + 
+                    "menülerinden ulaşabilirsiniz.", "Ürün silme", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
             }
 
             Products.Remove(currProduct);
+            List<ExpirationDate> tmpExDates = new List<ExpirationDate>(currProduct.ExpirationDates);
+            foreach (ExpirationDate expirationDate in tmpExDates)
+            {
+                ObjectCtx.Context.DeleteObject(expirationDate);
+            }
             ObjectCtx.Context.DeleteObject(currProduct);
             ObjectCtx.Context.SaveChanges();
         }
