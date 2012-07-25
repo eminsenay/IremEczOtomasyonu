@@ -27,7 +27,7 @@
             </Grid.RowDefinitions>
             <Label Content="Barkod:" Grid.Row="0" HorizontalAlignment="Left" Margin="3,3,0,3" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Height="23" Margin="3,3,3,3" Name="barcodeTextBox" VerticalAlignment="Center"
-                     GotFocus="ProductTextBox_GotFocus">
+                     GotFocus="ProductTextBox_GotFocus" KeyDown="BarcodeTextBox_KeyDown">
                 <Binding Path="Barcode" Mode="TwoWay" ValidatesOnDataErrors="True">
                     <Binding.ValidationRules>
                         <BL:UniqueBarcodeRule/>

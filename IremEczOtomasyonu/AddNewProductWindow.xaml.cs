@@ -68,5 +68,18 @@ namespace IremEczOtomasyonu
             }
             t.SelectAll();
         }
+
+        private void BarcodeTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Return)
+            {
+                return;
+            }
+
+            // Barcode machines simulate the return key after writing down the barcode.
+            // Prevent displaying incomplete entry message
+            e.Handled = true;
+            nameTextBox.Focus();
+        }
     }
 }
