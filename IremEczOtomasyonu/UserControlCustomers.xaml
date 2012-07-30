@@ -109,14 +109,18 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" Height="150" HorizontalAlignment="Center" Margin="3" Name="photoImage" Stretch="Uniform" VerticalAlignment="Center" Width="150">
+                    <Border Name="imageBorder" Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" BorderBrush="Aqua" BorderThickness="1" 
+                            HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Width="150" Height="150">
+                    <Image Name="photoImage" Stretch="Uniform" >
                         <Image.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Name="photoImgDeleteMenuItem" Header="Sil" Click="PhotoImgDeleteMenuItem_Click" />
                             </ContextMenu>
                         </Image.ContextMenu>
                     </Image>
-                    <Button Content="Fotoğraf Ekle" Grid.RowSpan="5" Grid.Column="6" Height="23" HorizontalAlignment="Center" Name="addPhotoButton" VerticalAlignment="Center" Width="75" Click="AddPhotoButton_Click" />
+                    </Border>
+                    <Button Content="Fotoğraf Ekle" Grid.Row="2" Grid.Column="6" Height="23" HorizontalAlignment="Center" Name="addPhotoButton" VerticalAlignment="Center" Width="100" Click="AddPhotoButton_Click" />
+                    <Button Content="Webcam'den Al" Grid.Row="3" Grid.Column="6" Height="23" HorizontalAlignment="Center" Name="capturePhotoButton" VerticalAlignment="Center" Width="100" Click="CapturePhotoButton_Click" />
                     <Label Content="İsim:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox Grid.Column="1" Grid.Row="0" Height="23" Margin="3,3,0,3" Name="firstNameTextBox" VerticalAlignment="Center" Width="197" HorizontalAlignment="Left" 
                              Text="{Binding Path=FirstName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />

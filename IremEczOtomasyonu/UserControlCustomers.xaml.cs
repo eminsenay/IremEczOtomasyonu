@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Objects;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -11,7 +13,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -19,6 +20,8 @@ using System.IO;
 using IremEczOtomasyonu.BL;
 using Microsoft.Win32;
 using System.Diagnostics;
+using Brushes = System.Windows.Media.Brushes;
+using Image = System.Windows.Controls.Image;
 
 namespace IremEczOtomasyonu
 {
@@ -118,20 +121,44 @@ namespace IremEczOtomasyonu
                 return;
             }
 
-            currCustomer.Photo = ConvertImageToByteArray(imagePath);
+            Bitmap customerPhotoBitmap = new Bitmap(imagePath);
+            currCustomer.Photo = ConvertBitmapToByteArray(customerPhotoBitmap);
             ShowCustomerPhoto(currCustomer);
             OnSelectedCustomerModified();
         }
 
-        private static byte[] ConvertImageToByteArray(string fileName)
+        /// <summary>
+        /// Captures a photo from the selected webcam.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CapturePhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Drawing.Bitmap bitMap = new System.Drawing.Bitmap(fileName);
-            System.Drawing.Imaging.ImageFormat bmpFormat = bitMap.RawFormat;
-            var imageToConvert = System.Drawing.Image.FromFile(fileName);
-            using (MemoryStream ms = new MemoryStream())
+            WebcamWindow webcamWindow = new WebcamWindow { Owner = ParentWindow };
+            bool? dialogResult = webcamWindow.ShowDialog();
+            if (dialogResult != true)
             {
-                imageToConvert.Save(ms, bmpFormat);
-                return ms.ToArray();
+                return;
+            }
+
+            Customer currCustomer = customersDataGrid.SelectedItem as Customer;
+            if (currCustomer == null)
+            {
+                return;
+            }
+
+            currCustomer.Photo = ConvertBitmapToByteArray(webcamWindow.GrabbedImage);
+            ShowCustomerPhoto(currCustomer);
+            OnSelectedCustomerModified();
+        }
+
+        private static byte[] ConvertBitmapToByteArray(Bitmap bitmap)
+        {
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+                return memory.ToArray();
             }
         }
 
@@ -155,9 +182,11 @@ namespace IremEczOtomasyonu
         {
             if (customer == null || customer.Photo == null)
             {
-                // Empty the photoImage and show the AddPhoto Button
+                // Empty the photoImage, show addPhoto and capturePhoto Buttons, show border
                 photoImage.Source = null;
                 addPhotoButton.Visibility = Visibility.Visible;
+                capturePhotoButton.Visibility = Visibility.Visible;
+                imageBorder.BorderThickness = new Thickness(1);
                 return;
             }
             // Set the source of the photoImage
@@ -171,8 +200,10 @@ namespace IremEczOtomasyonu
                 img.Freeze();
                 photoImage.Source = img;
             }
-            // Hide the addPhoto Button
+            // Hide the addPhoto and capturePhoto Buttons, remove the border
             addPhotoButton.Visibility = Visibility.Hidden;
+            capturePhotoButton.Visibility = Visibility.Hidden;
+            imageBorder.BorderThickness = new Thickness(0);
         }
 
         /// <summary>

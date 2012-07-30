@@ -51,6 +51,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Encoder, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Types, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Expression.Encoder.Utilities, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
     <Reference Include="PixelLab.Wpf, Version=5.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\Downloads\thinkpixellab-bot-b68e577\Wpf\_build\WPF\bin\Release\PixelLab.Wpf.dll</HintPath>
@@ -63,6 +66,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -74,6 +78,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -100,6 +105,7 @@
     </Compile>
     <Compile Include="BL\ObjectCtx.cs" />
     <Compile Include="BL\ProductSale.cs" />
+    <Compile Include="BL\WebcamUtils.cs" />
     <Compile Include="CustomerListWindow.xaml.cs">
       <DependentUpon>CustomerListWindow.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,9 @@
     <Compile Include="SaleListWindow.xaml.cs">
       <DependentUpon>SaleListWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebcamImagePreviewWindow.xaml.cs">
+      <DependentUpon>WebcamImagePreviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIUtilities.cs" />
     <Compile Include="UserControlSales.xaml.cs">
       <DependentUpon>UserControlSales.xaml</DependentUpon>
@@ -139,6 +148,9 @@
     </Compile>
     <Compile Include="UserControlProducts.xaml.cs">
       <DependentUpon>UserControlProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WebcamWindow.xaml.cs">
+      <DependentUpon>WebcamWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AboutBox.xaml">
       <SubType>Designer</SubType>
@@ -196,6 +208,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WebcamImagePreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControlCustomers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControlSales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WebcamWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
