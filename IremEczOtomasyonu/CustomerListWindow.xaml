@@ -21,7 +21,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="firstNameColumn" Binding="{Binding Path=FirstName}" Header="İsim" Width="4*" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="lastNameColumn" Binding="{Binding Path=LastName}" Header="Soyisim" Width="4*" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="birthdayColumn" Binding="{Binding Path=Birthday, StringFormat={}{0:d}}" Header="Doğum Tarihi" Width="3*" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="birthdayColumn" Binding="{Binding Path=Birthday, StringFormat={}{0:dd.MM.yyyy}}" Header="Doğum Tarihi" Width="3*" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="skinTypeColumn" Binding="{Binding Path=SkinType}" Header="Cilt Tipi" Width="2*" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="detailedInfoColumn" Binding="{Binding Path=DetailedInfo}" Header="Detaylı Bilgi" Width="6*" IsReadOnly="True" />
             </DataGrid.Columns>

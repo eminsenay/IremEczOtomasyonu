@@ -77,7 +77,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Margin="0" Style="{StaticResource TextBlockInsideDataGrid}" 
-                                               Text="{Binding Path=ExDate, StringFormat={}{0:d}}"/>
+                                               Text="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                                 <DataGridTemplateColumn.CellEditingTemplate>

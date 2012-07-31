@@ -19,7 +19,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Margin="0" Style="{StaticResource TextBlockInsideDataGrid}" 
-                                               Text="{Binding Path=PurchaseDate, StringFormat={}{0:d}}"/>
+                                               Text="{Binding Path=PurchaseDate, StringFormat={}{0:dd.MM.yyyy}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -50,7 +50,7 @@
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-            	<DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:d}}" Header="Son Kullanma Tarihi" 
+                <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}" Header="Son Kullanma Tarihi" 
                                     Width="120" IsReadOnly="True" />
                 <DataGridTextColumn x:Name="remarksColumn" Binding="{Binding Path=Remarks}" Header="Detaylar" MinWidth="100" Width="3*" />
             </DataGrid.Columns>

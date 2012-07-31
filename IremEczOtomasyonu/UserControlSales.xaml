@@ -36,7 +36,7 @@
                 <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:d}" SelectionChanged="ExpirationDateComboBox_SelectionChanged">
+                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:dd.MM.yyyy}" SelectionChanged="ExpirationDateComboBox_SelectionChanged">
                                 <ComboBox.ItemsSource>
                                     <Binding Path="Product.ExpirationDates" Converter="{StaticResource expDatesToDateTimeListConverter}" />
                                 </ComboBox.ItemsSource>

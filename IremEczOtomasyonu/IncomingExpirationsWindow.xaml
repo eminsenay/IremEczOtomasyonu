@@ -16,7 +16,7 @@
                   Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41"
                   d:DataContext="{d:DesignInstance Type=my:ExpirationDate}">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:d}}" Header="Son Kullanma Tarihi" Width="2*" MinWidth="100" />
+                <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}" Header="Son Kullanma Tarihi" Width="2*" MinWidth="100" />
                 <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Adedi" Width="SizeToHeader" />
                 <DataGridTextColumn x:Name="productNameColumn" Binding="{Binding Path=Product.Name}" Header="Ürün adı" Width="3*" MinWidth="150" />
                 <DataGridTextColumn x:Name="productBrandColumn" Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" Width="3*" MinWidth="150" />
