@@ -51,6 +51,7 @@ namespace IremEczOtomasyonu
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
             Customers = new ObservableCollection<Customer>(ObjectCtx.Context.Customers);
             customersViewSource.Source = Customers;
+            customersViewSource.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));
             _customerView = customersViewSource.View;
             AllChangesSaved = true;
         }

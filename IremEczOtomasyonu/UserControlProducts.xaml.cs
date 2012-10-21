@@ -46,6 +46,8 @@ namespace IremEczOtomasyonu
                 ObjectCtx.Context.Products.Include("ProductPurchases").Include("SaleItems"));
 
             productsViewSource.Source = Products;
+            productsViewSource.SortDescriptions.Add(new SortDescription("Brand", ListSortDirection.Ascending));
+            productsViewSource.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
 
             _currentView = productsViewSource.View;
         }

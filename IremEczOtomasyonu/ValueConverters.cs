@@ -10,11 +10,11 @@ using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
 {
-    class SaleItemToPriceConverter: IMultiValueConverter 
+    internal class SaleItemToPriceConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values[0].GetType() != typeof(int) || values[1].GetType() != typeof(decimal))
+            if (values[0].GetType() != typeof (int) || values[1].GetType() != typeof (decimal))
             {
                 return string.Empty;
             }
@@ -32,7 +32,7 @@ namespace IremEczOtomasyonu
     /// <summary>
     /// Converter class to obtain the total number of the items of a product list.
     /// </summary>
-    class ProductListToItemSumConverter: IValueConverter
+    internal class ProductListToItemSumConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -75,7 +75,7 @@ namespace IremEczOtomasyonu
             }
             ProductSale productSale = firstItem.ProductSale;
             StringBuilder ret = new StringBuilder();
-            ret.AppendFormat("{0:d} {0:HH:mm}", productSale.SaleDate); 
+            ret.AppendFormat("{0:d} {0:HH:mm}", productSale.SaleDate);
             ret.Append(", Toplam Fiyat: " + productSale.TotalPrice);
             if (!string.IsNullOrEmpty(productSale.Remarks))
             {
@@ -90,7 +90,7 @@ namespace IremEczOtomasyonu
         }
     }
 
-    internal class DealTypeToNiceStringConverter: IValueConverter
+    internal class DealTypeToNiceStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -112,13 +112,14 @@ namespace IremEczOtomasyonu
         }
     }
 
-    internal class ExpirationDatesToDateTimeListConverter: IValueConverter
+    internal class ExpirationDatesToDateTimeListConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             IEnumerable<ExpirationDate> expirationDates = value as IEnumerable<ExpirationDate>;
-            return expirationDates == null ? null : 
-                expirationDates.Select(expirationDate => expirationDate.ExDate).ToList();
+            return expirationDates == null
+                       ? null
+                       : expirationDates.Select(expirationDate => expirationDate.ExDate).ToList();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -127,7 +128,7 @@ namespace IremEczOtomasyonu
         }
     }
 
-    internal class ProductSalesToSaleItemsConverter: IValueConverter
+    internal class ProductSalesToSaleItemsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -136,7 +137,7 @@ namespace IremEczOtomasyonu
             {
                 return null;
             }
-            
+
             ObservableCollection<SaleItem> saleItems = new ObservableCollection<SaleItem>();
             foreach (SaleItem saleItem in productSales.SelectMany(productSale => productSale.SaleItems))
             {
@@ -148,6 +149,19 @@ namespace IremEczOtomasyonu
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    internal class StringTrimConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null ? null : ((string) value).Trim();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null ? null : ((string)value).Trim();
         }
     }
 }

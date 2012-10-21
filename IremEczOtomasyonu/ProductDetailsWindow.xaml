@@ -10,6 +10,7 @@
     <Window.Resources>
         <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance BL:ExpirationDate, CreateList=True}" />
         <my:DealTypeToNiceStringConverter x:Key="dealItemToNiceStringConverter" />
+        <my:StringTrimConverter x:Key="stringTrimConverter"/>
     </Window.Resources>
     <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -40,10 +41,10 @@
                      Text="{Binding Path=Barcode, Mode=TwoWay, ValidatesOnDataErrors=True}" />
                 <Label Content="Ürün Adı:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                 <TextBox Grid.Column="1" Grid.Row="1" Height="23" Margin="3" Name="nameTextBox" VerticalAlignment="Center"
-                     Text="{Binding Path=Name, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                     Text="{Binding Path=Name, Converter={StaticResource stringTrimConverter}, Mode=TwoWay, ValidatesOnDataErrors=True}" />
                 <Label Content="Ürün Markası:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                 <TextBox Grid.Column="1" Grid.Row="2" Height="23" Margin="3" Name="brandTextBox" VerticalAlignment="Center"
-                     Text="{Binding Path=Brand, Mode=TwoWay, ValidatesOnDataErrors=True}" />
+                     Text="{Binding Path=Brand, Converter={StaticResource stringTrimConverter}, Mode=TwoWay, ValidatesOnDataErrors=True}" />
                 <Label Content="Stoktaki Adedi:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                 <TextBox Grid.Column="1" Grid.Row="3" Height="23" Margin="3" Name="numItemsTextBox" VerticalAlignment="Center" IsReadOnly="True"
                      Text="{Binding Path=NumItems, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" />
