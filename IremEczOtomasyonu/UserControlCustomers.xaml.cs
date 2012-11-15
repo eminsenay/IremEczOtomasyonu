@@ -86,6 +86,10 @@ namespace IremEczOtomasyonu
             Customers.Add(newCustomer);
             ObjectCtx.Context.AddToCustomers(newCustomer);
             ObjectCtx.Context.SaveChanges();
+
+            // select the customer from the customers datagrid so that the user can enter additional details 
+            // without problems
+            customersDataGrid.SelectedItem = newCustomer;
         }
 
         private void SaveChangesButton_Click(object sender, RoutedEventArgs e)
