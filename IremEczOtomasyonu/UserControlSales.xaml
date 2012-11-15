@@ -6,17 +6,35 @@
              mc:Ignorable="d" 
              xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
              xmlns:my="clr-namespace:IremEczOtomasyonu"
-             d:DesignHeight="330" d:DesignWidth="900">
+             d:DesignHeight="330" d:DesignWidth="870" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <my:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
         <my:ExpirationDatesToDateTimeListConverter x:Key="expDatesToDateTimeListConverter" />
+        <my:ProductToBrandAndNameConverter x:Key="productToBrandAndNameConverter" />
     </UserControl.Resources>
     <Grid Name="saleGrid">
         <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="68,12,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="150" />
-        <Button Content="Ekle" Height="23" HorizontalAlignment="Left" Margin="224,12,0,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
+        
+        <Label Content="ya da" Height="28" Margin="234,10,0,0" Name="orLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
+        <Label Content="Marka veya İsim: " Height="28" HorizontalAlignment="Right" Margin="0,10,480,0" Name="productBrandLabel" VerticalAlignment="Top" />
+        <my:AutoCompleteFocusableBox Height="23" HorizontalAlignment="Right" Margin="0,12,94,0" x:Name="productBrandAndNameAutoCompleteBox" 
+                                     VerticalAlignment="Top" Width="380" IsTextCompletionEnabled="True" ItemsSource="{Binding}" 
+                                     ValueMemberBinding="{Binding Converter={StaticResource productToBrandAndNameConverter}}"
+                                     EnterKeyDown="ProductBrandAndNameAutoCompleteBox_EnterKeyDown">
+            <my:AutoCompleteFocusableBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=Brand}" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </my:AutoCompleteFocusableBox.ItemTemplate>
+        </my:AutoCompleteFocusableBox>
+        <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,12,13,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
         <DataGrid AutoGenerateColumns="False" Margin="12,41,12,68" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
-                  CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}">
+                  CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}"
+                  d:DataContext="{d:DesignInstance Type=BL:ProductSale}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
@@ -96,6 +114,6 @@
         <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,8" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="Images/magnifying_glass.ico" />
         </Button>
-
+       
     </Grid>
 </UserControl>

@@ -164,4 +164,22 @@ namespace IremEczOtomasyonu
             return value == null ? null : ((string)value).Trim();
         }
     }
+
+    internal class ProductToBrandAndNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Product p = value as Product;
+            if (p == null)
+            {
+                return string.Empty;
+            }
+            return p.Brand + " - " + p.Name;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -182,18 +182,21 @@ namespace IremEczOtomasyonu
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            // validation check
-            string validationMsg = userControlSales.Validate();
-            if (validationMsg != null)
+            if (_changedProductSales != null && _changedProductSales.Count > 0)
             {
-                MessageBox.Show(validationMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                // validation check
+                string validationMsg = userControlSales.Validate();
+                if (validationMsg != null)
+                {
+                    MessageBox.Show(validationMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-            string stockControlMsg = userControlSales.StockControl();
-            if (stockControlMsg != null)
-            {
-                MessageBox.Show(stockControlMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                string stockControlMsg = userControlSales.StockControl();
+                if (stockControlMsg != null)
+                {
+                    MessageBox.Show(stockControlMsg, "Satış uyarısı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
 
             ObjectCtx.Context.SaveChanges();

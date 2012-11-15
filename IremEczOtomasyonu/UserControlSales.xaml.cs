@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Objects.DataClasses;
 using System.Diagnostics;
 using System.Globalization;
@@ -52,51 +53,97 @@ namespace IremEczOtomasyonu
         }
 
         /// <summary>
-        /// Adds a new product to the purchase. If the barcode cannot be found in the database, an error is raised.
+        /// Event handler for product add button. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ProductAddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (barcodeTextBox == null || string.IsNullOrEmpty(barcodeTextBox.Text))
+            AddNewProduct();
+        }
+
+        /// <summary>
+        /// Adds a new product to the purchase. Checks if product is given with barcode or the name and brand.
+        /// If the user entered a barcode and it cannot be found in the database, an error is raised.
+        /// An error is also raised if the user entered a product name and brand, 
+        /// and they don't correspond to a product.
+        /// </summary>
+        private void AddNewProduct()
+        {
+            if ((barcodeTextBox == null || string.IsNullOrEmpty(barcodeTextBox.Text) &&
+                 (productBrandAndNameAutoCompleteBox == null ||
+                  string.IsNullOrEmpty(productBrandAndNameAutoCompleteBox.Text))))
             {
-                return;
-            }
-            Product newProduct = ObjectCtx.Context.Products.FirstOrDefault(p => p.Barcode == barcodeTextBox.Text);
-            if (newProduct == null)
-            {
-                MessageBox.Show("Girmiş olduğunuz barkod sistemde kayıtlı değil.", "Ürün uyarısı", MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-                barcodeTextBox.SelectAll();
                 return;
             }
 
-            ExpirationDate selectedExpDate = newProduct.ExpirationDates.FirstOrDefault();
+            Product selectedProduct;
+            bool barcodeGiven = false;
+            if (!string.IsNullOrEmpty(barcodeTextBox.Text))
+            {
+                barcodeGiven = true;
+                // Add new item using barcode
+                selectedProduct = ObjectCtx.Context.Products.FirstOrDefault(p => p.Barcode == barcodeTextBox.Text);
+                if (selectedProduct == null)
+                {
+                    MessageBox.Show("Girmiş olduğunuz barkod sistemde kayıtlı değil.", "Ürün uyarısı",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                    barcodeTextBox.SelectAll();
+                    return;
+                }
+            }
+            else
+            {
+                // Add new item using product
+
+
+                // Check if the product exists
+                if (productBrandAndNameAutoCompleteBox.SelectedItem == null)
+                {
+                    return;
+                }
+                selectedProduct = productBrandAndNameAutoCompleteBox.SelectedItem as Product;
+                if (selectedProduct == null)
+                {
+                    return;
+                }
+            }
+
+            ExpirationDate selectedExpDate = selectedProduct.ExpirationDates.FirstOrDefault();
             if (selectedExpDate == null)
             {
                 Debug.Fail("No Expiration date can be found for the product.");
                 return;
             }
             SaleItem newItem = new SaleItem
-                               {
-                                   Id = Guid.NewGuid(),
-                                   Product = newProduct,
-                                   NumSold = 1,
-                                   ProductSale = CurrentProductSale,
-                                   ExDate = selectedExpDate.ExDate,
-                                   UnitPrice = newProduct.CurrentSellingPrice ?? 0
-                               };
+                                   {
+                                       Id = Guid.NewGuid(),
+                                       Product = selectedProduct,
+                                       NumSold = 1,
+                                       ProductSale = CurrentProductSale,
+                                       ExDate = selectedExpDate.ExDate,
+                                       UnitPrice = selectedProduct.CurrentSellingPrice ?? 0
+                                   };
             CurrentProductSale.SaleItems.Add(newItem);
             newItem.Product.NumItems -= newItem.NumSold;
             selectedExpDate.NumItems -= newItem.NumSold;
 
             // Make prevnumsold equal. Values should only be different when the user manually changes the numsold.
             newItem.PrevNumSold = newItem.NumSold;
-            
+
             UpdateTotalPrice();
 
-            barcodeTextBox.Text = string.Empty;
-            barcodeTextBox.Focus();
+            if (barcodeGiven)
+            {
+                barcodeTextBox.Text = string.Empty;
+                barcodeTextBox.Focus();
+            }
+            else
+            {
+                productBrandAndNameAutoCompleteBox.Text = string.Empty;
+                productBrandAndNameAutoCompleteBox.Focus();
+            }
 
             OnCurrentProductSaleChanged();
         }
@@ -376,6 +423,36 @@ namespace IremEczOtomasyonu
                                 "Lütfen stok bilgilerini tekrar kontrol edin.", "Stok uyarısı",
                                 MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            productBrandAndNameAutoCompleteBox.DataContext = ObjectCtx.Context.Products.OrderBy(p => p.Brand);
+            productBrandAndNameAutoCompleteBox.ItemFilter += ItemFilter;
+        }
+
+        private bool ItemFilter(string search, object item)
+        {
+            Product p = item as Product;
+            if (p == null)
+            {
+                return false;
+            }
+            string[] searchTokens = search.Split(' ', '-');
+            foreach (string searchToken in searchTokens)
+            {
+                if (!p.Name.ToLowerInvariant().Contains(searchToken.ToLowerInvariant()) && 
+                    !p.Brand.ToLowerInvariant().Contains(searchToken.ToLowerInvariant()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void ProductBrandAndNameAutoCompleteBox_EnterKeyDown(object obj)
+        {
+            AddNewProduct();
         }
     }
 }
