@@ -54,6 +54,27 @@ namespace IremEczOtomasyonu
             customersViewSource.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));
             _customerView = customersViewSource.View;
             AllChangesSaved = true;
+
+            // Expiration date sanity check
+            //foreach (Product product in ObjectCtx.Context.Products)
+            //{
+            //    int expSum = 0;
+            //    List<ExpirationDate> expirationDates = new List<ExpirationDate>();
+            //    foreach (ExpirationDate expirationDate in ObjectCtx.Context.ExpirationDates)
+            //    {
+            //        if (expirationDate.ProductId != product.Id)
+            //        {
+            //            continue;
+            //        }
+            //        expSum += expirationDate.NumItems;
+            //        expirationDates.Add(expirationDate);
+            //    }
+
+            //    if (product.NumItems != expSum)
+            //    {
+            //        Debug.Fail("This should not happen");
+            //    }
+            //}
         }
 
         public void Reload()
