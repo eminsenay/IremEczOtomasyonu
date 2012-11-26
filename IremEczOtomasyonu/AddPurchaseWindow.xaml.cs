@@ -83,7 +83,7 @@ namespace IremEczOtomasyonu
             {
                 _currExpirationDate.NumItems = CurrentPurchase.NumItems;
                 _currExpirationDate.Id = Guid.NewGuid();
-                ObjectCtx.Context.AddToExpirationDates(_currExpirationDate);
+                ObjectCtx.Context.ExpirationDates.AddObject(_currExpirationDate);
             }
             else
             {
