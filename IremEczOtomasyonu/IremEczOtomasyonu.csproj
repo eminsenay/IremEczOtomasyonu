@@ -133,8 +133,8 @@
       <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BL\Customer.cs" />
-    <Compile Include="BL\Database1Entities.Designer.cs">
-      <DependentUpon>Database1Entities.edmx</DependentUpon>
+    <Compile Include="BL\IremEczDermokozmetikDbEntities.Designer.cs">
+      <DependentUpon>IremEczDermokozmetikDbEntities.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -285,9 +285,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="BL\Database1Entities.edmx">
+    <EntityDeploy Include="BL\IremEczDermokozmetikDbEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Database1Entities.Designer.cs</LastGenOutput>
+      <LastGenOutput>IremEczDermokozmetikDbEntities.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Database1Context.datasource" />
@@ -302,7 +302,7 @@
   <ItemGroup>
     <Resource Include="TextFile1.txt" />
     <Resource Include="Images\IremEczAboutBox.gif" />
-    <Content Include="Database1.sdf">
+    <Content Include="IremEczDermokozmetikDb.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Images\magnifying_glass.ico" />

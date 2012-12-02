@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:b="clr-namespace:IremEczOtomasyonu.DatePickerWatermark" 
              StartupUri="MainWindow.xaml"
-             DispatcherUnhandledException="Application_DispatcherUnhandledException">
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             Startup="Application_Startup">
     <Application.Resources>
         <Storyboard x:Key="FlashError">
             <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" 
