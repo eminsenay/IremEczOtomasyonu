@@ -8,3 +8,5 @@ IremEczOtomasyonu.sln.DotSettings.user
 IremEczOtomasyonu.sln.docstates.suo
 IremEczOtomasyonu/Database1_sorunlu.sdf
 IremEczOtomasyonu/Database1_bak.sdf
+ConnectionStringEncrypter/bin/*
+ConnectionStringEncrypter/obj/*
