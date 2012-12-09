@@ -1,9 +1,12 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using IremEczOtomasyonu.BL;
-using Microsoft.Expression.Encoder.Devices;
+using Touchless.Vision.Camera;
+using MessageBox = System.Windows.MessageBox;
 
 namespace IremEczOtomasyonu
 {
@@ -12,42 +15,45 @@ namespace IremEczOtomasyonu
     /// </summary>
     public partial class WebcamWindow : Window
     {
-        private readonly WebcamUtils _webCamUtils;
-
         public Bitmap GrabbedImage { get; private set; }
+        private static Bitmap _latestFrame;
+        private CameraFrameSource _frameSource;
+        private readonly PictureBox _pictureBoxDisplay;
 
         public WebcamWindow()
         {
             InitializeComponent();
-            _webCamUtils = new WebcamUtils(host);
-            
-            // Fill the combobox
-            foreach (string encoderDeviceStr in _webCamUtils.GetVideoEncoders())
-            {
-                webcamComboBox.Items.Add(encoderDeviceStr);
-            }
+            _pictureBoxDisplay = new PictureBox();
+            host.Child = _pictureBoxDisplay;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Select the combobox item
+            // Refresh the list of available cameras
+            webcamComboBox.Items.Clear();
             string defaultWebcam = Properties.Settings.Default.SelectedWebcam;
-            if (!string.IsNullOrEmpty(defaultWebcam))
+            foreach (Camera cam in CameraService.AvailableCameras)
             {
-                webcamComboBox.SelectedItem = defaultWebcam;
+                webcamComboBox.Items.Add(cam);
+                // Search for the last selected webcam
+                if (cam.Name == defaultWebcam)
+                {
+                    webcamComboBox.SelectedItem = cam;
+                }
             }
         }
 
         private void WebcamComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Display a preview
-            _webCamUtils.DisplayVideoPreview((string) e.AddedItems[0]);
+            ThrashOldCamera();
+            StartCapturing();
             SaveSelectedWebcam();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _webCamUtils.StopVideoPreview();
+            ThrashOldCamera();
         }
 
         /// <summary>
@@ -55,7 +61,7 @@ namespace IremEczOtomasyonu
         /// </summary>
         private void SaveSelectedWebcam()
         {
-            string selectedWebcam = (string) webcamComboBox.SelectedItem;
+            string selectedWebcam = ((Camera)webcamComboBox.SelectedItem).Name;
             if (string.IsNullOrEmpty(selectedWebcam))
             {
                 return;
@@ -66,14 +72,83 @@ namespace IremEczOtomasyonu
 
         private void GrabImageButton_Click(object sender, RoutedEventArgs e)
         {
-            GrabbedImage = _webCamUtils.GrabImage();
+            if (_frameSource == null)
+            {
+                return;
+            }
+
+            // Clone the image to use it in preview window
+            GrabbedImage = (Bitmap) _latestFrame.Clone();
             WebcamImagePreviewWindow previewWindow = new WebcamImagePreviewWindow(GrabbedImage) { Owner = this };
             bool? dialogResult = previewWindow.ShowDialog();
+            // If the user accepts to use the image, close the window
             if (dialogResult == true)
             {
                 DialogResult = true;
                 Close();
             }
+        }
+
+        /// <summary>
+        /// Start capturing from the selected webcam
+        /// </summary>
+        private void StartCapturing()
+        {
+            try
+            {
+                Camera c = (Camera)webcamComboBox.SelectedItem;
+                SetFrameSource(new CameraFrameSource(c));
+                _frameSource.Camera.CaptureWidth = 320;
+                _frameSource.Camera.CaptureHeight = 240;
+                _frameSource.Camera.Fps = 20;
+                _frameSource.NewFrame += OnImageCaptured;
+
+                _pictureBoxDisplay.Paint += DrawLatestImage;
+                _frameSource.StartFrameCapture();
+            }
+            catch (Exception ex)
+            {
+                webcamComboBox.Text = "Bir Webcam Seçiniz";
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public void OnImageCaptured(Touchless.Vision.Contracts.IFrameSource frameSource, 
+            Touchless.Vision.Contracts.Frame frame, double fps)
+        {
+            _latestFrame = frame.Image;
+            _pictureBoxDisplay.Invalidate();
+        }
+
+        private void DrawLatestImage(object sender, PaintEventArgs e)
+        {
+            if (_latestFrame != null)
+            {
+                // Draw the latest image from the active camera
+                e.Graphics.DrawImage(_latestFrame, 0, 0, _latestFrame.Width, _latestFrame.Height);
+            }
+        }
+
+        private void ThrashOldCamera()
+        {
+            // Trash the old camera
+            if (_frameSource != null)
+            {
+                _frameSource.NewFrame -= OnImageCaptured;
+                _frameSource.Camera.Dispose();
+                SetFrameSource(null);
+                _pictureBoxDisplay.Paint -= DrawLatestImage;
+            }
+        }
+
+        private void SetFrameSource(CameraFrameSource cameraFrameSource)
+        {
+            if (_frameSource == cameraFrameSource)
+            {
+                return;
+            }
+
+            _frameSource = cameraFrameSource;
         }
     }
 }

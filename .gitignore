@@ -1,13 +1,20 @@
 
 IremEczOtomasyonu.suo
 IremEczOtomasyonu/bin/*
-IremEczOtomasyonu/IremEczOtomasyonu.csproj.user
 IremEczOtomasyonu/obj/*
 _ReSharper.IremEczOtomasyonu/*
-IremEczOtomasyonu.sln.DotSettings.user
 IremEczOtomasyonu.sln.docstates.suo
 IremEczOtomasyonu/Database1_sorunlu.sdf
 IremEczOtomasyonu/Database1_bak.sdf
 ConnectionStringEncrypter/bin/*
 ConnectionStringEncrypter/obj/*
 IremEczSetup/IremEczSetup/Express/*
+WebCamLib/Debug/*
+WebCamLib/Release/*
+WebCamWrapper/bin/*
+WebCamWrapper/obj/*
+*.user
+Debug*/
+Release*/
+IremEczOtomasyonu.sdf
+IremEczOtomasyonu.opensdf
