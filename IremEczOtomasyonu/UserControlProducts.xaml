@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lib="http://schemas.thinkpixellab.com/2011/xaml/presentation"
              xmlns:my="clr-namespace:IremEczOtomasyonu" mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1100" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -13,12 +12,32 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
         <my:ProductListToItemSumConverter x:Key="prodListToSumConverter" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource productsViewSource}">
-        <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="searchBarcodeInfoTextBox" VerticalAlignment="Top" Width="255" TextBoxInfo="Barkod" TextChanged="ProductSearchControl_TextChanged" />
-        <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="273,12,0,0" Name="searchBrandNameInfoTextBox" VerticalAlignment="Top" Width="255" TextBoxInfo="Marka Adı" TextChanged="ProductSearchControl_TextChanged" />
-        <lib:InfoTextBox Height="23" Margin="534,12,12,0" Name="searchProductNameInfoTextBox" VerticalAlignment="Top" TextBoxInfo="Ürün Adı" TextChanged="ProductSearchControl_TextChanged" />
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="12,41" Name="productsDataGrid" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="36" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="265" />
+            <ColumnDefinition Width="265" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="120" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,8,0,0" Text="Barkod" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchBarcodeInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Grid.Row="0" Grid.Column="0" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="255" TextChanged="ProductSearchControl_TextChanged" Name="searchBarcodeInfoTextBox" Background="Transparent" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="10,8,0,0" Text="Marka Adı" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchBrandNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Grid.Row="0" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="255" TextChanged="ProductSearchControl_TextChanged" Name="searchBrandNameInfoTextBox" Background="Transparent" />
+        <TextBlock Grid.Row="0" Grid.Column="2" Margin="10,8,0,0" Text="Ürün Adı" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchProductNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Height="23" HorizontalAlignment="Stretch" Margin="6,6,6,0" VerticalAlignment="Top" TextChanged="ProductSearchControl_TextChanged" Name="searchProductNameInfoTextBox" Background="Transparent" />
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="5" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,6,6,0" Name="productsDataGrid" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" PreviewKeyDown="ProductsDataGrid_PreviewKeyDown" SelectionMode="Single"
                   CanUserAddRows="False">
             <DataGrid.RowStyle>
@@ -73,7 +92,7 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Button Content="Yeni Ürün Ekle" Height="23" HorizontalAlignment="Right" Margin="0,0,128,12" Name="addNewProduct" VerticalAlignment="Bottom" Width="110" Click="AddNewProduct_Click" />
-        <Button Content="Stok Girişi" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="addPurchaseButton" VerticalAlignment="Bottom" Width="110" Click="AddPurchaseButton_Click" />
+        <Button Grid.Row="2" Grid.Column="3" Content="Yeni Ürün Ekle" Height="23" Margin="0,6,6,0" Name="addNewProduct" VerticalAlignment="Top" Click="AddNewProduct_Click" HorizontalAlignment="Right" Width="110" />
+        <Button Grid.Row="2" Grid.Column="4" Content="Stok Girişi" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" Click="AddPurchaseButton_Click" />
     </Grid>
 </UserControl>

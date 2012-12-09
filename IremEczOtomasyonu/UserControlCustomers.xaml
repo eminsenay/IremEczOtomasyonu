@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:lib="clr-namespace:PixelLab.Wpf;assembly=PixelLab.Wpf" mc:Ignorable="d" 
+             mc:Ignorable="d" 
              xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
              xmlns:my="clr-namespace:IremEczOtomasyonu"
              d:DesignHeight="600" d:DesignWidth="1100" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
@@ -11,10 +11,6 @@
     <UserControl.Resources>
         <my:ProductSalesToSaleItemsConverter x:Key="productSalesToSaleItemsConverter" />
         <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
-        <!--<CollectionViewSource x:Key="productSalesViewSource" d:DesignSource="{d:DesignInstance my:ProductSale, CreateList=True}" 
-                              Source="{Binding Source={StaticResource customersViewSource}, Path=ProductSales}" />-->
-        <!--<CollectionViewSource x:Key="saleItemsViewSource" d:DesignSource="{d:DesignInstance BL:SaleItem, CreateList=True}"
-                              Filter="SaleItems_Filter" CollectionViewType="{x:Type ListCollectionView}"/>-->
         <CollectionViewSource x:Key="saleItemsViewSource" d:DesignSource="{d:DesignInstance BL:SaleItem, CreateList=True}"
                               Source="{Binding Source={StaticResource customersViewSource}, Path=ProductSales, 
                               Converter={StaticResource productSalesToSaleItemsConverter}}">
@@ -23,13 +19,32 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
         <my:SaleItemListToHeaderConverter x:Key="saleItemListToHeaderConverter" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
     <Grid DataContext="{StaticResource customersViewSource}">
         <Grid Margin="0,0,0,0">
-            <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="searchFirstNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="İsim" />
-            <lib:InfoTextBox Height="23" HorizontalAlignment="Left" Margin="132,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Soyisim" />
-            <lib:InfoTextBox Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="258,6,87,0" TextChanged="CustomerSearchControl_TextChanged" TextBoxInfo="Detaylı Bilgi" />
-            <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="90" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="10,8,0,0" Text="İsim" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchFirstNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Grid.Column="0" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" Name="searchFirstNameInfoTextBox" Background="Transparent" />
+            <TextBlock Grid.Column="1" Margin="10,8,0,0" Text="Soyisim" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchLastNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" Background="Transparent" />
+            <TextBlock Grid.Column="2" Margin="10,8,5,0" Text="Detaylı Bilgi" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchDetailedInfoInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBox Grid.Column="2" Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="6,6,0,0" TextChanged="CustomerSearchControl_TextChanged" Background="Transparent" />
+            <Button Grid.Column="3" Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="6,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
+        </Grid>
+        <Grid Margin="0,0,0,0">
             <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,35,486,262" Name="customersDataGrid" 
                       RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="CustomersDataGrid_SelectionChanged" 
                       SelectionMode="Single" PreviewKeyDown="CustomersDataGrid_PreviewKeyDown" CanUserAddRows="False">
@@ -89,6 +104,8 @@
                     </DataGrid>
                 </Grid>
             </GroupBox>
+        </Grid>
+        <Grid Margin="0,0,0,0">
             <GroupBox Header="Detaylar" Margin="6,0,6,6" Name="detailsGroupBox" Height="250" VerticalAlignment="Bottom">
                 <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top"
                       d:DataContext="{d:DesignInstance Type=BL:Customer}">
@@ -111,13 +128,13 @@
                     </Grid.RowDefinitions>
                     <Border Name="imageBorder" Grid.Column="6" Grid.Row="0" Grid.RowSpan="5" BorderBrush="Aqua" BorderThickness="1" 
                             HorizontalAlignment="Center" Margin="3" VerticalAlignment="Center" Width="150" Height="150">
-                    <Image Name="photoImage" Stretch="Uniform" >
-                        <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Name="photoImgDeleteMenuItem" Header="Sil" Click="PhotoImgDeleteMenuItem_Click" />
-                            </ContextMenu>
-                        </Image.ContextMenu>
-                    </Image>
+                        <Image Name="photoImage" Stretch="Uniform" >
+                            <Image.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Name="photoImgDeleteMenuItem" Header="Sil" Click="PhotoImgDeleteMenuItem_Click" />
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
                     </Border>
                     <Button Content="Fotoğraf Ekle" Grid.Row="2" Grid.Column="6" Height="23" HorizontalAlignment="Center" Name="addPhotoButton" VerticalAlignment="Center" Width="100" Click="AddPhotoButton_Click" />
                     <Button Content="Webcam'den Al" Grid.Row="3" Grid.Column="6" Height="23" HorizontalAlignment="Center" Name="capturePhotoButton" VerticalAlignment="Center" Width="100" Click="CapturePhotoButton_Click" />
@@ -138,7 +155,7 @@
                              Text="{Binding Path=MaritalStatus, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
                     <Label Content="Mesleği:" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox Grid.Column="5" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="jobTextBox" VerticalAlignment="Center" Width="197" 
-                             Text="{Binding Path=Job, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />                    
+                             Text="{Binding Path=Job, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />
                     <Label Content="Ev Telefonu:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
                     <TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3,3,0,3" Name="homePhoneTextBox" VerticalAlignment="Center" Width="197" 
                              Text="{Binding Path=PhoneHome, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true, NotifyOnSourceUpdated=True}" SourceUpdated="SelectedCustomerModified" />

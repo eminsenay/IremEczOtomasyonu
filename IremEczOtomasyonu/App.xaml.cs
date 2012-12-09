@@ -37,7 +37,7 @@ namespace IremEczOtomasyonu
             string dbDir;
 #if !DEBUG
             // The following code is necessary to use the sdf file located at the %appdata% directory for setup builds
-            dbDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            dbDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
             // Connection string must look like the following (don't forget the pipes):
 
