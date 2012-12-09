@@ -272,6 +272,7 @@
     <None Include="SetupReq\eula.rtf" />
   </ItemGroup>
   <ItemGroup>
+    <SplashScreen Include="IremEczSplashScreen.png" />
     <Resource Include="SetupReq\eczane_logo.ico" />
     <Resource Include="TextFile1.txt" />
     <Resource Include="Images\IremEczAboutBox.gif" />
