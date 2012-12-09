@@ -1,94 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 
 namespace ConnectionStringEncrypter
 {
     /// <summary>
-    /// Encrypts the connection string part of app.config for IremEczOtomasyonu setup builds.
+    /// Encrypts the connection string part of app.config for IremEczOtomasyonu setup builds. The application is run 
+    /// as administrator during setup. This means, the connection string is first installed unencrypted. 
+    /// It may seem like a security problem but this level of security is enough for the application.
     /// </summary>
     class Program
     {
+        // ReSharper disable UnusedParameter.Local
         static void Main(string[] args)
+        // ReSharper restore UnusedParameter.Local
         {
-            // Copy app.config file located at the IremEczOtomasyonu project as web.config file
-            System.Reflection.Assembly a = System.Reflection.Assembly.GetEntryAssembly();
-            string baseDir = Path.GetDirectoryName(a.Location);
-            if (string.IsNullOrEmpty(baseDir))
+            try
             {
-                return;
+                //Opens the specified client configuration file as a Configuration object 
+                System.Reflection.Assembly a = System.Reflection.Assembly.GetEntryAssembly();
+                // ReSharper disable AssignNullToNotNullAttribute
+                string iremEczExePath = Path.Combine(Path.GetDirectoryName(a.Location), "IremEczOtomasyonu.exe");
+                // ReSharper restore AssignNullToNotNullAttribute
+                Configuration config = ConfigurationManager.OpenExeConfiguration(iremEczExePath);
+
+                // Get the connectionStrings section. 
+                ConfigurationSection section = config.GetSection("connectionStrings");
+
+                //Ensures that the section is not already protected 
+                if (!section.SectionInformation.IsProtected)
+                {
+                    //Uses the Windows Data Protection API (DPAPI) to encrypt the 
+                    //configuration section using a machine-specific secret key 
+                    section.SectionInformation.ProtectSection("DataProtectionConfigurationProvider");
+                    config.Save();
+                }
+
             }
-            
-            string appConfigPath = Path.GetFullPath(
-                Path.Combine(baseDir, "..\\..\\..\\IremEczOtomasyonu\\app.config"));
-            string webConfigPath = Path.Combine(baseDir, "web.config");
-            File.Copy(appConfigPath, webConfigPath, true);
-
-            // Get the path of aspnet_iis executable
-            string dotNetInstallationFolder = GetDotNetInstallationFolder();
-            string aspNetRegIisPath = Path.Combine(dotNetInstallationFolder, "aspnet_regiis.exe");
-
-            // start aspnet_regiis to encrypt the connection string
-            Process p = new Process();
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.CreateNoWindow = true;
-            p.StartInfo.FileName = aspNetRegIisPath;
-            p.StartInfo.Arguments = "-pef connectionStrings \"" + baseDir + 
-                "\" -prov DataProtectionConfigurationProvider";
-            p.Start();
-            p.WaitForExit();
-
-            // rename the web.config
-            string finalConfigPath = Path.Combine(baseDir, "IremEczOtomasyonu.exe.config");
-            if (File.Exists(finalConfigPath))
+            catch (Exception e)
             {
-                File.Delete(finalConfigPath);
+                using (StreamWriter writer = new StreamWriter(
+                    Path.Combine(Path.GetTempPath(), "IremEczOtomasyonuInstallationOutput.txt"), true))
+                {
+                    writer.Write(e);
+                    writer.Close();
+                }
+                throw;
             }
-            File.Move(webConfigPath, finalConfigPath);
-        }
-
-        // ReSharper disable InconsistentNaming
-        // ReSharper disable UnusedMember.Local
-        [Flags]
-        enum RuntimeInfo
-        {
-            UPGRADE_VERSION = 0x01,
-            REQUEST_IA64 = 0x02,
-            REQUEST_AMD64 = 0x04,
-            REQUEST_X86 = 0x08,
-            DONT_RETURN_DIRECTORY = 0x10,
-            DONT_RETURN_VERSION = 0x20,
-            DONT_SHOW_ERROR_DIALOG = 0x40
-        }
-        // ReSharper restore InconsistentNaming
-        // ReSharper restore UnusedMember.Local
-
-        [DllImport("mscoree.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        static extern int GetRequestedRuntimeInfo(string pExe, string pwszVersion, string pConfigurationFile, 
-            uint startupFlags, RuntimeInfo runtimeInfoFlags, StringBuilder pDirectory, uint dwDirectory, 
-            out uint dwDirectoryLength, StringBuilder pVersion, uint cchBuffer, out uint dwLength);
-
-        /// <summary>
-        /// Gets the .NET installation folder
-        /// </summary>
-        /// <returns></returns>
-        private static string GetDotNetInstallationFolder()
-        {
-            Version envVersion = Environment.Version;
-            StringBuilder directory = new StringBuilder(0x200);
-            StringBuilder version = new StringBuilder(0x20);
-            uint directoryLength;
-            uint versionLength;
-            int hr = GetRequestedRuntimeInfo(null, "v" + envVersion.ToString(3), null, 0,
-                RuntimeInfo.DONT_SHOW_ERROR_DIALOG | RuntimeInfo.UPGRADE_VERSION, directory, (uint)directory.Capacity, 
-                out directoryLength, version, (uint)version.Capacity, out versionLength);
-
-            Marshal.ThrowExceptionForHR(hr);
-            return Path.Combine(directory.ToString(), version.ToString());
         }
     }
 }
