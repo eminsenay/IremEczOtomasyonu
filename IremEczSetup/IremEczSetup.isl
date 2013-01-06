@@ -4031,11 +4031,11 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Emin\Desktop\res\add\eczane_logo.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
 		<row><td>ConnectionStringEn_B86B7A41159B4CACB2B5062C81882C38.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>IremEczOtomasyonu._5185FE9C9A474F238163C04BC2457705.exe</td><td/><td>C:\Users\Emin\Desktop\res\add\eczane_logo.ico</td><td>0</td></row>
+		<row><td>IremEczOtomasyonu._5185FE9C9A474F238163C04BC2457705.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
 		<row><td>IremEczOtomasyonu._798D251D64264EF6A0608C606FA203BA.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
-		<row><td>IremEczOtomasyonu._F6BFA73E0F054BC0B54D67D1E7D68BF1.exe</td><td/><td>C:\Users\Emin\Desktop\res\add\eczane_logo.ico</td><td>0</td></row>
+		<row><td>IremEczOtomasyonu._F6BFA73E0F054BC0B54D67D1E7D68BF1.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
 		<row><td>IremEczOtomasyonu._FBB290806FBE49D494387F4BCB401E35.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
 	</table>
 

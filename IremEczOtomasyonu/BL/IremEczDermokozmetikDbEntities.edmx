@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="Customers" EntityType="Model1.Store.Customers" store:Type="Tables" />
           <EntitySet Name="ExpirationDates" EntityType="Model1.Store.ExpirationDates" store:Type="Tables" />
@@ -447,30 +447,30 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="Model1" >
+      <Diagram Name="Model1">
         <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="0.625" PointY="0.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="Model1.ExpirationDate" Width="1.5" PointX="7.25" PointY="4.125" Height="1.9802864583333317" />
         <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="5" PointY="4" Height="2.5571907552083317" />
         <EntityTypeShape EntityType="Model1.Product" Width="1.5" PointX="6.875" PointY="0.5" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="Model1.ProductSale" Width="1.5" PointX="2.875" PointY="0.875" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="Model1.SaleItem" Width="1.5" PointX="4.875" PointY="0.75" Height="2.5571907552083317" />
-        <AssociationConnector Association="Model1.ProductSale_Customer" >
+        <AssociationConnector Association="Model1.ProductSale_Customer">
           <ConnectorPoint PointX="2.125" PointY="2.0574446614583337" />
           <ConnectorPoint PointX="2.875" PointY="2.0574446614583337" />
         </AssociationConnector>
-        <AssociationConnector Association="Model1.ExpirationDate_Product" >
+        <AssociationConnector Association="Model1.ExpirationDate_Product">
           <ConnectorPoint PointX="7.8125" PointY="3.4417936197916674" />
           <ConnectorPoint PointX="7.8125" PointY="4.125" />
         </AssociationConnector>
-        <AssociationConnector Association="Model1.ProductPurchase_Product" >
+        <AssociationConnector Association="Model1.ProductPurchase_Product">
           <ConnectorPoint PointX="6.875" PointY="3.4417936197916674" />
           <ConnectorPoint PointX="6.625" PointY="4" />
         </AssociationConnector>
-        <AssociationConnector Association="Model1.SaleItem_Product" >
+        <AssociationConnector Association="Model1.SaleItem_Product">
           <ConnectorPoint PointX="6.875" PointY="2.0285953776041659" />
           <ConnectorPoint PointX="6.375" PointY="2.0285953776041659" />
         </AssociationConnector>
-        <AssociationConnector Association="Model1.SaleItem_ProductSale" >
+        <AssociationConnector Association="Model1.SaleItem_ProductSale">
           <ConnectorPoint PointX="4.375" PointY="2.0574446614583337" />
           <ConnectorPoint PointX="4.875" PointY="2.0574446614583337" />
         </AssociationConnector>
