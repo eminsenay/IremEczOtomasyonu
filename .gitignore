@@ -8,7 +8,8 @@ IremEczOtomasyonu/Database1_sorunlu.sdf
 IremEczOtomasyonu/Database1_bak.sdf
 ConnectionStringEncrypter/bin/*
 ConnectionStringEncrypter/obj/*
-IremEczSetup/IremEczSetup/Express/*
+IremEczSetup/IremEczSetup/Express/
+IremEczSetup/IremEczSetup/Express/Interm/*
 WebCamLib/Debug/*
 WebCamLib/Release/*
 WebCamWrapper/bin/*

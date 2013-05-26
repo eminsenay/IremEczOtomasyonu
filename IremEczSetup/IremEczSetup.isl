@@ -265,7 +265,7 @@
 		<row><td>NewBinary18</td><td/><td>&lt;ISProductFolder&gt;\Redist\Language Independent\OS Independent\InstallStateMenu.ico</td></row>
 		<row><td>NewBinary19</td><td/><td>&lt;ISProductFolder&gt;\redist\Language independent\i386\SerialNumCAHelper.dll</td></row>
 		<row><td>NewBinary2</td><td/><td>&lt;ISProductFolder&gt;\Redist\Language Independent\OS Independent\New.ibd</td></row>
-		<row><td>NewBinary20</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\ConnectionStringEncrypter\bin\Release\ConnectionStringEncrypter.exe</td></row>
+		<row><td>NewBinary20</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\ConnectionStringEncrypter\bin\Release\ConnectionStringEncrypter.exe</td></row>
 		<row><td>NewBinary3</td><td/><td>&lt;ISProductFolder&gt;\Redist\Language Independent\OS Independent\Up.ibd</td></row>
 		<row><td>NewBinary4</td><td/><td>&lt;ISProductFolder&gt;\Redist\Language Independent\OS Independent\WarningIcon.ibd</td></row>
 		<row><td>NewBinary5</td><td/><td>&lt;ISProductFolder&gt;\Support\Themes\InstallShield Blue Theme\welcome.jpg</td></row>
@@ -564,7 +564,7 @@
 		<row><td>LicenseAgreement</td><td>DlgLine</td><td>Line</td><td>48</td><td>234</td><td>326</td><td>0</td><td>1</td><td/><td/><td/><td/><td>0</td><td/><td/><td/></row>
 		<row><td>LicenseAgreement</td><td>DlgTitle</td><td>Text</td><td>13</td><td>6</td><td>292</td><td>25</td><td>65539</td><td/><td>##IDS__IsLicenseDlg_LicenseAgreement##</td><td/><td/><td>0</td><td/><td/><td/></row>
 		<row><td>LicenseAgreement</td><td>ISPrintButton</td><td>PushButton</td><td>301</td><td>188</td><td>65</td><td>17</td><td>3</td><td/><td>##IDS_PRINT_BUTTON##</td><td>Agree</td><td/><td>0</td><td/><td/><td/></row>
-		<row><td>LicenseAgreement</td><td>Memo</td><td>ScrollableText</td><td>8</td><td>55</td><td>358</td><td>130</td><td>7</td><td/><td/><td/><td/><td>0</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eula.rtf</td><td/></row>
+		<row><td>LicenseAgreement</td><td>Memo</td><td>ScrollableText</td><td>8</td><td>55</td><td>358</td><td>130</td><td>7</td><td/><td/><td/><td/><td>0</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eula.rtf</td><td/></row>
 		<row><td>LicenseAgreement</td><td>Next</td><td>PushButton</td><td>230</td><td>243</td><td>66</td><td>17</td><td>3</td><td/><td>##IDS_NEXT##</td><td>Cancel</td><td/><td>0</td><td/><td/><td/></row>
 		<row><td>MaintenanceType</td><td>Back</td><td>PushButton</td><td>164</td><td>243</td><td>66</td><td>17</td><td>3</td><td/><td>##IDS_BACK##</td><td>Next</td><td/><td>0</td><td/><td/><td/></row>
 		<row><td>MaintenanceType</td><td>Banner</td><td>Bitmap</td><td>0</td><td>0</td><td>374</td><td>44</td><td>1</td><td/><td/><td/><td/><td>0</td><td/><td/><td>NewBinary1</td></row>
@@ -1909,15 +1909,15 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>connectionstringencrypter.ex</td><td>ConnectionStringEncrypter.exe</td><td>CONNEC~1.EXE|ConnectionStringEncrypter.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\ConnectionStringEncrypter\bin\Release\ConnectionStringEncrypter.exe</td><td>1</td><td/></row>
-		<row><td>iremeczdermokozmetikdb.sdf</td><td>ISX_DEFAULTCOMPONENT2</td><td>IREMEC~1.SDF|IremEczDermokozmetikDb.sdf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\IremEczDermokozmetikDb.sdf</td><td>1</td><td/></row>
-		<row><td>iremeczotomasyonu.exe</td><td>IremEczOtomasyonu.exe</td><td>IREMEC~1.EXE|IremEczOtomasyonu.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\IremEczOtomasyonu.exe</td><td>1</td><td/></row>
-		<row><td>iremeczotomasyonu.exe.config</td><td>ISX_DEFAULTCOMPONENT</td><td>IREMEC~1.CON|IremEczOtomasyonu.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\IremEczOtomasyonu.exe.config</td><td>1</td><td/></row>
-		<row><td>presentationcore.dll</td><td>PresentationCore.dll</td><td>PRESEN~1.DLL|PresentationCore.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\PresentationCore.dll</td><td>1</td><td/></row>
-		<row><td>presentationframework.dll</td><td>PresentationFramework.dll</td><td>PRESEN~1.DLL|PresentationFramework.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\PresentationFramework.dll</td><td>1</td><td/></row>
-		<row><td>system.windows.controls.inpu</td><td>System.Windows.Controls.Input.Toolkit.dll</td><td>SYSTEM~1.DLL|System.Windows.Controls.Input.Toolkit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\System.Windows.Controls.Input.Toolkit.dll</td><td>1</td><td/></row>
-		<row><td>system.windows.controls.layo</td><td>System.Windows.Controls.Layout.Toolkit.dll</td><td>SYSTEM~1.DLL|System.Windows.Controls.Layout.Toolkit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\System.Windows.Controls.Layout.Toolkit.dll</td><td>1</td><td/></row>
-		<row><td>wpftoolkit.dll</td><td>WPFToolkit.dll</td><td>WPFTOO~1.DLL|WPFToolkit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\WPFToolkit.dll</td><td>1</td><td/></row>
+		<row><td>connectionstringencrypter.ex</td><td>ConnectionStringEncrypter.exe</td><td>CONNEC~1.EXE|ConnectionStringEncrypter.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\ConnectionStringEncrypter\bin\Release\ConnectionStringEncrypter.exe</td><td>1</td><td/></row>
+		<row><td>iremeczdermokozmetikdb.sdf</td><td>ISX_DEFAULTCOMPONENT2</td><td>IREMEC~1.SDF|IremEczDermokozmetikDb.sdf</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\IremEczDermokozmetikDb.sdf</td><td>1</td><td/></row>
+		<row><td>iremeczotomasyonu.exe</td><td>IremEczOtomasyonu.exe</td><td>IREMEC~1.EXE|IremEczOtomasyonu.exe</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\IremEczOtomasyonu.exe</td><td>1</td><td/></row>
+		<row><td>iremeczotomasyonu.exe.config</td><td>ISX_DEFAULTCOMPONENT</td><td>IREMEC~1.CON|IremEczOtomasyonu.exe.config</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\IremEczOtomasyonu.exe.config</td><td>1</td><td/></row>
+		<row><td>presentationcore.dll</td><td>PresentationCore.dll</td><td>PRESEN~1.DLL|PresentationCore.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\PresentationCore.dll</td><td>1</td><td/></row>
+		<row><td>presentationframework.dll</td><td>PresentationFramework.dll</td><td>PRESEN~1.DLL|PresentationFramework.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\PresentationFramework.dll</td><td>1</td><td/></row>
+		<row><td>system.windows.controls.inpu</td><td>System.Windows.Controls.Input.Toolkit.dll</td><td>SYSTEM~1.DLL|System.Windows.Controls.Input.Toolkit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\System.Windows.Controls.Input.Toolkit.dll</td><td>1</td><td/></row>
+		<row><td>system.windows.controls.layo</td><td>System.Windows.Controls.Layout.Toolkit.dll</td><td>SYSTEM~1.DLL|System.Windows.Controls.Layout.Toolkit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\System.Windows.Controls.Layout.Toolkit.dll</td><td>1</td><td/></row>
+		<row><td>wpftoolkit.dll</td><td>WPFToolkit.dll</td><td>WPFTOO~1.DLL|WPFToolkit.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\bin\Release\WPFToolkit.dll</td><td>1</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2782,7 +2782,7 @@
 		<col def="I2">Order</col>
 		<col def="I2">ISSetupLocation</col>
 		<col def="S255">ISReleaseFlags</col>
-		<row><td>_0297C876_C750_4EA9_BCFA_02FAD1DCCA46_</td><td>Microsoft .NET Framework 4.0 Client.prq</td><td/><td/><td/></row>
+		<row><td>_122C3A57_7963_448F_807E_40314C539189_</td><td>Microsoft .NET Framework 4.0 Client.prq</td><td/><td/><td/></row>
 	</table>
 
 	<table name="ISSetupType">
@@ -2816,7 +2816,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>EminSenay</td><td>0</td><td/><td>1310779505</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Emin Senay</td><td>0</td><td/><td>-761192788</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-576705481</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-576705481</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION40CLIENT</td><td>1033</td><td>Microsoft .NET Framework 4.0 Client Package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-576703401</td></row>
@@ -3919,7 +3919,7 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-576705481</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-576705481</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-576705481</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.Eminsenay.com</td><td>0</td><td/><td>1310768179</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.eminsenay.com</td><td>0</td><td/><td>-761194836</td></row>
 		<row><td>ID_STRING2</td><td>1033</td><td>EminSenay</td><td>0</td><td/><td>1310779505</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>LAUNCH~1.EXE|Launch IremEczOtomasyonu.exe</td><td>0</td><td/><td>-576701321</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>Irem Eczanesi Dermokozmetik Sistemi</td><td>0</td><td/><td>1310733904</td></row>
@@ -4031,12 +4031,12 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
 		<row><td>ConnectionStringEn_B86B7A41159B4CACB2B5062C81882C38.exe</td><td/><td>&lt;ISProductFolder&gt;\redist\Language Independent\OS Independent\GenericExe.ico</td><td>0</td></row>
-		<row><td>IremEczOtomasyonu._5185FE9C9A474F238163C04BC2457705.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
-		<row><td>IremEczOtomasyonu._798D251D64264EF6A0608C606FA203BA.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
-		<row><td>IremEczOtomasyonu._F6BFA73E0F054BC0B54D67D1E7D68BF1.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
-		<row><td>IremEczOtomasyonu._FBB290806FBE49D494387F4BCB401E35.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2010\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
+		<row><td>IremEczOtomasyonu._5185FE9C9A474F238163C04BC2457705.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
+		<row><td>IremEczOtomasyonu._798D251D64264EF6A0608C606FA203BA.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
+		<row><td>IremEczOtomasyonu._F6BFA73E0F054BC0B54D67D1E7D68BF1.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
+		<row><td>IremEczOtomasyonu._FBB290806FBE49D494387F4BCB401E35.exe</td><td/><td>C:\Users\Emin\Documents\Visual Studio 2012\Projects\IremEczOtomasyonu\IremEczOtomasyonu\SetupReq\eczane_logo.ico</td><td>0</td></row>
 	</table>
 
 	<table name="IniFile">
