@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IremEczOtomasyonu", "IremEczOtomasyonu\IremEczOtomasyonu.csproj", "{6B60DF19-4EFD-4865-99BF-22BCF112F0B2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CC5D5149-0092-4508-AC34-2ABE1468A1C9} = {CC5D5149-0092-4508-AC34-2ABE1468A1C9}
