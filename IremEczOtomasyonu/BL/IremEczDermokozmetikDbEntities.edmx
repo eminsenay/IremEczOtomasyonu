@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="Model1StoreContainer">
-          <EntitySet Name="Customers" EntityType="Model1.Store.Customers" store:Type="Tables" />
-          <EntitySet Name="ExpirationDates" EntityType="Model1.Store.ExpirationDates" store:Type="Tables" />
-          <EntitySet Name="ProductPurchases" EntityType="Model1.Store.ProductPurchases" store:Type="Tables" />
-          <EntitySet Name="Products" EntityType="Model1.Store.Products" store:Type="Tables" />
-          <EntitySet Name="ProductSales" EntityType="Model1.Store.ProductSales" store:Type="Tables" />
-          <EntitySet Name="SaleItems" EntityType="Model1.Store.SaleItems" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Model1.Store.Customers" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ExpirationDates" EntityType="Model1.Store.ExpirationDates" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ProductPurchases" EntityType="Model1.Store.ProductPurchases" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Products" EntityType="Model1.Store.Products" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ProductSales" EntityType="Model1.Store.ProductSales" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="SaleItems" EntityType="Model1.Store.SaleItems" store:Type="Tables" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <AssociationSet Name="ExpirationDate_Product" Association="Model1.Store.ExpirationDate_Product">
             <End Role="Products" EntitySet="Products" />
             <End Role="ExpirationDates" EntitySet="ExpirationDates" />
@@ -174,8 +174,8 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="Model1" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="Customers" EntityType="Model1.Customer" />
           <EntitySet Name="ExpirationDates" EntityType="Model1.ExpirationDate" />
           <EntitySet Name="ProductPurchases" EntityType="Model1.ProductPurchase" />
@@ -215,7 +215,7 @@
           <Property Type="String" Name="Job" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="DetailedInfo" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Binary" Name="Photo" MaxLength="Max" FixedLength="false" />
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="ProductSales" Relationship="Model1.ProductSale_Customer" FromRole="Customer" ToRole="ProductSale" />
           <Property Type="String" Name="PhoneHome" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PhoneMobile" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -226,7 +226,7 @@
           </Key>
           <Property Type="DateTime" Name="ExDate" Nullable="false" />
           <Property Type="Int32" Name="NumItems" Nullable="false" />
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Guid" Name="ProductId" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Model1.ExpirationDate_Product" FromRole="ExpirationDate" ToRole="Product" />
         </EntityType>
@@ -238,7 +238,7 @@
           <Property Type="DateTime" Name="PurchaseDate" Nullable="false" />
           <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="NumItems" Nullable="false" />
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Guid" Name="ProductId" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Model1.ProductPurchase_Product" FromRole="ProductPurchas" ToRole="Product" />
           <Property Type="DateTime" Name="ExDate" Nullable="false" />
@@ -253,7 +253,7 @@
           <Property Type="Int32" Name="NumItems" Nullable="false" />
           <Property Type="Decimal" Name="CurrentBuyingPrice" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="CurrentSellingPrice" Precision="19" Scale="4" />
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <NavigationProperty Name="ExpirationDates" Relationship="Model1.ExpirationDate_Product" FromRole="Product" ToRole="ExpirationDate" />
           <NavigationProperty Name="ProductPurchases" Relationship="Model1.ProductPurchase_Product" FromRole="Product" ToRole="ProductPurchas" />
           <NavigationProperty Name="SaleItems" Relationship="Model1.SaleItem_Product" FromRole="Product" ToRole="SaleItem" />
@@ -265,7 +265,7 @@
           <Property Type="DateTime" Name="SaleDate" Nullable="false" />
           <Property Type="Decimal" Name="TotalPrice" Nullable="false" Precision="19" Scale="4" />
           <Property Type="String" Name="Remarks" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Guid" Name="CustomerId" />
           <NavigationProperty Name="Customer" Relationship="Model1.ProductSale_Customer" FromRole="ProductSale" ToRole="Customer" />
           <NavigationProperty Name="SaleItems" Relationship="Model1.SaleItem_ProductSale" FromRole="ProductSale" ToRole="SaleItem" />
@@ -277,7 +277,7 @@
           <Property Type="Int32" Name="NumSold" Nullable="false" />
           <Property Type="DateTime" Name="ExDate" Nullable="false" />
           <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Guid" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="None" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Guid" Name="ProductId" Nullable="false" />
           <Property Type="Guid" Name="ProductSaleId" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="Model1.SaleItem_Product" FromRole="SaleItem" ToRole="Product" />
@@ -347,7 +347,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <Alias Key="Model" Value="Model1" />
         <Alias Key="Target" Value="Model1.Store" />
         <EntityContainerMapping CdmEntityContainer="Model1Container" StorageEntityContainer="Model1StoreContainer">
@@ -432,14 +432,14 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <edmx:Designer>
     <edmx:Connection>
-      <DesignerInfoPropertySet>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
     </edmx:Connection>
     <edmx:Options>
-      <DesignerInfoPropertySet>
+      <DesignerInfoPropertySet xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
@@ -447,7 +447,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram Name="Model1">
+      <Diagram Name="Model1" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
         <EntityTypeShape EntityType="Model1.Customer" Width="1.5" PointX="0.625" PointY="0.75" Height="2.9417936197916674" />
         <EntityTypeShape EntityType="Model1.ExpirationDate" Width="1.5" PointX="7.25" PointY="4.125" Height="1.9802864583333317" />
         <EntityTypeShape EntityType="Model1.ProductPurchase" Width="1.625" PointX="5" PointY="4" Height="2.5571907552083317" />

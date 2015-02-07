@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -171,6 +172,7 @@ namespace IremEczOtomasyonu.BL
         private ObjectSet<SaleItem> _SaleItems;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -222,11 +224,11 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -251,7 +253,8 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -268,7 +271,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, true);
+                _FirstName = StructuralObject.SetValidValue(value, true, "FirstName");
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -292,7 +295,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, true);
+                _LastName = StructuralObject.SetValidValue(value, true, "LastName");
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -316,7 +319,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnBirthdayChanging(value);
                 ReportPropertyChanging("Birthday");
-                _Birthday = StructuralObject.SetValidValue(value);
+                _Birthday = StructuralObject.SetValidValue(value, "Birthday");
                 ReportPropertyChanged("Birthday");
                 OnBirthdayChanged();
             }
@@ -340,7 +343,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnSkinTypeChanging(value);
                 ReportPropertyChanging("SkinType");
-                _SkinType = StructuralObject.SetValidValue(value, true);
+                _SkinType = StructuralObject.SetValidValue(value, true, "SkinType");
                 ReportPropertyChanged("SkinType");
                 OnSkinTypeChanged();
             }
@@ -364,7 +367,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnMaritalStatusChanging(value);
                 ReportPropertyChanging("MaritalStatus");
-                _MaritalStatus = StructuralObject.SetValidValue(value, true);
+                _MaritalStatus = StructuralObject.SetValidValue(value, true, "MaritalStatus");
                 ReportPropertyChanged("MaritalStatus");
                 OnMaritalStatusChanged();
             }
@@ -388,7 +391,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnJobChanging(value);
                 ReportPropertyChanging("Job");
-                _Job = StructuralObject.SetValidValue(value, true);
+                _Job = StructuralObject.SetValidValue(value, true, "Job");
                 ReportPropertyChanged("Job");
                 OnJobChanged();
             }
@@ -412,7 +415,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnDetailedInfoChanging(value);
                 ReportPropertyChanging("DetailedInfo");
-                _DetailedInfo = StructuralObject.SetValidValue(value, true);
+                _DetailedInfo = StructuralObject.SetValidValue(value, true, "DetailedInfo");
                 ReportPropertyChanged("DetailedInfo");
                 OnDetailedInfoChanged();
             }
@@ -436,7 +439,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnPhotoChanging(value);
                 ReportPropertyChanging("Photo");
-                _Photo = StructuralObject.SetValidValue(value, true);
+                _Photo = StructuralObject.SetValidValue(value, true, "Photo");
                 ReportPropertyChanged("Photo");
                 OnPhotoChanged();
             }
@@ -462,7 +465,7 @@ namespace IremEczOtomasyonu.BL
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -487,7 +490,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnPhoneHomeChanging(value);
                 ReportPropertyChanging("PhoneHome");
-                _PhoneHome = StructuralObject.SetValidValue(value, true);
+                _PhoneHome = StructuralObject.SetValidValue(value, true, "PhoneHome");
                 ReportPropertyChanged("PhoneHome");
                 OnPhoneHomeChanged();
             }
@@ -511,7 +514,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnPhoneMobileChanging(value);
                 ReportPropertyChanging("PhoneMobile");
-                _PhoneMobile = StructuralObject.SetValidValue(value, true);
+                _PhoneMobile = StructuralObject.SetValidValue(value, true, "PhoneMobile");
                 ReportPropertyChanged("PhoneMobile");
                 OnPhoneMobileChanged();
             }
@@ -521,7 +524,7 @@ namespace IremEczOtomasyonu.BL
         partial void OnPhoneMobileChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -547,6 +550,7 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -577,7 +581,8 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -594,7 +599,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnExDateChanging(value);
                 ReportPropertyChanging("ExDate");
-                _ExDate = StructuralObject.SetValidValue(value);
+                _ExDate = StructuralObject.SetValidValue(value, "ExDate");
                 ReportPropertyChanged("ExDate");
                 OnExDateChanged();
             }
@@ -618,7 +623,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnNumItemsChanging(value);
                 ReportPropertyChanging("NumItems");
-                _NumItems = StructuralObject.SetValidValue(value);
+                _NumItems = StructuralObject.SetValidValue(value, "NumItems");
                 ReportPropertyChanged("NumItems");
                 OnNumItemsChanged();
             }
@@ -644,7 +649,7 @@ namespace IremEczOtomasyonu.BL
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -669,7 +674,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnProductIdChanging(value);
                 ReportPropertyChanging("ProductId");
-                _ProductId = StructuralObject.SetValidValue(value);
+                _ProductId = StructuralObject.SetValidValue(value, "ProductId");
                 ReportPropertyChanged("ProductId");
                 OnProductIdChanged();
             }
@@ -679,7 +684,7 @@ namespace IremEczOtomasyonu.BL
         partial void OnProductIdChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -721,6 +726,7 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -747,7 +753,8 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -764,7 +771,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnBarcodeChanging(value);
                 ReportPropertyChanging("Barcode");
-                _Barcode = StructuralObject.SetValidValue(value, true);
+                _Barcode = StructuralObject.SetValidValue(value, true, "Barcode");
                 ReportPropertyChanged("Barcode");
                 OnBarcodeChanged();
             }
@@ -788,7 +795,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -812,7 +819,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnBrandChanging(value);
                 ReportPropertyChanging("Brand");
-                _Brand = StructuralObject.SetValidValue(value, true);
+                _Brand = StructuralObject.SetValidValue(value, true, "Brand");
                 ReportPropertyChanged("Brand");
                 OnBrandChanged();
             }
@@ -836,7 +843,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnNumItemsChanging(value);
                 ReportPropertyChanging("NumItems");
-                _NumItems = StructuralObject.SetValidValue(value);
+                _NumItems = StructuralObject.SetValidValue(value, "NumItems");
                 ReportPropertyChanged("NumItems");
                 OnNumItemsChanged();
             }
@@ -860,7 +867,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnCurrentBuyingPriceChanging(value);
                 ReportPropertyChanging("CurrentBuyingPrice");
-                _CurrentBuyingPrice = StructuralObject.SetValidValue(value);
+                _CurrentBuyingPrice = StructuralObject.SetValidValue(value, "CurrentBuyingPrice");
                 ReportPropertyChanged("CurrentBuyingPrice");
                 OnCurrentBuyingPriceChanged();
             }
@@ -884,7 +891,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnCurrentSellingPriceChanging(value);
                 ReportPropertyChanging("CurrentSellingPrice");
-                _CurrentSellingPrice = StructuralObject.SetValidValue(value);
+                _CurrentSellingPrice = StructuralObject.SetValidValue(value, "CurrentSellingPrice");
                 ReportPropertyChanged("CurrentSellingPrice");
                 OnCurrentSellingPriceChanged();
             }
@@ -910,7 +917,7 @@ namespace IremEczOtomasyonu.BL
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -921,7 +928,7 @@ namespace IremEczOtomasyonu.BL
         partial void OnIdChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -991,6 +998,7 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1025,7 +1033,8 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1042,7 +1051,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnPriceChanging(value);
                 ReportPropertyChanging("Price");
-                _Price = StructuralObject.SetValidValue(value);
+                _Price = StructuralObject.SetValidValue(value, "Price");
                 ReportPropertyChanged("Price");
                 OnPriceChanged();
             }
@@ -1066,7 +1075,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnPurchaseDateChanging(value);
                 ReportPropertyChanging("PurchaseDate");
-                _PurchaseDate = StructuralObject.SetValidValue(value);
+                _PurchaseDate = StructuralObject.SetValidValue(value, "PurchaseDate");
                 ReportPropertyChanged("PurchaseDate");
                 OnPurchaseDateChanged();
             }
@@ -1090,7 +1099,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnRemarksChanging(value);
                 ReportPropertyChanging("Remarks");
-                _Remarks = StructuralObject.SetValidValue(value, true);
+                _Remarks = StructuralObject.SetValidValue(value, true, "Remarks");
                 ReportPropertyChanged("Remarks");
                 OnRemarksChanged();
             }
@@ -1114,7 +1123,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnNumItemsChanging(value);
                 ReportPropertyChanging("NumItems");
-                _NumItems = StructuralObject.SetValidValue(value);
+                _NumItems = StructuralObject.SetValidValue(value, "NumItems");
                 ReportPropertyChanged("NumItems");
                 OnNumItemsChanged();
             }
@@ -1140,7 +1149,7 @@ namespace IremEczOtomasyonu.BL
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -1165,7 +1174,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnProductIdChanging(value);
                 ReportPropertyChanging("ProductId");
-                _ProductId = StructuralObject.SetValidValue(value);
+                _ProductId = StructuralObject.SetValidValue(value, "ProductId");
                 ReportPropertyChanged("ProductId");
                 OnProductIdChanged();
             }
@@ -1189,7 +1198,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnExDateChanging(value);
                 ReportPropertyChanging("ExDate");
-                _ExDate = StructuralObject.SetValidValue(value);
+                _ExDate = StructuralObject.SetValidValue(value, "ExDate");
                 ReportPropertyChanged("ExDate");
                 OnExDateChanged();
             }
@@ -1199,7 +1208,7 @@ namespace IremEczOtomasyonu.BL
         partial void OnExDateChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1241,6 +1250,7 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1269,7 +1279,8 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1286,7 +1297,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnSaleDateChanging(value);
                 ReportPropertyChanging("SaleDate");
-                _SaleDate = StructuralObject.SetValidValue(value);
+                _SaleDate = StructuralObject.SetValidValue(value, "SaleDate");
                 ReportPropertyChanged("SaleDate");
                 OnSaleDateChanged();
             }
@@ -1310,7 +1321,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnTotalPriceChanging(value);
                 ReportPropertyChanging("TotalPrice");
-                _TotalPrice = StructuralObject.SetValidValue(value);
+                _TotalPrice = StructuralObject.SetValidValue(value, "TotalPrice");
                 ReportPropertyChanged("TotalPrice");
                 OnTotalPriceChanged();
             }
@@ -1334,7 +1345,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnRemarksChanging(value);
                 ReportPropertyChanging("Remarks");
-                _Remarks = StructuralObject.SetValidValue(value, true);
+                _Remarks = StructuralObject.SetValidValue(value, true, "Remarks");
                 ReportPropertyChanged("Remarks");
                 OnRemarksChanged();
             }
@@ -1360,7 +1371,7 @@ namespace IremEczOtomasyonu.BL
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -1385,7 +1396,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnCustomerIdChanging(value);
                 ReportPropertyChanging("CustomerId");
-                _CustomerId = StructuralObject.SetValidValue(value);
+                _CustomerId = StructuralObject.SetValidValue(value, "CustomerId");
                 ReportPropertyChanged("CustomerId");
                 OnCustomerIdChanged();
             }
@@ -1395,7 +1406,7 @@ namespace IremEczOtomasyonu.BL
         partial void OnCustomerIdChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1459,6 +1470,7 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1493,7 +1505,8 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1510,7 +1523,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnNumSoldChanging(value);
                 ReportPropertyChanging("NumSold");
-                _NumSold = StructuralObject.SetValidValue(value);
+                _NumSold = StructuralObject.SetValidValue(value, "NumSold");
                 ReportPropertyChanged("NumSold");
                 OnNumSoldChanged();
             }
@@ -1534,7 +1547,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnExDateChanging(value);
                 ReportPropertyChanging("ExDate");
-                _ExDate = StructuralObject.SetValidValue(value);
+                _ExDate = StructuralObject.SetValidValue(value, "ExDate");
                 ReportPropertyChanged("ExDate");
                 OnExDateChanged();
             }
@@ -1558,7 +1571,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnUnitPriceChanging(value);
                 ReportPropertyChanging("UnitPrice");
-                _UnitPrice = StructuralObject.SetValidValue(value);
+                _UnitPrice = StructuralObject.SetValidValue(value, "UnitPrice");
                 ReportPropertyChanged("UnitPrice");
                 OnUnitPriceChanged();
             }
@@ -1584,7 +1597,7 @@ namespace IremEczOtomasyonu.BL
                 {
                     OnIdChanging(value);
                     ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
+                    _Id = StructuralObject.SetValidValue(value, "Id");
                     ReportPropertyChanged("Id");
                     OnIdChanged();
                 }
@@ -1609,7 +1622,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnProductIdChanging(value);
                 ReportPropertyChanging("ProductId");
-                _ProductId = StructuralObject.SetValidValue(value);
+                _ProductId = StructuralObject.SetValidValue(value, "ProductId");
                 ReportPropertyChanged("ProductId");
                 OnProductIdChanged();
             }
@@ -1633,7 +1646,7 @@ namespace IremEczOtomasyonu.BL
             {
                 OnProductSaleIdChanging(value);
                 ReportPropertyChanging("ProductSaleId");
-                _ProductSaleId = StructuralObject.SetValidValue(value);
+                _ProductSaleId = StructuralObject.SetValidValue(value, "ProductSaleId");
                 ReportPropertyChanged("ProductSaleId");
                 OnProductSaleIdChanged();
             }
@@ -1643,7 +1656,7 @@ namespace IremEczOtomasyonu.BL
         partial void OnProductSaleIdChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1723,8 +1736,9 @@ namespace IremEczOtomasyonu.BL
         }
 
         #endregion
+
     }
 
     #endregion
-    
+
 }
