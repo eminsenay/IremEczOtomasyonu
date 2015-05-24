@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+using System.Data.SqlServerCe;
 using System.Windows;
+using System.Windows.Threading;
+using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu
 {
@@ -13,7 +12,7 @@ namespace IremEczOtomasyonu
     public partial class App : Application
     {
         private void Application_DispatcherUnhandledException(object sender,
-            System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+            DispatcherUnhandledExceptionEventArgs e)
         {
             MessageBox.Show(e.Exception.Message, "Uncaught Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             MessageBox.Show(e.Exception.ToString(), "Uncaught Exception", MessageBoxButton.OK, MessageBoxImage.Error);

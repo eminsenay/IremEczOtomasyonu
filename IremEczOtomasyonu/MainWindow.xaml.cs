@@ -18,6 +18,7 @@ using IremEczOtomasyonu.BL;
 using Microsoft.Win32;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Data.SqlServerCe;
 
 namespace IremEczOtomasyonu
 {
@@ -123,12 +124,20 @@ namespace IremEczOtomasyonu
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // Check the expiration dates
-            DateTime oneMonthLater = DateTime.Today + new TimeSpan(30, 0, 0, 0);
-            if (ObjectCtx.Context.ExpirationDates.Any(x => x.NumItems > 0 && oneMonthLater >= x.ExDate))
+            // Check if database exists
+            if (!CheckDatabaseConnection())
             {
-                MessageBox.Show(
-                    "Son kullanma tarihi 30 gün içinde dolacak olan ürünleriniz var. Detaylı bilgi için: Ekstra --> Son Kullanma Tarihleri Yaklaşan Ürünler");
+                Environment.Exit(-1);
+            }
+            else
+            {
+                // Check the expiration dates
+                DateTime oneMonthLater = DateTime.Today + new TimeSpan(30, 0, 0, 0);
+                if (ObjectCtx.Context.ExpirationDates.Any(x => x.NumItems > 0 && oneMonthLater >= x.ExDate))
+                {
+                    MessageBox.Show(this,
+                        "Son kullanma tarihi 30 gün içinde dolacak olan ürünleriniz var. Detaylı bilgi için: Ekstra --> Son Kullanma Tarihleri Yaklaşan Ürünler");
+                }
             }
         }
 
@@ -152,6 +161,42 @@ namespace IremEczOtomasyonu
                 ObjectCtx.Reload();
                 _customersUserControl.Reload();
                 _productsUserControl.Reload();
+            }
+        }
+
+        /// <summary>
+        /// Checks if the database is at its given place at the datasource.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>Don't forget to modify the connection string if you modify the app.config. 
+        /// Getting it dynamically as 
+        /// "string connectionString = "DataSource=" + ObjectCtx.Context.Connection.DataSource;" 
+        /// does only work when the sql server ce is installed, so it is avoided here.</remarks>
+        private bool CheckDatabaseConnection()
+        {
+            // Check if database exists
+            if (ObjectCtx.Context.DatabaseExists())
+            {
+                return true;
+            }
+            const string connectionString = "DataSource=|DataDirectory|IremEczDermokozmetikDb.sdf";
+            MessageBox.Show(this, "Veritabanına ulaşılamıyor. Olması beklenen yer: " +
+                            PathFromConnectionString(connectionString));
+            return false;
+        }
+
+        private static string PathFromConnectionString(string connectionString)
+        {
+            SqlCeConnectionStringBuilder sb = new SqlCeConnectionStringBuilder(GetFullConnectionString(connectionString));
+            return sb.DataSource;
+        }
+
+        private static string GetFullConnectionString(string connectionString)
+        {
+            using (SqlCeReplication repl = new SqlCeReplication())
+            {
+                repl.SubscriberConnectionString = connectionString;
+                return repl.SubscriberConnectionString;
             }
         }
     }

@@ -53,11 +53,16 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SetupReq\eczane_logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, PublicKeyToken=89845dcd8080cc91">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -286,9 +291,9 @@
     <Resource Include="Images\eczane_logo.gif" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
