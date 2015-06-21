@@ -15,8 +15,14 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_10F5B9477F793A45935CF05C541D9A0D"
-        "OwnerKey" = "8:_B7ED343AAD75414DA97171289B8E3BEC"
+        "MsmKey" = "8:_030D6BB8B4A8DCD94AAEDD5AD026DE56"
+        "OwnerKey" = "8:_6F622356E6A1461E99B4DDFEC7FFE4F4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_030D6BB8B4A8DCD94AAEDD5AD026DE56"
+        "OwnerKey" = "8:_E5CFBA897CD4A9FC1CC340836F58AFA8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,26 +45,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_468594D914407E2C4401EAD95CCC0ED4"
-        "OwnerKey" = "8:_6F622356E6A1461E99B4DDFEC7FFE4F4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_468594D914407E2C4401EAD95CCC0ED4"
-        "OwnerKey" = "8:_AA8744BBC2A1E3AD9583C8A42F0F7F54"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4BEE507C11014DE8B1D944AD8CB6F9A7"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4BEE507C11014DE8B1D944AD8CB6F9A7"
-        "OwnerKey" = "8:_71B47F67490A4CA884CC04610D9EED0E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -87,50 +75,32 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_718F94F77278F6C6D7352261D39968C7"
-        "OwnerKey" = "8:_AA8744BBC2A1E3AD9583C8A42F0F7F54"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_718F94F77278F6C6D7352261D39968C7"
-        "OwnerKey" = "8:_6F622356E6A1461E99B4DDFEC7FFE4F4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_71B47F67490A4CA884CC04610D9EED0E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7DCE3AC6E96E4AD9AE053F0C86B070FC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_AA8744BBC2A1E3AD9583C8A42F0F7F54"
+        "MsmKey" = "8:_875CDEE50E2908539582ADC68EED2C72"
+        "OwnerKey" = "8:_E5CFBA897CD4A9FC1CC340836F58AFA8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_875CDEE50E2908539582ADC68EED2C72"
         "OwnerKey" = "8:_6F622356E6A1461E99B4DDFEC7FFE4F4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B7ED343AAD75414DA97171289B8E3BEC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C2E7469B810FAE9BE18CD0B2FB0DA55C"
-        "OwnerKey" = "8:_B7ED343AAD75414DA97171289B8E3BEC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C954DB52B1004AE98EE68A4351D0986B"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E5CFBA897CD4A9FC1CC340836F58AFA8"
+        "OwnerKey" = "8:_6F622356E6A1461E99B4DDFEC7FFE4F4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -148,49 +118,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_71B47F67490A4CA884CC04610D9EED0E"
+        "OwnerKey" = "8:_E5CFBA897CD4A9FC1CC340836F58AFA8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_875CDEE50E2908539582ADC68EED2C72"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_030D6BB8B4A8DCD94AAEDD5AD026DE56"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7DCE3AC6E96E4AD9AE053F0C86B070FC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C2E7469B810FAE9BE18CD0B2FB0DA55C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AA8744BBC2A1E3AD9583C8A42F0F7F54"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_718F94F77278F6C6D7352261D39968C7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_468594D914407E2C4401EAD95CCC0ED4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B7ED343AAD75414DA97171289B8E3BEC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_10F5B9477F793A45935CF05C541D9A0D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -326,14 +272,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_10F5B9477F793A45935CF05C541D9A0D"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_030D6BB8B4A8DCD94AAEDD5AD026DE56"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:System.ComponentModel.Composition, Version=2009.1.23.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_10F5B9477F793A45935CF05C541D9A0D"
+                    "_030D6BB8B4A8DCD94AAEDD5AD026DE56"
                     {
                     "Name" = "8:System.ComponentModel.Composition.dll"
                     "Attributes" = "3:512"
@@ -439,37 +385,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_468594D914407E2C4401EAD95CCC0ED4"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.ComponentModel.Composition, Version=2009.1.23.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_468594D914407E2C4401EAD95CCC0ED4"
-                    {
-                    "Name" = "8:System.ComponentModel.Composition.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.ComponentModel.Composition.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6CC0A762ACC8D564669E436505F3DDE0"
             {
             "AssemblyRegister" = "3:1"
@@ -501,14 +416,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_718F94F77278F6C6D7352261D39968C7"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_875CDEE50E2908539582ADC68EED2C72"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebCamLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:WebCamLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_718F94F77278F6C6D7352261D39968C7"
+                    "_875CDEE50E2908539582ADC68EED2C72"
                     {
                     "Name" = "8:WebCamLib.dll"
                     "Attributes" = "3:512"
@@ -532,51 +447,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AA8744BBC2A1E3AD9583C8A42F0F7F54"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5CFBA897CD4A9FC1CC340836F58AFA8"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Touchless.Vision, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Touchless.Vision, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_AA8744BBC2A1E3AD9583C8A42F0F7F54"
+                    "_E5CFBA897CD4A9FC1CC340836F58AFA8"
                     {
                     "Name" = "8:Touchless.Vision.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:Touchless.Vision.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C2E7469B810FAE9BE18CD0B2FB0DA55C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebCamLib, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_C2E7469B810FAE9BE18CD0B2FB0DA55C"
-                    {
-                    "Name" = "8:WebCamLib.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:WebCamLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
@@ -705,7 +589,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:İrem Eczanesi Dermokozmetik Sistemi"
         "ProductCode" = "8:{83BACADE-7308-4DB2-98BF-6BB2E496522A}"
-        "PackageCode" = "8:{034AF832-6AF0-4C86-873E-DF0D1F021A53}"
+        "PackageCode" = "8:{91ADA556-ECDE-4ABE-ACB0-51BAA4633E87}"
         "UpgradeCode" = "8:{F0C69FB3-E946-48C9-9B29-8BE045DD708F}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1282,7 +1166,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6F622356E6A1461E99B4DDFEC7FFE4F4"
             {
-            "SourcePath" = "8:..\\IremEczOtomasyonu\\obj\\x86\\Release\\IremEczOtomasyonu.exe"
+            "SourcePath" = "8:..\\IremEczOtomasyonu\\obj\\x64\\Release\\IremEczOtomasyonu.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
@@ -1308,37 +1192,9 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_71B47F67490A4CA884CC04610D9EED0E"
-            {
-            "SourcePath" = "8:..\\Release\\WebCamLib.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{2522CF32-DEDF-43C4-9A9E-D52A7CE4BE3E}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7DCE3AC6E96E4AD9AE053F0C86B070FC"
             {
-            "SourcePath" = "8:..\\ConnectionStringEncrypter\\obj\\x86\\Release\\ConnectionStringEncrypter.exe"
+            "SourcePath" = "8:..\\ConnectionStringEncrypter\\obj\\x64\\Release\\ConnectionStringEncrypter.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
@@ -1359,34 +1215,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{D2347FED-18E2-407C-A27E-BC92852F9EEC}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B7ED343AAD75414DA97171289B8E3BEC"
-            {
-            "SourcePath" = "8:..\\WebCamWrapper\\obj\\Release\\Touchless.Vision.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3129CDAB0A924CF490D27E8892D1BD7E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{CC5D5149-0092-4508-AC34-2ABE1468A1C9}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
