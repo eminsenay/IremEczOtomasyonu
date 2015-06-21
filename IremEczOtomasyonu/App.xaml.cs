@@ -43,9 +43,10 @@ namespace IremEczOtomasyonu
             
 #else
             System.Reflection.Assembly a = System.Reflection.Assembly.GetEntryAssembly();
-            string baseDir = System.IO.Path.GetDirectoryName(a.Location);
+            dbDir = System.IO.Path.GetDirectoryName(a.Location);
 // ReSharper disable AssignNullToNotNullAttribute
-            dbDir = System.IO.Path.GetFullPath(System.IO.Path.Combine(baseDir, "..\\.."));
+            // Use this setting if you want to use the db file located at the sources.
+            // dbDir = System.IO.Path.GetFullPath(System.IO.Path.Combine(dbDir, "..\\..\\.."));
 // ReSharper restore AssignNullToNotNullAttribute
 #endif
             AppDomain.CurrentDomain.SetData("DataDirectory", dbDir);
