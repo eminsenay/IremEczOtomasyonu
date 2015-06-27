@@ -127,17 +127,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AboutBox.xaml.cs">
+    <Compile Include="UI\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddNewProductWindow.xaml.cs">
+    <Compile Include="UI\AddNewProductWindow.xaml.cs">
       <DependentUpon>AddNewProductWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AutoCompleteFocusableBox.cs" />
-    <Compile Include="BarcodeWindow.xaml.cs">
+    <Compile Include="UI\AutoCompleteFocusableBox.cs" />
+    <Compile Include="UI\BarcodeWindow.xaml.cs">
       <DependentUpon>BarcodeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddPurchaseWindow.xaml.cs">
+    <Compile Include="UI\AddPurchaseWindow.xaml.cs">
       <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BL\Customer.cs" />
@@ -148,81 +148,81 @@
     </Compile>
     <Compile Include="BL\ObjectCtx.cs" />
     <Compile Include="BL\ProductSale.cs" />
-    <Compile Include="WebcamWindow.xaml.cs">
+    <Compile Include="UI\WebcamWindow.xaml.cs">
       <DependentUpon>WebcamWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomerListWindow.xaml.cs">
+    <Compile Include="UI\CustomerListWindow.xaml.cs">
       <DependentUpon>CustomerListWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DatePickerWatermarkBehaviour.cs" />
     <Compile Include="BL\Deal.cs" />
     <Compile Include="BL\Product.cs" />
     <Compile Include="BL\ExpirationDate.cs" />
-    <Compile Include="IncomingExpirationsWindow.xaml.cs">
+    <Compile Include="UI\IncomingExpirationsWindow.xaml.cs">
       <DependentUpon>IncomingExpirationsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProductDetailsWindow.xaml.cs">
+    <Compile Include="UI\ProductDetailsWindow.xaml.cs">
       <DependentUpon>ProductDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BL\ProductPurchase.cs" />
     <Compile Include="BL\SaleItem.cs" />
-    <Compile Include="ProductSaleCountWindow.xaml.cs">
+    <Compile Include="UI\ProductSaleCountWindow.xaml.cs">
       <DependentUpon>ProductSaleCountWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PurchaseListWindow.xaml.cs">
+    <Compile Include="UI\PurchaseListWindow.xaml.cs">
       <DependentUpon>PurchaseListWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SaleListWindow.xaml.cs">
+    <Compile Include="UI\SaleListWindow.xaml.cs">
       <DependentUpon>SaleListWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WebcamImagePreviewWindow.xaml.cs">
+    <Compile Include="UI\WebcamImagePreviewWindow.xaml.cs">
       <DependentUpon>WebcamImagePreviewWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIUtilities.cs" />
-    <Compile Include="UserControlSales.xaml.cs">
+    <Compile Include="UI\UIUtilities.cs" />
+    <Compile Include="UI\UserControlSales.xaml.cs">
       <DependentUpon>UserControlSales.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ValueConverters.cs" />
-    <Compile Include="SaleWindow.xaml.cs">
+    <Compile Include="UI\ValueConverters.cs" />
+    <Compile Include="UI\SaleWindow.xaml.cs">
       <DependentUpon>SaleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BL\ValidationRules.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="UserControlCustomers.xaml.cs">
+    <Compile Include="Properties\Settings.cs" />
+    <Compile Include="UI\UserControlCustomers.xaml.cs">
       <DependentUpon>UserControlCustomers.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControlProducts.xaml.cs">
+    <Compile Include="UI\UserControlProducts.xaml.cs">
       <DependentUpon>UserControlProducts.xaml</DependentUpon>
     </Compile>
-    <Page Include="AboutBox.xaml">
+    <Page Include="UI\AboutBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddNewProductWindow.xaml">
+    <Page Include="UI\AddNewProductWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BarcodeWindow.xaml">
+    <Page Include="UI\BarcodeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddPurchaseWindow.xaml">
+    <Page Include="UI\AddPurchaseWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WebcamWindow.xaml">
+    <Page Include="UI\WebcamWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="CustomerListWindow.xaml">
+    <Page Include="UI\CustomerListWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="IncomingExpirationsWindow.xaml">
+    <Page Include="UI\IncomingExpirationsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="UI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -230,43 +230,43 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="UI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ProductDetailsWindow.xaml">
+    <Page Include="UI\ProductDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ProductSaleCountWindow.xaml">
+    <Page Include="UI\ProductSaleCountWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PurchaseListWindow.xaml">
+    <Page Include="UI\PurchaseListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SaleListWindow.xaml">
+    <Page Include="UI\SaleListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SaleWindow.xaml">
+    <Page Include="UI\SaleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WebcamImagePreviewWindow.xaml">
+    <Page Include="UI\WebcamImagePreviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControlCustomers.xaml">
+    <Page Include="UI\UserControlCustomers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControlProducts.xaml">
+    <Page Include="UI\UserControlProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControlSales.xaml">
+    <Page Include="UI\UserControlSales.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,7 +308,7 @@
     <None Include="SetupReq\eula.rtf" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="IremEczSplashScreen.png" />
+    <SplashScreen Include="Images\IremEczSplashScreen.png" />
     <Resource Include="SetupReq\eczane_logo.ico" />
     <Resource Include="TextFile1.txt" />
     <Resource Include="Images\IremEczAboutBox.gif" />

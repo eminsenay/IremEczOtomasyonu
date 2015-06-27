@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="IremEczOtomasyonu.UI.UserControlSales"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
+             xmlns:my="clr-namespace:IremEczOtomasyonu"
+             xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
+             d:DesignHeight="330" d:DesignWidth="870" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ui:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
+        <ui:ExpirationDatesToDateTimeListConverter x:Key="expDatesToDateTimeListConverter" />
+        <ui:ProductToBrandAndNameConverter x:Key="productToBrandAndNameConverter" />
+    </UserControl.Resources>
+    <Grid Name="saleGrid">
+        <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="68,12,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="150" />
+        
+        <Label Content="ya da" Height="28" Margin="234,10,0,0" Name="orLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
+        <Label Content="Marka veya İsim: " Height="28" HorizontalAlignment="Right" Margin="0,10,480,0" Name="productBrandLabel" VerticalAlignment="Top" />
+        <ui:AutoCompleteFocusableBox Height="23" HorizontalAlignment="Right" Margin="0,12,94,0" x:Name="productBrandAndNameAutoCompleteBox" 
+                                     VerticalAlignment="Top" Width="380" IsTextCompletionEnabled="True" ItemsSource="{Binding}" 
+                                     ValueMemberBinding="{Binding Converter={StaticResource productToBrandAndNameConverter}}"
+                                     EnterKeyDown="ProductBrandAndNameAutoCompleteBox_EnterKeyDown">
+            <ui:AutoCompleteFocusableBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Path=Brand}" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ui:AutoCompleteFocusableBox.ItemTemplate>
+        </ui:AutoCompleteFocusableBox>
+        <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,12,13,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
+        <DataGrid AutoGenerateColumns="False" Margin="12,41,12,68" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
+                  CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}"
+                  d:DataContext="{d:DesignInstance Type=BL:ProductSale}">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
+                                    Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
+                <DataGridTextColumn x:Name="brandColumn" Header="Marka" MinWidth="150" IsReadOnly="True"
+                                    Binding="{Binding Path=Product.Brand, Mode=OneWay}"/>
+                <DataGridTextColumn x:Name="nameColumn" Header="İsim" MinWidth="150" Width="*" IsReadOnly="True"
+                                    Binding="{Binding Path=Product.Name, Mode=OneWay}"/>
+                <DataGridTextColumn x:Name="numItemsColumn" Header="Adet" Width="40">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="NumSold" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <BL:IntegerValidationRule Min="1"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:dd.MM.yyyy}" SelectionChanged="ExpirationDateComboBox_SelectionChanged">
+                                <ComboBox.ItemsSource>
+                                    <Binding Path="Product.ExpirationDates" Converter="{StaticResource expDatesToDateTimeListConverter}" />
+                                </ComboBox.ItemsSource>
+                                <ComboBox.SelectedItem>
+                                    <Binding Path="ExDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                                </ComboBox.SelectedItem>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="unitPriceColumn" Header="Birim Fiyat" MinWidth="100">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
+                            <Binding.ValidationRules>
+                                <BL:MoneyValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn x:Name="totalPriceColumn" Header="Toplam Fiyat" MinWidth="100" IsReadOnly="True">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource saleItemToPriceConverter}">
+                            <Binding Path="NumSold"/>
+                            <Binding Path="UnitPrice"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="datagridDeleteSaleItemMenuItem" Header="Sil" Click="DatagridDeleteSaleItemMenuItem_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Right" Margin="0,0,190,5" Name="customerNameLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Width="150" HorizontalAlignment="Right" Margin="0,0,34,8" Name="customerNameTextBox" VerticalAlignment="Bottom"
+                 Text="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş, Mode=OneWay}" IsReadOnly="True">
+            <TextBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="customerNameTextBoxDeleteMenuItem" Header="İlişkiyi kaldır" Click="CustomerNameTextBoxDeleteMenuItem_Click"/>
+                </ContextMenu>
+            </TextBox.ContextMenu>
+        </TextBox>
+        <Label Content="Detaylar:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,34" Name="detailsLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="48" HorizontalAlignment="Left" Margin="68,0,0,12" Name="textBoxRemarks" VerticalAlignment="Bottom" Width="231"
+                 VerticalScrollBarVisibility="Auto" Text="{Binding Mode=TwoWay, Path=Remarks, ValidatesOnDataErrors=True}"/>
+        <Label Content="Toplam:" Height="28" HorizontalAlignment="Right" Margin="0,0,168,34" Name="totalPriceLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Margin="0,0,12,37" Name="totalPriceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150">
+            <TextBox.Text>
+                <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
+                    <Binding.ValidationRules>
+                        <BL:MoneyValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,8" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="Images/magnifying_glass.ico" />
+        </Button>
+       
+    </Grid>
+</UserControl>

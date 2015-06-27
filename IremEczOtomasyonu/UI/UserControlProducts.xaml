@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="IremEczOtomasyonu.UI.UserControlProducts"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:IremEczOtomasyonu"
+             xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1100" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="productsViewSource" Filter="ProductCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" >
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Brand"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+        <ui:ProductListToItemSumConverter x:Key="prodListToSumConverter" />
+        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource productsViewSource}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="36" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="265" />
+            <ColumnDefinition Width="265" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="120" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="10,8,0,0" Text="Barkod" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchBarcodeInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Grid.Row="0" Grid.Column="0" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="255" TextChanged="ProductSearchControl_TextChanged" Name="searchBarcodeInfoTextBox" Background="Transparent" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="10,8,0,0" Text="Marka Adı" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchBrandNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Grid.Row="0" Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="255" TextChanged="ProductSearchControl_TextChanged" Name="searchBrandNameInfoTextBox" Background="Transparent" />
+        <TextBlock Grid.Row="0" Grid.Column="2" Margin="10,8,0,0" Text="Ürün Adı" Foreground="{StaticResource brushWatermarkForeground}"
+                       Visibility="{Binding ElementName=searchProductNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" Height="23" HorizontalAlignment="Stretch" Margin="6,6,6,0" VerticalAlignment="Top" TextChanged="ProductSearchControl_TextChanged" Name="searchProductNameInfoTextBox" Background="Transparent" />
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="5" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,6,6,0" Name="productsDataGrid" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected" PreviewKeyDown="ProductsDataGrid_PreviewKeyDown" SelectionMode="Single"
+                  CanUserAddRows="False">
+            <DataGrid.RowStyle>
+                <Style>
+                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="ProductsDataGrid_MouseDoubleClick"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Path=Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="False">
+                                            <Expander.Header>
+                                                <!-- datacontext = collectionviewgroup -->
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Path=Name}" />
+                                                    <TextBlock Text=", Toplam "/>
+                                                    <TextBlock Text="{Binding Path=Items, Converter={StaticResource prodListToSumConverter}}"/>
+                                                    <TextBlock Text=" ürün stokta"/>
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="barcodeColumn" Binding="{Binding Path=Barcode}" Header="Barkod" MinWidth="220" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" MinWidth="350" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" Header="İsim" MinWidth="390" IsReadOnly="True" />
+                <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Stok Miktarı" Width="SizeToHeader" IsReadOnly="True" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="datagridDetailsMenuItem" Header="Detaylar" Click="DatagridDetailsMenuItem_Click" />
+                    <MenuItem Name="datagridAddPurchaseMenuItem" Header="Stok Girişi" Click="DatagridAddPurchaseMenuItem_Click" />
+                    <MenuItem Name="datagridDeleteProductMenuItem" Header="Sil" Click="DatagridDeleteProductMenuItem_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Button Grid.Row="2" Grid.Column="3" Content="Yeni Ürün Ekle" Height="23" Margin="0,6,6,0" Name="addNewProduct" VerticalAlignment="Top" Click="AddNewProduct_Click" HorizontalAlignment="Right" Width="110" />
+        <Button Grid.Row="2" Grid.Column="4" Content="Stok Girişi" Height="23" HorizontalAlignment="Right" Margin="0,6,6,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" Click="AddPurchaseButton_Click" />
+    </Grid>
+</UserControl>

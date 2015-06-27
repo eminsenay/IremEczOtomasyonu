@@ -1,0 +1,32 @@
+﻿<Window x:Class="IremEczOtomasyonu.UI.IncomingExpirationsWindow"
+        Title="Son Kullanma Tarihi Yaklaşan Ürünler" Height="384" Width="685" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:my="clr-namespace:IremEczOtomasyonu.BL" 
+        mc:Ignorable="d" 
+        Loaded="Window_Loaded" WindowStartupLocation="CenterOwner"
+        Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
+    <Window.Resources>
+        <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
+    </Window.Resources>
+    <Grid DataContext="{StaticResource expirationDatesViewSource}">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" 
+                  Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41"
+                  d:DataContext="{d:DesignInstance Type=my:ExpirationDate}">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}" Header="Son Kullanma Tarihi" Width="2*" MinWidth="100" />
+                <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Adedi" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="productNameColumn" Binding="{Binding Path=Product.Name}" Header="Ürün adı" Width="3*" MinWidth="150" />
+                <DataGridTextColumn x:Name="productBrandColumn" Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" Width="3*" MinWidth="150" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="datagridDetailsMenuItem" Header="Detaylar" Click="DatagridDetailsMenuItem_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Button Content="Tamam" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="okButton" VerticalAlignment="Bottom" Width="75" IsDefault="True" Click="OkButton_Click" />
+    </Grid>
+</Window>

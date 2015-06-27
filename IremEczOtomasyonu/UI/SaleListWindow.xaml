@@ -1,0 +1,39 @@
+﻿<Window x:Class="IremEczOtomasyonu.UI.SaleListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
+        xmlns:my="clr-namespace:IremEczOtomasyonu"
+        xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
+        Title="Bütün Satışlar" Height="700" Width="900" mc:Ignorable="d" Loaded="Window_Loaded"
+        WindowStartupLocation="CenterOwner" Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
+    <Window.Resources>
+        <CollectionViewSource x:Key="productSalesViewSource" d:DesignSource="{d:DesignInstance BL:ProductSale, CreateList=True}"
+                              CollectionViewType="{x:Type ListCollectionView}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource productSalesViewSource}">
+        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" Height="241" ItemsSource="{Binding}" Name="productSalesDataGrid" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected" VerticalAlignment="Top" CanUserAddRows="False" IsReadOnly="True" CanUserDeleteRows="True" 
+                  SelectionChanged="ProductSalesDataGrid_SelectionChanged" Margin="6,12,6,0" PreviewKeyDown="ProductSalesDataGrid_PreviewKeyDown">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="saleDateColumn" Binding="{Binding Path=SaleDate}" Header="Tarih" Width="150" />
+                <DataGridTextColumn x:Name="customerColumn" Binding="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş}" Header="Müşteri" Width="150" />
+                <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding Path=TotalPrice, StringFormat={}{0:C}, ConverterCulture=tr-TR}"
+                                    Header="Toplam Fiyat" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="remarksColumn" Binding="{Binding Path=Remarks}" Header="Detaylar" Width="*" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="datagridDeleteProductSaleMenuItem" Header="Sil" Click="DatagridDeleteProductSaleMenuItem_Click" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <GroupBox Name="saleDetailsGroupBox" Header="Satış Detayları" Margin="6,259,6,41">
+            <ui:UserControlSales x:Name="userControlSales" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </GroupBox>
+        <Button Content="İptal" Height="23" HorizontalAlignment="Right" Margin="0,0,6,12" Name="cancelButton" VerticalAlignment="Bottom" Width="75" IsCancel="True" />
+        <Button Content="Tamam" Height="23" HorizontalAlignment="Right" Margin="0,0,87,12" Name="okButton" VerticalAlignment="Bottom" Width="75" IsDefault="True" Click="OkButton_Click" />
+        <Button Content="Uygula" Height="23" HorizontalAlignment="Right" Margin="0,0,168,12" Name="applyButton" VerticalAlignment="Bottom" Width="75" IsEnabled="False" Click="ApplyButton_Click" />
+    </Grid>
+</Window>
