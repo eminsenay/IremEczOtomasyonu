@@ -30,7 +30,7 @@ namespace IremEczOtomasyonu.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productPurchasesViewSource = ((CollectionViewSource)
-                (FindResource("productPurchasesViewSource")));
+                (FindResource("ProductPurchasesViewSource")));
             
             CurrentPurchase = new ProductPurchase
                                {

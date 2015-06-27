@@ -33,7 +33,7 @@ namespace IremEczOtomasyonu.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productPurchasesViewSource = ((CollectionViewSource)(
-                FindResource("productPurchasesViewSource")));
+                FindResource("ProductPurchasesViewSource")));
             _productPurchases = new ObservableCollection<ProductPurchase>(ObjectCtx.Context.ProductPurchases.OrderBy(
                 x => x.PurchaseDate));
             // Set prev num items by hand to keep track of numitems modifications

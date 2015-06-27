@@ -20,7 +20,7 @@ namespace IremEczOtomasyonu.UI
             InitializeComponent();
             //_dbContext = dbContext;
 
-            CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
+            CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("CustomersViewSource")));
             customersViewSource.Source = ObjectCtx.Context.Customers;
             _customerView = customersViewSource.View;
         }

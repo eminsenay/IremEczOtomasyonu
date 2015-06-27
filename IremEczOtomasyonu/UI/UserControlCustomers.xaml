@@ -3,27 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
-             xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
-             xmlns:my="clr-namespace:IremEczOtomasyonu"
+             xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
              xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
-             d:DesignHeight="600" d:DesignWidth="1100" FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
+             d:DesignHeight="600" d:DesignWidth="1100" 
+             FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <ui:ProductSalesToSaleItemsConverter x:Key="productSalesToSaleItemsConverter" />
-        <CollectionViewSource x:Key="customersViewSource" Filter="CustomerCollection_Filter" CollectionViewType="{x:Type ListCollectionView}" />
-        <CollectionViewSource x:Key="saleItemsViewSource" d:DesignSource="{d:DesignInstance BL:SaleItem, CreateList=True}"
-                              Source="{Binding Source={StaticResource customersViewSource}, Path=ProductSales, 
-                              Converter={StaticResource productSalesToSaleItemsConverter}}">
+        <ui:ProductSalesToSaleItemsConverter x:Key="ProductSalesToSaleItemsConverter" />
+        <CollectionViewSource x:Key="CustomersViewSource" Filter="CustomerCollection_Filter" 
+                              CollectionViewType="{x:Type ListCollectionView}" />
+        <CollectionViewSource x:Key="SaleItemsViewSource" 
+                              d:DesignSource="{d:DesignInstance bl:SaleItem, CreateList=True}"
+                              Source="{Binding Source={StaticResource CustomersViewSource}, Path=ProductSales, Converter={StaticResource ProductSalesToSaleItemsConverter}}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="ProductSale.Id"/>
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-        <ui:SaleItemListToHeaderConverter x:Key="saleItemListToHeaderConverter" />
-        <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ui:SaleItemListToHeaderConverter x:Key="SaleItemListToHeaderConverter" />
     </UserControl.Resources>
-    <Grid DataContext="{StaticResource customersViewSource}">
+    <Grid DataContext="{StaticResource CustomersViewSource}">
         <Grid Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -34,16 +34,26 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="90" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Margin="10,8,0,0" Text="İsim" Foreground="{StaticResource brushWatermarkForeground}"
-                       Visibility="{Binding ElementName=searchFirstNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox Grid.Column="0" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" Name="searchFirstNameInfoTextBox" Background="Transparent" />
-            <TextBlock Grid.Column="1" Margin="10,8,0,0" Text="Soyisim" Foreground="{StaticResource brushWatermarkForeground}"
-                       Visibility="{Binding ElementName=searchLastNameInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox Grid.Column="1" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="searchLastNameInfoTextBox" VerticalAlignment="Top" Width="120" TextChanged="CustomerSearchControl_TextChanged" Background="Transparent" />
-            <TextBlock Grid.Column="2" Margin="10,8,5,0" Text="Detaylı Bilgi" Foreground="{StaticResource brushWatermarkForeground}"
-                       Visibility="{Binding ElementName=searchDetailedInfoInfoTextBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBox Grid.Column="2" Height="23" HorizontalAlignment="Stretch" Name="searchDetailedInfoInfoTextBox" VerticalAlignment="Top" Margin="6,6,0,0" TextChanged="CustomerSearchControl_TextChanged" Background="Transparent" />
-            <Button Grid.Column="3" Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="6,6,6,0" Name="addCustomerButton" VerticalAlignment="Top" Width="75" Click="AddCustomerButton_Click" />
+            <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="0" Name="searchFirstNameInfoTextBox" Watermark="İsim"
+                                   Height="23" Width="120"
+                                   HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="6,6,0,0"
+                                   TextChanged="CustomerSearchControl_TextChanged"
+                                   AutoSelectBehavior="OnFocus"/>
+            <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="1" Name="searchLastNameInfoTextBox" Watermark="Soyisim"
+                                   Height="23" Width="120"
+                                   HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="6,6,0,0"
+                                   TextChanged="CustomerSearchControl_TextChanged"
+                                   AutoSelectBehavior="OnFocus"/>
+            <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="2" Name="searchDetailedInfoInfoTextBox" 
+                                   Watermark="Detaylı Bilgi"
+                                   Height="23" 
+                                   HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="6,6,0,0"
+                                   TextChanged="CustomerSearchControl_TextChanged"
+                                   AutoSelectBehavior="OnFocus"/>
+            <Button Grid.Row="0" Grid.Column="3" Name="addCustomerButton" Content="Ekle" 
+                    Height="23" Width="75" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6,6,6,0" 
+                    Click="AddCustomerButton_Click" />
         </Grid>
         <Grid Margin="0,0,0,0">
             <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,35,486,262" Name="customersDataGrid" 
@@ -67,7 +77,7 @@
             </DataGrid>
             <GroupBox Header="Müşterinin Aldığı Ürünler" Margin="0,35,6,262" Name="productsGroupBox" HorizontalAlignment="Right" Width="474">
                 <Grid>
-                    <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource saleItemsViewSource}}" Margin="0,0,0,0" CanUserAddRows="False">
+                    <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource SaleItemsViewSource}}" Margin="0,0,0,0" CanUserAddRows="False">
                         <DataGrid.GroupStyle>
                             <GroupStyle>
                                 <GroupStyle.HeaderTemplate>
@@ -85,7 +95,7 @@
                                                     <Expander IsExpanded="True">
                                                         <Expander.Header>
                                                             <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="{Binding Path=Items, Converter={StaticResource saleItemListToHeaderConverter}}" />
+                                                                <TextBlock Text="{Binding Path=Items, Converter={StaticResource SaleItemListToHeaderConverter}}" />
                                                             </StackPanel>
                                                         </Expander.Header>
                                                         <ItemsPresenter />
@@ -109,7 +119,7 @@
         <Grid Margin="0,0,0,0">
             <GroupBox Header="Detaylar" Margin="6,0,6,6" Name="detailsGroupBox" Height="250" VerticalAlignment="Bottom">
                 <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top"
-                      d:DataContext="{d:DesignInstance Type=BL:Customer}">
+                      d:DataContext="{d:DesignInstance Type=bl:Customer}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />

@@ -77,7 +77,7 @@ namespace IremEczOtomasyonu.UI
 
             SaleCountItems = new ObservableCollection<SaleCountItem>();
             CollectionViewSource productSaleCountViewSource = (
-                (CollectionViewSource)(FindResource("productSaleCountViewSource")));
+                (CollectionViewSource)(FindResource("ProductSaleCountViewSource")));
             productSaleCountViewSource.Source = SaleCountItems;
 
             SaleCntDate = new SaleCountDate {LastDateCount = 30};

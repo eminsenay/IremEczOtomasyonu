@@ -21,7 +21,7 @@ namespace IremEczOtomasyonu.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ObjectDataProvider currentProductDataProvider = ((ObjectDataProvider)(FindResource("currentProduct")));
+            ObjectDataProvider currentProductDataProvider = ((ObjectDataProvider)(FindResource("CurrentProduct")));
             CurrentProduct = currentProductDataProvider.Data as Product;
         }
 

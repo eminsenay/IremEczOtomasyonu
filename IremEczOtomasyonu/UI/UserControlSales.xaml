@@ -4,14 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             xmlns:BL="clr-namespace:IremEczOtomasyonu.BL"
-             xmlns:my="clr-namespace:IremEczOtomasyonu"
+             xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
              xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
              d:DesignHeight="330" d:DesignWidth="870" Loaded="UserControl_Loaded">
     <UserControl.Resources>
-        <ui:SaleItemToPriceConverter x:Key="saleItemToPriceConverter" />
-        <ui:ExpirationDatesToDateTimeListConverter x:Key="expDatesToDateTimeListConverter" />
-        <ui:ProductToBrandAndNameConverter x:Key="productToBrandAndNameConverter" />
+        <ui:SaleItemToPriceConverter x:Key="SaleItemToPriceConverter" />
+        <ui:ExpirationDatesToDateTimeListConverter x:Key="ExpDatesToDateTimeListConverter" />
+        <ui:ProductToBrandAndNameConverter x:Key="ProductToBrandAndNameConverter" />
     </UserControl.Resources>
     <Grid Name="saleGrid">
         <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
@@ -21,7 +20,7 @@
         <Label Content="Marka veya İsim: " Height="28" HorizontalAlignment="Right" Margin="0,10,480,0" Name="productBrandLabel" VerticalAlignment="Top" />
         <ui:AutoCompleteFocusableBox Height="23" HorizontalAlignment="Right" Margin="0,12,94,0" x:Name="productBrandAndNameAutoCompleteBox" 
                                      VerticalAlignment="Top" Width="380" IsTextCompletionEnabled="True" ItemsSource="{Binding}" 
-                                     ValueMemberBinding="{Binding Converter={StaticResource productToBrandAndNameConverter}}"
+                                     ValueMemberBinding="{Binding Converter={StaticResource ProductToBrandAndNameConverter}}"
                                      EnterKeyDown="ProductBrandAndNameAutoCompleteBox_EnterKeyDown">
             <ui:AutoCompleteFocusableBox.ItemTemplate>
                 <DataTemplate>
@@ -35,7 +34,7 @@
         <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,12,13,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
         <DataGrid AutoGenerateColumns="False" Margin="12,41,12,68" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
                   CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}"
-                  d:DataContext="{d:DesignInstance Type=BL:ProductSale}">
+                  d:DataContext="{d:DesignInstance Type=bl:ProductSale}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
@@ -47,7 +46,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="NumSold" Mode="TwoWay" ValidatesOnDataErrors="True">
                             <Binding.ValidationRules>
-                                <BL:IntegerValidationRule Min="1"/>
+                                <bl:IntegerValidationRule Min="1"/>
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
@@ -57,7 +56,7 @@
                         <DataTemplate>
                             <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:dd.MM.yyyy}" SelectionChanged="ExpirationDateComboBox_SelectionChanged">
                                 <ComboBox.ItemsSource>
-                                    <Binding Path="Product.ExpirationDates" Converter="{StaticResource expDatesToDateTimeListConverter}" />
+                                    <Binding Path="Product.ExpirationDates" Converter="{StaticResource ExpDatesToDateTimeListConverter}" />
                                 </ComboBox.ItemsSource>
                                 <ComboBox.SelectedItem>
                                     <Binding Path="ExDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
@@ -70,14 +69,14 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                             <Binding.ValidationRules>
-                                <BL:MoneyValidationRule/>
+                                <bl:MoneyValidationRule/>
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn x:Name="totalPriceColumn" Header="Toplam Fiyat" MinWidth="100" IsReadOnly="True">
                     <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource saleItemToPriceConverter}">
+                        <MultiBinding Converter="{StaticResource SaleItemToPriceConverter}">
                             <Binding Path="NumSold"/>
                             <Binding Path="UnitPrice"/>
                         </MultiBinding>
@@ -107,7 +106,7 @@
             <TextBox.Text>
                 <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                     <Binding.ValidationRules>
-                        <BL:MoneyValidationRule/>
+                        <bl:MoneyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

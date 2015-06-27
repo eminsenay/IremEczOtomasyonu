@@ -26,7 +26,7 @@ namespace IremEczOtomasyonu.UI
 
             productDetailsGrid.DataContext = _product;
 
-            CollectionViewSource expirationDatesViewSource = ((CollectionViewSource)(FindResource("expirationDatesViewSource")));
+            CollectionViewSource expirationDatesViewSource = ((CollectionViewSource)(FindResource("ExpirationDatesViewSource")));
             expirationDatesViewSource.Source = _expirationDates;
 
             dealsDataGrid.ItemsSource = _product.GetAllDeals();

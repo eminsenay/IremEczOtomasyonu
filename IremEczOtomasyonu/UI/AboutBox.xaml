@@ -5,7 +5,7 @@
         Style="{DynamicResource AboutDialogStyle}" WindowStartupLocation="CenterOwner"
         Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
-        <Image x:Key="aboutLogo" Source="Images/IremEczAboutBox.gif" />
+        <Image x:Key="AboutLogo" Source="/IremEczOtomasyonu;component/Images/IremEczAboutBox.gif" />
         <Style x:Key="AboutDialogStyle" TargetType="Window">
             <Setter Property="Height" Value="Auto" />
             <Setter Property="Width" Value="500" />
@@ -55,7 +55,7 @@
         </Style>
     </Window.Resources>
     <StackPanel x:Uid="clientArea" Style="{StaticResource BackgroundStyle}">
-        <StaticResource ResourceKey="aboutLogo" />
+        <StaticResource ResourceKey="AboutLogo" />
         <StackPanel x:Uid="displayArea" Style="{StaticResource DisplayAreaStyle}" 
                     DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Mode=OneTime}">
             <Label x:Name="productName" x:Uid="productName" 
@@ -75,8 +75,9 @@
                 <Button x:Name="okButton" x:Uid="okButton" Style="{StaticResource OkButtonStyle}" 
                         Content="OK" />
                 <Label x:Name="productLink" x:Uid="productLink" Style="{StaticResource LinkLabelStyle}" >
-                    <Hyperlink x:Name="hyperlink" x:Uid="hyperlink" NavigateUri="{Binding Mode=OneTime, Path=LinkUri}"  Style="{StaticResource LinkLabelStyle}"
-                               Hyperlink.RequestNavigate="Hyperlink_RequestNavigate">
+                    <Hyperlink x:Name="hyperlink" x:Uid="hyperlink" 
+                               NavigateUri="{Binding Mode=OneTime, Path=LinkUri}"  Style="{StaticResource LinkLabelStyle}"
+                               RequestNavigate="Hyperlink_RequestNavigate">
                         <TextBlock Text="{Binding Mode=OneTime, Path=LinkText}" />
                     </Hyperlink>
                 </Label>

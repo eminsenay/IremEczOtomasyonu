@@ -9,17 +9,25 @@
         Loaded="Window_Loaded" WindowStartupLocation="CenterOwner"
         Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
-        <CollectionViewSource x:Key="expirationDatesViewSource" d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
+        <CollectionViewSource x:Key="ExpirationDatesViewSource" 
+                              d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
     </Window.Resources>
-    <Grid DataContext="{StaticResource expirationDatesViewSource}">
-        <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" 
-                  Name="expirationDatesDataGrid" RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41"
+    <Grid DataContext="{StaticResource ExpirationDatesViewSource}">
+        <DataGrid Name="expirationDatesDataGrid"
+                  AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" 
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41"
                   d:DataContext="{d:DesignInstance Type=my:ExpirationDate}">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="exDateColumn" Binding="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}" Header="Son Kullanma Tarihi" Width="2*" MinWidth="100" />
-                <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Adedi" Width="SizeToHeader" />
-                <DataGridTextColumn x:Name="productNameColumn" Binding="{Binding Path=Product.Name}" Header="Ürün adı" Width="3*" MinWidth="150" />
-                <DataGridTextColumn x:Name="productBrandColumn" Binding="{Binding Path=Product.Brand}" Header="Ürün Markası" Width="3*" MinWidth="150" />
+                <DataGridTextColumn x:Name="exDateColumn" Header="Son Kullanma Tarihi"
+                                    Binding="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}" 
+                                    Width="2*" MinWidth="100" />
+                <DataGridTextColumn Header="Adedi" x:Name="numItemsColumn" 
+                                    Binding="{Binding Path=NumItems}" Width="SizeToHeader" />
+                <DataGridTextColumn x:Name="productNameColumn" Header="Ürün adı"
+                                    Binding="{Binding Path=Product.Name}" Width="3*" MinWidth="150" />
+                <DataGridTextColumn x:Name="productBrandColumn" Header="Ürün Markası" 
+                                    Binding="{Binding Path=Product.Brand}" Width="3*" MinWidth="150" />
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
@@ -27,6 +35,8 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Button Content="Tamam" Height="23" HorizontalAlignment="Right" Margin="0,0,12,12" Name="okButton" VerticalAlignment="Bottom" Width="75" IsDefault="True" Click="OkButton_Click" />
+        <Button Name="okButton" Content="Tamam" 
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,12,12" 
+                Width="75" Height="23" IsDefault="True" Click="OkButton_Click" />
     </Grid>
 </Window>

@@ -31,7 +31,7 @@ namespace IremEczOtomasyonu.UI
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
+            CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("ProductsViewSource")));
             Products = new ObservableCollection<Product>(
                 ObjectCtx.Context.Products.Include("ProductPurchases").Include("SaleItems"));
 

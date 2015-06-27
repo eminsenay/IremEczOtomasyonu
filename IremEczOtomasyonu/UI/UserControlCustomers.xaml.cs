@@ -38,7 +38,7 @@ namespace IremEczOtomasyonu.UI
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("customersViewSource")));
+            CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("CustomersViewSource")));
             Customers = new ObservableCollection<Customer>(ObjectCtx.Context.Customers);
             customersViewSource.Source = Customers;
             customersViewSource.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));

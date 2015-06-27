@@ -23,7 +23,7 @@ namespace IremEczOtomasyonu.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource expirationDatesViewSource = ((CollectionViewSource)
-                (FindResource("expirationDatesViewSource")));
+                (FindResource("ExpirationDatesViewSource")));
             DateTime oneMonthLater = DateTime.Today + new TimeSpan(365, 0, 0, 0);
             IncomingExpirationDates = new ObservableCollection<ExpirationDate>(ObjectCtx.Context.ExpirationDates.Where(
                 x => x.NumItems > 0 && oneMonthLater >= x.ExDate).OrderBy(x => x.ExDate));

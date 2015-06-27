@@ -21,30 +21,32 @@
                 </ObjectAnimationUsingKeyFrames>
             </Storyboard>
 
-
-            <Style x:Key="myErrorTemplate" TargetType="Control">
+            <!-- Start of error template -->
+            <Style x:Key="MyErrorTemplate" TargetType="Control">
                 <Setter Property="Validation.ErrorTemplate">
                     <Setter.Value>
                         <ControlTemplate>
                             <DockPanel>
-                                <TextBlock Margin="5,0,5,0" Foreground="Red" FontSize="16" VerticalAlignment="Center" 
-                                       Text="*" ToolTip="{Binding ElementName=errorAdorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}" />
+                                <TextBlock Margin="5,0,5,0" Foreground="Red" FontSize="16" 
+                                           VerticalAlignment="Center" Text="*" 
+                                           ToolTip="{Binding ElementName=errorAdorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}" />
                                 <AdornedElementPlaceholder x:Name="errorAdorner" />
                             </DockPanel>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style TargetType="TextBox" BasedOn="{StaticResource myErrorTemplate}" />
-            <Style TargetType="CheckBox" BasedOn="{StaticResource myErrorTemplate}" />
-            <Style TargetType="ComboBox" BasedOn="{StaticResource myErrorTemplate}" />
-            <Style TargetType="DatePicker" BasedOn="{StaticResource myErrorTemplate}">
+            <Style TargetType="TextBox" BasedOn="{StaticResource MyErrorTemplate}" />
+            <Style TargetType="CheckBox" BasedOn="{StaticResource MyErrorTemplate}" />
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MyErrorTemplate}" />
+            <Style TargetType="DatePicker" BasedOn="{StaticResource MyErrorTemplate}">
                 <Setter Property="Margin" Value="10,5"/>
                 <Setter Property="b:DatePickerWatermarkBehaviour.Watermark" Value="Seçiniz"/>
             </Style>
-
+            
+            
             <!-- For the controls inside a datagrid, the error is displayed at the beginning of the row. 
-        No need to add * again, the default error template should suffice. -->
+            No need to add * again, the default error template should suffice. -->
 
             <Style TargetType="DatePicker" x:Key="DatePickerInsideDataGrid">
                 <Setter Property="Margin" Value="10,5"/>
@@ -64,6 +66,8 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
+            <!-- End of error template -->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

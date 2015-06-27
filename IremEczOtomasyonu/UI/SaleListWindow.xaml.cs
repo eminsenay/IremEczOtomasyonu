@@ -44,7 +44,7 @@ namespace IremEczOtomasyonu.UI
         {
             // Load data into ProductSales. You can modify this code as needed.
             CollectionViewSource productSalesViewSource = ((CollectionViewSource)(
-                FindResource("productSalesViewSource")));
+                FindResource("ProductSalesViewSource")));
             _productSaleColl = new ObservableCollection<ProductSale>(ObjectCtx.Context.ProductSales.OrderByDescending(
                 x => x.SaleDate));
             productSalesViewSource.Source = _productSaleColl;
