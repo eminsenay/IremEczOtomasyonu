@@ -19,13 +19,15 @@ using Microsoft.Win32;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Data.SqlServerCe;
+using Fluent;
+using Touchless.Shared.Extensions;
 
 namespace IremEczOtomasyonu
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly UserControlCustomers _customersUserControl;
         private readonly UserControlProducts _productsUserControl;
@@ -34,10 +36,8 @@ namespace IremEczOtomasyonu
         {
             InitializeComponent();
             _customersUserControl = new UserControlCustomers();
-            customersTabItem.Content = _customersUserControl;
             _productsUserControl = new UserControlProducts();
-            productsTabItem.Content = _productsUserControl;
-
+            dockPanel.Children.Add(_customersUserControl);
             _customersUserControl.searchFirstNameInfoTextBox.Focus();
         }
 
@@ -71,25 +71,38 @@ namespace IremEczOtomasyonu
             _customersUserControl.ExecuteCustomerSale(null);
         }
 
-        private void CloseMenuItem_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void ProductTotalPriceMenuItem_Click(object sender, RoutedEventArgs e)
+        private void ProductTotalPriceButton_Click(object sender, RoutedEventArgs e)
         {
+            int numDifferentBrands, productCount;
+            decimal totalSalePrice;
             // Many different queries are not the optimal way of doing it, but it works. 
-            // Consider changing it if its performance is not satisifactory
-            int numDifferentBrands = (from p in ObjectCtx.Context.Products select p.Brand).Distinct().Count();
-            int productCount = ObjectCtx.Context.Products.Sum(x => x.NumItems);
-            decimal totalSalePrice = ObjectCtx.Context.Products.Sum(x => (x.NumItems * x.CurrentSellingPrice)) ?? 0;
+            // Consider changing it if its performance is not satisfactory
+            if (!ObjectCtx.Context.Products.Any())
+            {
+                // No products exist now
+                numDifferentBrands = 0;
+                productCount = 0;
+                totalSalePrice = 0;
+            }
+            else 
+            {
+                numDifferentBrands = (from p in ObjectCtx.Context.Products select p.Brand).Distinct().Count();
+                productCount = ObjectCtx.Context.Products.Sum(x => x.NumItems);
+                totalSalePrice = ObjectCtx.Context.Products.Sum(x => (x.NumItems * x.CurrentSellingPrice)) ?? 0;
+            }
+            
             string messageToShow = string.Format(
                 "Stoktaki {0} farklı markanın toplam {1} ürününün güncel satış fiyatı toplamı {2:0.00} TL'dir.",
                 numDifferentBrands, productCount, totalSalePrice);
             MessageBox.Show(messageToShow, "Stok değeri");
         }
 
-        private void ProductSaleDisplayMenuItem_Click(object sender, RoutedEventArgs e)
+        private void PreviousSalesButton_Click(object sender, RoutedEventArgs e)
         {
             if (!_customersUserControl.AllChangesSaved)
             {
@@ -110,13 +123,13 @@ namespace IremEczOtomasyonu
             //}
         }
 
-        private void ProductSaleCountMenuItem_Click(object sender, RoutedEventArgs e)
+        private void NumberOfPurchasesButton_Click(object sender, RoutedEventArgs e)
         {
             ProductSaleCountWindow productSaleCountWindow = new ProductSaleCountWindow { Owner = this };
             productSaleCountWindow.ShowDialog();
         }
 
-        private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
             AboutBox aboutBox = new AboutBox(this);
             aboutBox.ShowDialog();
@@ -141,13 +154,13 @@ namespace IremEczOtomasyonu
             }
         }
 
-        private void ProductExpirationDatesMenuItem_Click(object sender, RoutedEventArgs e)
+        private void ProductsToBeExpiredButton_Click(object sender, RoutedEventArgs e)
         {
             IncomingExpirationsWindow incomingExpirationsWindow = new IncomingExpirationsWindow { Owner = this };
             incomingExpirationsWindow.ShowDialog();
         }
 
-        private void ProductPurchaseDisplayMenuItem_Click(object sender, RoutedEventArgs e)
+        private void PreviousPurchasesButton_Click(object sender, RoutedEventArgs e)
         {
             if (!_customersUserControl.AllChangesSaved)
             {
@@ -198,6 +211,18 @@ namespace IremEczOtomasyonu
                 repl.SubscriberConnectionString = connectionString;
                 return repl.SubscriberConnectionString;
             }
+        }
+
+        private void CustomersButton_Click(object sender, RoutedEventArgs e)
+        {
+            dockPanel.Children.Clear();
+            dockPanel.Children.Add(_customersUserControl);
+        }
+
+        private void ProductsButton_Click(object sender, RoutedEventArgs e)
+        {
+            dockPanel.Children.Clear();
+            dockPanel.Children.Add(_productsUserControl);
         }
     }
 }

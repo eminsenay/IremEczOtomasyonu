@@ -75,6 +75,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fluent, Version=3.4.0.0, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\WpfApplication2\build\bin\NET 4.5\Release\Fluent.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -92,6 +99,9 @@
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -302,6 +312,15 @@
     <Resource Include="SetupReq\eczane_logo.ico" />
     <Resource Include="TextFile1.txt" />
     <Resource Include="Images\IremEczAboutBox.gif" />
+    <Resource Include="Images\CustomerButton.png" />
+    <Resource Include="Images\NumberOfPurchasesButton.png" />
+    <Resource Include="Images\PreviousPurchasesButton.png" />
+    <Resource Include="Images\PreviousSalesButton.png" />
+    <Resource Include="Images\ProductSaleButton.png" />
+    <Resource Include="Images\ProductSaleWithoutCustomerButton.png" />
+    <Resource Include="Images\ProductsButton.png" />
+    <Resource Include="Images\ProductsToBeExpiredButton.png" />
+    <Resource Include="Images\ProductTotalPriceButton.png" />
     <Content Include="IremEczDermokozmetikDb.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
