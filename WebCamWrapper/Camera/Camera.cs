@@ -168,7 +168,7 @@ namespace Touchless.Vision.Camera
         /// <returns>A bitmap of the last image acquired from the camera</returns>
         public Bitmap GetCurrentImage()
         {
-            Bitmap b = null;
+            Bitmap b;
             lock (_bitmapLock)
             {
                 if (_bitmap == null)
@@ -266,7 +266,8 @@ namespace Touchless.Vision.Camera
             {
                 if (_dtLastCap != DateTime.MinValue)
                 {
-                    double milliseconds = ((dtCap.Ticks - _dtLastCap.Ticks) / TimeSpan.TicksPerMillisecond) * 1.15;
+                    // ReSharper disable once PossibleLossOfFraction
+                    double milliseconds = (dtCap.Ticks - _dtLastCap.Ticks) / TimeSpan.TicksPerMillisecond * 1.15;
                     if (milliseconds + _timeBehind >= _timeBetweenFrames)
                     {
                         _timeBehind = (milliseconds - _timeBetweenFrames);

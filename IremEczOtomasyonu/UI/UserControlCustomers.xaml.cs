@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using IremEczOtomasyonu.BL;
 using Microsoft.Win32;
 using Brushes = System.Windows.Media.Brushes;
+using Image = System.Drawing.Image;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -138,7 +139,7 @@ namespace IremEczOtomasyonu.UI
             }
 
             Bitmap customerPhotoBitmap = new Bitmap(imagePath);
-            currCustomer.Photo = ConvertBitmapToByteArray(customerPhotoBitmap);
+            currCustomer.Photo = ConvertImageToByteArray(customerPhotoBitmap);
             ShowCustomerPhoto(currCustomer);
             OnSelectedCustomerModified();
         }
@@ -163,16 +164,16 @@ namespace IremEczOtomasyonu.UI
                 return;
             }
 
-            currCustomer.Photo = ConvertBitmapToByteArray(webcamWindow.GrabbedImage);
+            currCustomer.Photo = ConvertImageToByteArray(webcamWindow.GrabbedImage);
             ShowCustomerPhoto(currCustomer);
             OnSelectedCustomerModified();
         }
 
-        private static byte[] ConvertBitmapToByteArray(Bitmap bitmap)
+        private static byte[] ConvertImageToByteArray(Image image)
         {
             using (MemoryStream memory = new MemoryStream())
             {
-                bitmap.Save(memory, ImageFormat.Png);
+                image.Save(memory, ImageFormat.Png);
                 memory.Position = 0;
                 return memory.ToArray();
             }

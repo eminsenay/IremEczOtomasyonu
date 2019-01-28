@@ -22,4 +22,7 @@ IremEczOtomasyonu.opensdf
 *.suo
 packages/
 *.Dotsettings
+!ResharperSettings/*.Dotsettings
 *.swidtag
+.vs
+.DS_Store

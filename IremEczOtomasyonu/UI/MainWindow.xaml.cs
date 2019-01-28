@@ -174,9 +174,9 @@ namespace IremEczOtomasyonu.UI
             {
                 return true;
             }
-            const string connectionString = "DataSource=|DataDirectory|IremEczDermokozmetikDb.sdf";
+            const string ConnectionString = "DataSource=|DataDirectory|IremEczDermokozmetikDb.sdf";
             MessageBox.Show(this, "Veritabanına ulaşılamıyor. Olması beklenen yer: " +
-                            PathFromConnectionString(connectionString));
+                            PathFromConnectionString(ConnectionString));
             return false;
         }
 

@@ -42,6 +42,7 @@ namespace IremEczOtomasyonu.UI
             if (expirationDate == null)
             {
                 Debug.Fail("Selected Expiration date cannot be retrieved.");
+                // ReSharper disable once HeuristicUnreachableCode
                 return;
             }
 

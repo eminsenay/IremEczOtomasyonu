@@ -98,6 +98,7 @@ namespace IremEczOtomasyonu.UI
             if (currProductPurchase == null)
             {
                 Debug.Fail("Current product sale could not be retrieved.");
+                // ReSharper disable once HeuristicUnreachableCode
                 return;
             }
             _changedProductPurchases.Add(currProductPurchase);

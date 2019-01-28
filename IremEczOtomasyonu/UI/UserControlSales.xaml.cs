@@ -104,6 +104,7 @@ namespace IremEczOtomasyonu.UI
             if (selectedExpDate == null)
             {
                 Debug.Fail("No Expiration date can be found for the product.");
+                // ReSharper disable once HeuristicUnreachableCode
                 return;
             }
             SaleItem newItem = new SaleItem
@@ -155,6 +156,7 @@ namespace IremEczOtomasyonu.UI
             productSaleDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
             SaleItem currItem = e.Row.Item as SaleItem;
             Debug.Assert(currItem != null, "Associated sale item cannot be retrieved.");
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (currItem != null && currItem.PrevNumSold != currItem.NumSold)
             {
                 // User has changed the number of items cell.
@@ -403,6 +405,7 @@ namespace IremEczOtomasyonu.UI
             {
                 // They cannot be null since both of them are selected from the combo box.
                 Debug.Fail("Expiration date of the sale item cannot be found");
+                // ReSharper disable once HeuristicUnreachableCode
                 return;
             }
             oldExpDate.NumItems += currItem.NumSold;

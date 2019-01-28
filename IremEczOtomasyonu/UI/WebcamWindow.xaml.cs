@@ -141,7 +141,7 @@ namespace IremEczOtomasyonu.UI
 
         private void SetFrameSource(CameraFrameSource cameraFrameSource)
         {
-            if (_frameSource == cameraFrameSource)
+            if (cameraFrameSource != null && _frameSource == cameraFrameSource)
             {
                 return;
             }

@@ -53,7 +53,7 @@ namespace Touchless.Shared.Extensions
 
         public static BitmapSource ToBitmapSource(this Bitmap source)
         {
-            BitmapSource bs = null;
+            BitmapSource bs;
 
             IntPtr ip = source.GetHbitmap();
             try

@@ -55,7 +55,7 @@ namespace Touchless.Vision.Contracts
                 return data;
             }
             //Setter is only here for serialization purposes
-            set { }
+            set {  }
         }
 
 
