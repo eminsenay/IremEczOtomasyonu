@@ -111,10 +111,5 @@
         <Button Grid.Row="2" Grid.Column="4" Content="Stok Girişi" Height="23" HorizontalAlignment="Right" 
                 Margin="0,6,6,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" 
                 Click="AddPurchaseButton_Click" />
-        <!--
-        <Button Grid.Row="2" Grid.Column="2" Content="Yeni Ürün Ekle (test)" Height="23" Margin="0,6,6,0" 
-        	x:Name="addNewProductCopy" VerticalAlignment="Top" Click="AddNewProductCopy_Click" HorizontalAlignment="Right" 
-        	Width="110" />
-        -->
     </Grid>
 </UserControl>

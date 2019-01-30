@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using IremEczOtomasyonu.BL;
-using IremEczOtomasyonu.View;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -63,16 +62,6 @@ namespace IremEczOtomasyonu.UI
             {
                 // A product is added. Refresh the datagrid
                 Products.Add(addProductWindow.CurrentProduct);
-            }
-        }
-
-        private void AddNewProductCopy_Click(object sender, RoutedEventArgs e)
-        {
-            AddNewProductView addProductView = new AddNewProductView();
-            if (addProductView.ShowDialog() == true)
-            {
-                // A product is added. Refresh the datagrid
-                // Products.Add(addProductWindow.CurrentProduct);
             }
         }
 

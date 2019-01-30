@@ -9,7 +9,7 @@
         <ResourceDictionary>
             <!-- Ribbon office 2013 theme -->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Office2013/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
 
