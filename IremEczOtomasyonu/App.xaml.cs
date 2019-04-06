@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.SqlServerCe;
 using System.Windows;
 using System.Windows.Threading;
 using IremEczOtomasyonu.BL;

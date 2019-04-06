@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IremEczOtomasyonu.Models;
+using System;
 
 namespace IremEczOtomasyonu.BL
 {

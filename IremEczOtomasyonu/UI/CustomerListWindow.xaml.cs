@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -47,7 +49,7 @@ namespace IremEczOtomasyonu.UI
                 foreach (ExpirationDate expirationDate in e.OldItems)
                 {
                     _product.ExpirationDates.Remove(expirationDate);
-                    ObjectCtx.Context.DeleteObject(expirationDate);
+                    ObjectCtx.Context.ExpirationDates.Remove(expirationDate);
                 }
             }
         }
@@ -89,14 +91,15 @@ namespace IremEczOtomasyonu.UI
             }
             
             // Remove possibly added expiration dates
-            foreach (var entry in ObjectCtx.Context.ObjectStateManager.GetObjectStateEntries(EntityState.Added))
+            foreach (var entry in ObjectCtx.Context.ChangeTracker.Entries().Where(
+                t => t.State == Microsoft.EntityFrameworkCore.EntityState.Added))
             {
                 if (entry.Entity != null)
                 {
-                    ObjectCtx.Context.DeleteObject(entry.Entity);
+                    ObjectCtx.Context.Remove(entry.Entity);
                 }
             }
-            ObjectCtx.Context.AcceptAllChanges();
+            ObjectCtx.Context.SaveChanges();
         }
 
         private void DatagridDeleteExpirationDateMenuItem_Click(object sender, RoutedEventArgs e)

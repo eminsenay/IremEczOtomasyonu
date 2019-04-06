@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI
@@ -128,12 +129,12 @@ namespace IremEczOtomasyonu.UI
                     item.Product.ExpirationDates.Add(orgExpirationDate);
                 }
 
-                ObjectCtx.Context.SaleItems.DeleteObject(saleItem);
+                ObjectCtx.Context.SaleItems.Remove(saleItem);
             }
 
             // Delete the product sale
             _productSaleColl.Remove(selectedSale);
-            ObjectCtx.Context.DeleteObject(selectedSale);
+            ObjectCtx.Context.ProductSales.Remove(selectedSale);
 
             applyButton.IsEnabled = true;
         }

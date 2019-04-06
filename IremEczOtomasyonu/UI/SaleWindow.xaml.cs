@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data.Objects.DataClasses;
 using System.Windows;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using System.Collections.Generic;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -21,7 +22,7 @@ namespace IremEczOtomasyonu.UI
             
             userControlSales.CurrentProductSale = new ProductSale
                                                   {
-                                                      SaleItems = new EntityCollection<SaleItem>(),
+                                                      SaleItems = new List<SaleItem>(),
                                                       SaleDate = DateTime.Now,
                                                       TotalPrice = 0
                                                   };
@@ -31,7 +32,7 @@ namespace IremEczOtomasyonu.UI
 
             // Attach the product sale to the context so that detach actions on cancel don't cause problems 
             // Without the line an exception is fired if the user cancels before adding items to the sale.
-            ObjectCtx.Context.AddToProductSales(userControlSales.CurrentProductSale);
+            ObjectCtx.Context.ProductSales.Add(userControlSales.CurrentProductSale);
         }
 
         /// <summary>
@@ -63,7 +64,8 @@ namespace IremEczOtomasyonu.UI
             if (userControlSales.CurrentProductSale.SaleItems.Count == 0)
             {
                 // detach the current product sale since window is closed without any actual sale
-                ObjectCtx.Context.Detach(userControlSales.CurrentProductSale);
+                // ObjectCtx.Context.Detach(userControlSales.CurrentProductSale);
+                // TODO @Emin: Check if no detaching works
                 DialogResult = true;
                 Close();
                 return;
@@ -71,7 +73,7 @@ namespace IremEczOtomasyonu.UI
 
             userControlSales.CurrentProductSale.Id = Guid.NewGuid();
 
-            ObjectCtx.Context.AddToProductSales(userControlSales.CurrentProductSale);
+            ObjectCtx.Context.ProductSales.Add(userControlSales.CurrentProductSale);
             ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();
@@ -84,7 +86,8 @@ namespace IremEczOtomasyonu.UI
                 // Remove all added sale items.
                 userControlSales.RevertProductSale();
                 // detach the current product sale since window is closed without any actual sale
-                ObjectCtx.Context.Detach(userControlSales.CurrentProductSale);
+                //ObjectCtx.Context.Detach(userControlSales.CurrentProductSale);
+                // TODO @Emin: Check if no detaching works
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI
@@ -74,7 +75,7 @@ namespace IremEczOtomasyonu.UI
             {
                 _currExpirationDate.NumItems = CurrentPurchase.NumItems;
                 _currExpirationDate.Id = Guid.NewGuid();
-                ObjectCtx.Context.ExpirationDates.AddObject(_currExpirationDate);
+                ObjectCtx.Context.ExpirationDates.Add(_currExpirationDate);
             }
             else
             {
@@ -84,7 +85,7 @@ namespace IremEczOtomasyonu.UI
             CurrentPurchase.Id = Guid.NewGuid();
             CurrentPurchase.ExDate = _currExpirationDate.ExDate;
             CurrentPurchase.Product.NumItems += CurrentPurchase.NumItems;
-            ObjectCtx.Context.AddToProductPurchases(CurrentPurchase);
+            ObjectCtx.Context.ProductPurchases.Add(CurrentPurchase);
 
             ObjectCtx.Context.SaveChanges();
             DialogResult = true;

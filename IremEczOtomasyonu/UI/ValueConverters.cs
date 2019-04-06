@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using IremEczOtomasyonu.BL;
+using IremEczOtomasyonu.Models;
 
 namespace IremEczOtomasyonu.UI
 {

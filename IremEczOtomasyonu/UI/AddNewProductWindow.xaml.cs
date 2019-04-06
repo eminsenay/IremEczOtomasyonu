@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI
@@ -39,7 +40,7 @@ namespace IremEczOtomasyonu.UI
 
             CurrentProduct.Id = Guid.NewGuid();
 
-            ObjectCtx.Context.AddToProducts(CurrentProduct);
+            ObjectCtx.Context.Products.Add(CurrentProduct);
             ObjectCtx.Context.SaveChanges();
             DialogResult = true;
             Close();

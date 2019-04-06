@@ -2,11 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:bl="clr-namespace:IremEczOtomasyonu.BL" 
+        xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
         Title="Barkod Girişi" Height="93" Width="345" ShowInTaskbar="False" WindowStyle="ToolWindow"
         FocusManager.FocusedElement="{Binding ElementName=barcodeTextBox}" PreviewKeyDown="Window_PreviewKeyDown"
         WindowStartupLocation="CenterOwner" Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
-        <ObjectDataProvider x:Key="CurrentProduct" ObjectType="{x:Type bl:Product}"/>
+        <ObjectDataProvider x:Key="CurrentProduct" ObjectType="{x:Type m:Product}"/>
     </Window.Resources>
     <Grid DataContext="{Binding Source={StaticResource CurrentProduct}}">
         <Label Name="barcodeLabel" Content="Barkod:" 
