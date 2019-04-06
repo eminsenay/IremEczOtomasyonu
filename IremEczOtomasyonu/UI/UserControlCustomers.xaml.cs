@@ -9,10 +9,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using IremEczOtomasyonu.BL;
+using IremEczOtomasyonu.Models;
 using Microsoft.Win32;
 using Brushes = System.Windows.Media.Brushes;
 using Image = System.Drawing.Image;
+using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -96,7 +97,7 @@ namespace IremEczOtomasyonu.UI
             };
             
             Customers.Add(newCustomer);
-            ObjectCtx.Context.AddToCustomers(newCustomer);
+            ObjectCtx.Context.Customers.Add(newCustomer);
             ObjectCtx.Context.SaveChanges();
 
             // select the customer from the customers datagrid so that the user can enter additional details 
@@ -320,7 +321,7 @@ namespace IremEczOtomasyonu.UI
             if (result == MessageBoxResult.Yes)
             {
                 Customers.Remove(currCustomer);
-                ObjectCtx.Context.DeleteObject(currCustomer);
+                ObjectCtx.Context.Customers.Remove(currCustomer);
                 ObjectCtx.Context.SaveChanges();
             }
         }

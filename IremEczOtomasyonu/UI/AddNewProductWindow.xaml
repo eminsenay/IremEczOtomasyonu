@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
         xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
+        xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
         Title="Yeni Ürün Girişi" Height="235" Width="380" mc:Ignorable="d" Loaded="Window_Loaded" 
         FocusManager.FocusedElement="{Binding ElementName=barcodeTextBox}" WindowStartupLocation="CenterOwner"
         Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
-        <ObjectDataProvider x:Key="CurrentProduct" ObjectType="{x:Type bl:Product}"/>
+        <ObjectDataProvider x:Key="CurrentProduct" ObjectType="{x:Type m:Product}"/>
         <ui:StringTrimConverter x:Key="StringTrimConverter"/>
     </Window.Resources>
     <Grid>

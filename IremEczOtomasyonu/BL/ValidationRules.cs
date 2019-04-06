@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IremEczOtomasyonu.Models;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Controls;
@@ -71,7 +72,7 @@ namespace IremEczOtomasyonu.BL
             {
                 return new ValidationResult(false, "Lütfen geçerli bir değer giriniz.");
             }
-            using (Model1Container dbContext = new Model1Container())
+            using (PharmacyContext dbContext = new PharmacyContext())
             {
                 if (dbContext.Products.Any(p => p.Barcode == barcode))
                 {
@@ -98,7 +99,7 @@ namespace IremEczOtomasyonu.BL
             {
                 return new ValidationResult(false, "Lütfen geçerli bir değer giriniz.");
             }
-            using (Model1Container dbContext = new Model1Container())
+            using (PharmacyContext dbContext = new PharmacyContext())
             {
                 if (dbContext.Products.Any(p => p.Barcode == barcode))
                 {

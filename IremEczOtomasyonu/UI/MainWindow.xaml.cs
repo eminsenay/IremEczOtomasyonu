@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Data.SqlServerCe;
 using System.Linq;
 using System.Windows;
+using IremEczOtomasyonu.Models;
+using Microsoft.Data.Sqlite;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI
@@ -170,11 +171,12 @@ namespace IremEczOtomasyonu.UI
         private bool CheckDatabaseConnection()
         {
             // Check if database exists
-            if (ObjectCtx.Context.DatabaseExists())
+            if (ObjectCtx.Context.Database.CanConnect())
             {
                 return true;
             }
-            const string ConnectionString = "DataSource=|DataDirectory|IremEczDermokozmetikDb.sdf";
+            //TODO @Emin: Check if the following code works.
+            const string ConnectionString = "Data Source=test.db;";
             MessageBox.Show(this, "Veritabanına ulaşılamıyor. Olması beklenen yer: " +
                             PathFromConnectionString(ConnectionString));
             return false;
@@ -182,17 +184,8 @@ namespace IremEczOtomasyonu.UI
 
         private static string PathFromConnectionString(string connectionString)
         {
-            SqlCeConnectionStringBuilder sb = new SqlCeConnectionStringBuilder(GetFullConnectionString(connectionString));
+            SqliteConnectionStringBuilder sb = new SqliteConnectionStringBuilder(connectionString);
             return sb.DataSource;
-        }
-
-        private static string GetFullConnectionString(string connectionString)
-        {
-            using (SqlCeReplication repl = new SqlCeReplication())
-            {
-                repl.SubscriberConnectionString = connectionString;
-                return repl.SubscriberConnectionString;
-            }
         }
 
         private void CustomersButton_Click(object sender, RoutedEventArgs e)

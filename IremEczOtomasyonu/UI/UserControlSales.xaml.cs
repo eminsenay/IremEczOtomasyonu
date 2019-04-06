@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI
@@ -278,7 +279,8 @@ namespace IremEczOtomasyonu.UI
                 product.ExpirationDates.Add(orgExpirationDate);
             }
             product.SaleItems.Remove(saleItem);
-            ObjectCtx.Context.Detach(saleItem);
+            // TODO @Emin: Check if no detaching works
+            //ObjectCtx.Context.Detach(saleItem);
 
             UpdateTotalPrice();
             OnCurrentProductSaleChanged();

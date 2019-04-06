@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 
 namespace IremEczOtomasyonu.UI

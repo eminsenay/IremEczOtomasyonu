@@ -6,7 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -170,9 +172,9 @@ namespace IremEczOtomasyonu.UI
             List<ExpirationDate> tmpExDates = new List<ExpirationDate>(currProduct.ExpirationDates);
             foreach (ExpirationDate expirationDate in tmpExDates)
             {
-                ObjectCtx.Context.DeleteObject(expirationDate);
+                ObjectCtx.Context.ExpirationDates.Remove(expirationDate);
             }
-            ObjectCtx.Context.DeleteObject(currProduct);
+            ObjectCtx.Context.Products.Remove(currProduct);
             ObjectCtx.Context.SaveChanges();
         }
 
