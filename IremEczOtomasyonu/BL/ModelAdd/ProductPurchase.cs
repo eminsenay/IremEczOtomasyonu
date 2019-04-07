@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IremEczOtomasyonu.Models
 {
@@ -22,11 +23,13 @@ namespace IremEczOtomasyonu.Models
             }
         }
 
+        [NotMapped]
         public string Error
         {
             get { return null; }
         }
 
+        [NotMapped]
         public int PrevNumItems { get; set; }
 
 // ReSharper disable UnusedParameter.Local

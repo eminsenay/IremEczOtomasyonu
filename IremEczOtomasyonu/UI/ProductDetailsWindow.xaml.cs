@@ -92,7 +92,7 @@ namespace IremEczOtomasyonu.UI
             
             // Remove possibly added expiration dates
             foreach (var entry in ObjectCtx.Context.ChangeTracker.Entries().Where(
-                t => t.State == Microsoft.EntityFrameworkCore.EntityState.Added))
+                t => t.State == Microsoft.EntityFrameworkCore.EntityState.Added).ToList())
             {
                 if (entry.Entity != null)
                 {
