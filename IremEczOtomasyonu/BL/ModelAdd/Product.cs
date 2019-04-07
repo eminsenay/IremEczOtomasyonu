@@ -1,6 +1,7 @@
 ﻿using IremEczOtomasyonu.BL;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace IremEczOtomasyonu.Models
@@ -44,6 +45,7 @@ namespace IremEczOtomasyonu.Models
             }
         }
 
+        [NotMapped]
         public string Error
         {
             get { return null; }

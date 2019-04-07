@@ -32,6 +32,7 @@ namespace IremEczOtomasyonu.UI
             }
             if (Validation.GetHasError(barcodeTextBox))
             {
+                MessageBox.Show(Validation.GetErrors(barcodeTextBox)[0].ErrorContent.ToString());
                 e.Handled = true;
                 return;
             }
