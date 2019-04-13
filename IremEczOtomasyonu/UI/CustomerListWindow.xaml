@@ -5,6 +5,7 @@
         Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
+        xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d">
@@ -45,7 +46,7 @@
                   RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" 
                   CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" 
                   MouseDoubleClick="CustomersDataGrid_MouseDoubleClick"
-                  d:DataContext="{d:DesignInstance Type=bl:Customer}">
+                  d:DataContext="{d:DesignInstance Type=m:Customer}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="firstNameColumn" Header="İsim" 
                                     Binding="{Binding Path=FirstName}" Width="4*" IsReadOnly="True" />

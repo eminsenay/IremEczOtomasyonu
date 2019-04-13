@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
+             xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
              xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
              d:DesignHeight="330" d:DesignWidth="870" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -34,7 +35,7 @@
         <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,12,13,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
         <DataGrid AutoGenerateColumns="False" Margin="12,41,12,68" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
                   CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}"
-                  d:DataContext="{d:DesignInstance Type=bl:ProductSale}">
+                  d:DataContext="{d:DesignInstance Type=m:ProductSale}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
@@ -112,7 +113,7 @@
             </TextBox.Text>
         </TextBox>
         <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,8" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
-            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="Images/magnifying_glass.ico" />
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="/Images/magnifying_glass.ico" />
         </Button>
        
     </Grid>
