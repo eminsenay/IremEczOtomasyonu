@@ -8,7 +8,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("İrem Eczanesi Dermokozmetik Sistemi")]
-[assembly: AssemblyDescription("Bu uygulama Emin Şenay tarafından Nazilli İrem Eczanesi için özel olarak geliştirilmiştir. Emin Şenay'dan yazılı izin alınmadıkça ürünün kopyalanması, dağıtılması veya İrem Eczanesi haricinde kullanılması yasaktır. Bilgi için eminsenay@gmail.com adresini kullanabilirsiniz.")]
+[assembly: AssemblyDescription("Bu uygulama Emin Şenay tarafından Nazilli İrem Eczanesi için özel olarak geliştirilmiştir.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("İrem Eczanesi Dermokozmetik Sistemi")]
