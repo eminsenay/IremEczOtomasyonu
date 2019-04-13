@@ -1,4 +1,4 @@
-Ýrem Eczanesi Otomasyonu
+Ä°rem Eczanesi Otomasyonu
 =========================
 
 A small stock tracking and customer relationship management application.
