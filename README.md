@@ -1,4 +1,4 @@
-İrem Eczanesi Otomasyonu
+İrem Eczanesi Dermokozmetik Sistemi
 =========================
 
 A small stock tracking and customer relationship management application.
@@ -18,3 +18,50 @@ Roadmap (as of 04.2019)
 3. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
 4. Unit testing (maybe sometime in the future)
 5. UI port to Electron (maybe sometime in the future)
+
+
+Known Problems
+--------------
+
+### General
+
+- Artifacts of Debug and release builds are generated under different folders.
+- 32 bit generation folder name is not the same among projects (Win32 - x86).
+- Connection string is located at the source code.
+- DB doesn't have a password.
+
+### AboutBox
+
+Nothing.
+
+### AddNewProductWindow
+
+- Open the SaleWindow and close it without any sale. Afterwards, product cannot be added with the exception "SqliteException: SQLite Error 19: 'FOREIGN KEY constraint failed'.".
+
+### AddPurchaseWindow
+
+Nothing.
+
+### AutoCompleteFocusableBox
+
+Nothing.
+
+### BarcodeWindow
+
+Nothing. 
+
+### CustomerListWindow
+### IncomingExpirationsWindow
+### MainWindow
+### ProductDetailsWindow
+### ProductSaleCountWindow
+### PurchaseListWindow
+### SaleListWindow
+### SaleWindow
+### UIUtilities
+### UserControlCustomers
+### UserControlProducts
+### UserControlSales
+### ValueConverters
+### WebcamImagePreviewWindow
+### WebcamWindow

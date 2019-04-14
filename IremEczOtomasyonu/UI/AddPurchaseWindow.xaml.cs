@@ -48,15 +48,17 @@ namespace IremEczOtomasyonu.UI
                 Validation.GetHasError(purchaseDateDatePicker) || Validation.GetHasError(expirationDateDatePicker) ||
                 Validation.GetHasError(remarksTextBox))
             {
-                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
-                                "Ürün alımı uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı.\nLütfen düzeltip tekrar deneyin.\n" +
+                    "Detaylar için * üzerinde bekleyin.", "Ürün alımı uyarısı", 
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (CurrentPurchase.Price > 0 && CurrentPurchase.Price != CurrentPurchase.Product.CurrentBuyingPrice)
             {
                 MessageBoxResult res = MessageBox.Show(this, 
-                    "Girdiğiniz alış fiyatı ürünün güncel alış fiyatından farklı. \nGüncel alış fiyatını değiştirmek ister misiniz?", 
+                    "Girdiğiniz alış fiyatı ürünün güncel alış fiyatından farklı. \n" +
+                    "Güncel alış fiyatını değiştirmek ister misiniz?", 
                     "Güncel Alış Fiyatı Uyarısı", MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Cancel)
                 {

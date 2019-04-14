@@ -32,8 +32,9 @@ namespace IremEczOtomasyonu.UI
                 Validation.GetHasError(brandTextBox) || Validation.GetHasError(currentBuyingPriceTextBox) || 
                 Validation.GetHasError(currentSellingPriceTextBox))
             {
-                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı. \n Lütfen düzeltip tekrar deneyin.",
-                                "Ürün giriş uyarısı", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Girdiğiniz bazı bilgiler eksik ya da hatalı.\nLütfen düzeltip tekrar deneyin.\n" + 
+                    "Detaylar için * üzerinde bekleyin.", "Ürün giriş uyarısı", 
+                    MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
