@@ -4,20 +4,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:my="clr-namespace:IremEczOtomasyonu.BL" 
+        xmlns:m="clr-namespace:IremEczOtomasyonu.Models" 
         mc:Ignorable="d" 
         Loaded="Window_Loaded" WindowStartupLocation="CenterOwner"
         Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif">
     <Window.Resources>
         <CollectionViewSource x:Key="ExpirationDatesViewSource" 
-                              d:DesignSource="{d:DesignInstance my:ExpirationDate, CreateList=True}" />
+                              d:DesignSource="{d:DesignInstance m:ExpirationDate, CreateList=True}" />
     </Window.Resources>
     <Grid DataContext="{StaticResource ExpirationDatesViewSource}">
         <DataGrid Name="expirationDatesDataGrid"
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" 
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="True" Margin="0,0,0,41"
-                  d:DataContext="{d:DesignInstance Type=my:ExpirationDate}">
+                  d:DataContext="{d:DesignInstance Type=m:ExpirationDate}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="exDateColumn" Header="Son Kullanma Tarihi"
                                     Binding="{Binding Path=ExDate, StringFormat={}{0:dd.MM.yyyy}}" 

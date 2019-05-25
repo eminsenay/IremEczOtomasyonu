@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         x:Class="IremEczOtomasyonu.UI.SaleListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
+        xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Window.Resources>
         <CollectionViewSource CollectionViewType="{x:Type ListCollectionView}"
-                          d:DesignSource="{d:DesignInstance bl:ProductSale, CreateList=True}"
+                          d:DesignSource="{d:DesignInstance m:ProductSale, CreateList=True}"
                           x:Key="ProductSalesViewSource" />
     </Window.Resources>
     <Grid DataContext="{StaticResource ProductSalesViewSource}">

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
-             xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
+             xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
              xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
              d:DesignHeight="600" d:DesignWidth="1100" 
              FocusManager.FocusedElement="{Binding ElementName=searchFirstNameInfoTextBox}"
@@ -15,7 +15,7 @@
         <CollectionViewSource x:Key="CustomersViewSource" Filter="CustomerCollection_Filter" 
                               CollectionViewType="{x:Type ListCollectionView}" />
         <CollectionViewSource x:Key="SaleItemsViewSource" 
-                              d:DesignSource="{d:DesignInstance bl:SaleItem, CreateList=True}"
+                              d:DesignSource="{d:DesignInstance m:SaleItem, CreateList=True}"
                               Source="{Binding Source={StaticResource CustomersViewSource}, Path=ProductSales, Converter={StaticResource ProductSalesToSaleItemsConverter}}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription PropertyName="ProductSale.Id"/>
@@ -119,7 +119,7 @@
         <Grid Margin="0,0,0,0">
             <GroupBox Header="Detaylar" Margin="6,0,6,6" Name="detailsGroupBox" Height="250" VerticalAlignment="Bottom">
                 <Grid HorizontalAlignment="Stretch" Name="grid1" VerticalAlignment="Top"
-                      d:DataContext="{d:DesignInstance Type=bl:Customer}">
+                      d:DataContext="{d:DesignInstance Type=m:Customer}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
