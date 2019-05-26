@@ -34,8 +34,8 @@ namespace IremEczOtomasyonu.UI
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("ProductsViewSource")));
-            Products = new ObservableCollection<Product>(ObjectCtx.Context.Products.Include(
-                "ProductPurchases").Include("SaleItems").Include("ExpirationDates"));
+            Products = new ObservableCollection<Product>(ObjectCtx.Context.Products
+                .Include(p => p.ProductPurchases).Include(p => p.SaleItems).Include(p => p.ExpirationDates));
 
             productsViewSource.Source = Products;
             productsViewSource.SortDescriptions.Add(new SortDescription("Brand", ListSortDirection.Ascending));
@@ -51,7 +51,8 @@ namespace IremEczOtomasyonu.UI
                 return;
             }
             Products.Clear();
-            foreach (Product product in ObjectCtx.Context.Products.Include("ProductPurchases").Include("SaleItems"))
+            foreach (Product product in ObjectCtx.Context.Products.
+                Include(p => p.ProductPurchases).Include(p => p.SaleItems).Include(p => p.ExpirationDates))
             {
                 Products.Add(product);
             }
