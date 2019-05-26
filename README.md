@@ -51,15 +51,32 @@ Nothing.
 Nothing. 
 
 ### CustomerListWindow
+
+"Satış Ekranı" search window uses this window. Selected customer should be also selected at the "satış ekranı" but it is ignored.
+
 ### IncomingExpirationsWindow
+
+Nothing.
+
 ### MainWindow
 ### ProductDetailsWindow
+
+* Expiration dates of the product is not displayed when the product is added for the first time.
+* Other parts are not tested properly
+
 ### ProductSaleCountWindow
 ### PurchaseListWindow
 ### SaleListWindow
 ### SaleWindow
+
+Not working - No expiration date can be found for the product (whenever the product is tried to be added).
+
 ### UIUtilities
 ### UserControlCustomers
+
+* Müşterinin aldığı ürünler part cannot be tested right now
+* Other parts seem to be working
+
 ### UserControlProducts
 ### UserControlSales
 ### ValueConverters
