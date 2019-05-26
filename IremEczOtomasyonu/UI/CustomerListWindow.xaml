@@ -4,7 +4,6 @@
         Title="Müşteri Listesi" Height="300" Width="600" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner"
         Icon="/IremEczOtomasyonu;component/Images/eczane_logo.gif"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:bl="clr-namespace:IremEczOtomasyonu.BL"
         xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
