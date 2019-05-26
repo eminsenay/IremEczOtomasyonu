@@ -24,7 +24,7 @@ namespace IremEczOtomasyonu.UI
             InitializeComponent();
             CurrentProduct = product;
 
-            _currExpirationDate = new ExpirationDate { ProductId = CurrentProduct.Id };
+            _currExpirationDate = new ExpirationDate { Product = CurrentProduct };
             expirationDateDatePicker.DataContext = _currExpirationDate;
         }
 
@@ -36,7 +36,6 @@ namespace IremEczOtomasyonu.UI
             CurrentPurchase = new ProductPurchase
                                {
                                    Product = CurrentProduct,
-                                   ProductId = CurrentProduct.Id,
                                    PurchaseDate = DateTime.Now,
                                };
             productPurchasesViewSource.Source = new List<ProductPurchase> { CurrentPurchase };
@@ -72,7 +71,7 @@ namespace IremEczOtomasyonu.UI
 
             // check the curr. expiration date in db
             ExpirationDate expirationDate = ObjectCtx.Context.ExpirationDates.FirstOrDefault(
-                x => x.ProductId == CurrentProduct.Id && x.ExDate == _currExpirationDate.ExDate);
+                x => x.Product == CurrentProduct && x.ExDate == _currExpirationDate.ExDate);
             if (expirationDate == null)
             {
                 _currExpirationDate.NumItems = CurrentPurchase.NumItems;

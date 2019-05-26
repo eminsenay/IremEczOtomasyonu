@@ -2,6 +2,11 @@
 {
     partial class ProductSale
     {
+        // The following code had to be commented out because of the EFCore transition. 
+        // So called "lifecycle hooks" are not available at the EF Core. 
+        // See https://github.com/aspnet/EntityFrameworkCore/issues/626 for the latest status.
+        // Without the following code, customer textbox cannot be updated at the product sale 
+        // (Until finding another solution to the problem).
         /*
         public ProductSale()
         {
@@ -16,6 +21,5 @@
             OnPropertyChanged("Customer");
         }
         */
-        //TODO @Emin: Check if it is still required
     }
 }

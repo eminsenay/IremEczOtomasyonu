@@ -35,13 +35,7 @@ namespace IremEczOtomasyonu.UI
             InitializeComponent();
         }
 
-        public void OnCurrentProductSaleChanged()
-        {
-            if (CurrentProductSaleChanged != null)
-            {
-                CurrentProductSaleChanged();
-            }
-        }
+        public void OnCurrentProductSaleChanged() => CurrentProductSaleChanged?.Invoke();
 
         /// <summary>
         /// Event handler for product add button. 

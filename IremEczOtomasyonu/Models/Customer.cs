@@ -10,6 +10,7 @@ namespace IremEczOtomasyonu.Models
             ProductSales = new HashSet<ProductSale>();
         }
 
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? Birthday { get; set; }
@@ -18,10 +19,8 @@ namespace IremEczOtomasyonu.Models
         public string Job { get; set; }
         public string DetailedInfo { get; set; }
         public byte[] Photo { get; set; }
-        public Guid Id { get; set; }
         public string PhoneHome { get; set; }
         public string PhoneMobile { get; set; }
-
         public virtual ICollection<ProductSale> ProductSales { get; set; }
     }
 }

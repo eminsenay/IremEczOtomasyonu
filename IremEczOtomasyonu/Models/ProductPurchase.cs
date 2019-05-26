@@ -5,6 +5,7 @@ namespace IremEczOtomasyonu.Models
 {
     public partial class ProductPurchase
     {
+        public Guid Id { get; set; }
         public decimal Price { get; set; }
         public DateTime PurchaseDate { get; set; }
         public string Remarks { get; set; }
@@ -22,10 +23,7 @@ namespace IremEczOtomasyonu.Models
         }
         private int _NumItems;
         partial void OnNumItemsChanging(int value);
-        public Guid Id { get; set; }
-        public Guid ProductId { get; set; }
         public DateTime ExDate { get; set; }
-
         public Product Product { get; set; }
     }
 }

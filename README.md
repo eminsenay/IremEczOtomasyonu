@@ -36,7 +36,7 @@ Nothing.
 
 ### AddNewProductWindow
 
-- Open the SaleWindow and close it without any sale. Afterwards, product cannot be added with the exception "SqliteException: SQLite Error 19: 'FOREIGN KEY constraint failed'.".
+Nothing.
 
 ### AddPurchaseWindow
 
@@ -52,7 +52,7 @@ Nothing.
 
 ### CustomerListWindow
 
-"Satış Ekranı" search window uses this window. Selected customer should be also selected at the "satış ekranı" but it is ignored.
+"Satış Ekranı" search window uses this window. Selected customer should be also selected at the "satış ekranı" but it is ignored. See the comment at BL\ModelAdd\ProductSale.cs for more information about this problem.
 
 ### IncomingExpirationsWindow
 

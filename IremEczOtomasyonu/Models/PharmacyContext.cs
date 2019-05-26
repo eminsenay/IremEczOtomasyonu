@@ -8,11 +8,7 @@ namespace IremEczOtomasyonu.Models
     {
         public PharmacyContext()
         {
-        }
-
-        public PharmacyContext(DbContextOptions<PharmacyContext> options)
-            : base(options)
-        {
+            Database.EnsureCreated();
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
