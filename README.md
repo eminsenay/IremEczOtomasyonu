@@ -52,7 +52,7 @@ Nothing.
 
 ### CustomerListWindow
 
-"Satış Ekranı" search window uses this window. Selected customer should be also selected at the "satış ekranı" but it is ignored. See the comment at BL\ModelAdd\ProductSale.cs for more information about this problem.
+Nothing.
 
 ### IncomingExpirationsWindow
 

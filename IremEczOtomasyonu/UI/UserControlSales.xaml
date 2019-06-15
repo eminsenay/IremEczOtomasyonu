@@ -90,15 +90,6 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Right" Margin="0,0,190,5" Name="customerNameLabel" VerticalAlignment="Bottom" />
-        <TextBox Height="23" Width="150" HorizontalAlignment="Right" Margin="0,0,34,8" Name="customerNameTextBox" VerticalAlignment="Bottom"
-                 Text="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş, Mode=OneWay}" IsReadOnly="True">
-            <TextBox.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Name="customerNameTextBoxDeleteMenuItem" Header="İlişkiyi kaldır" Click="CustomerNameTextBoxDeleteMenuItem_Click"/>
-                </ContextMenu>
-            </TextBox.ContextMenu>
-        </TextBox>
         <Label Content="Detaylar:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,34" Name="detailsLabel" VerticalAlignment="Bottom" />
         <TextBox Height="48" HorizontalAlignment="Left" Margin="68,0,0,12" Name="textBoxRemarks" VerticalAlignment="Bottom" Width="231"
                  VerticalScrollBarVisibility="Auto" Text="{Binding Mode=TwoWay, Path=Remarks, ValidatesOnDataErrors=True}"/>
@@ -112,9 +103,17 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Right" Margin="0,0,190,5" Name="customerNameLabel" VerticalAlignment="Bottom" />
+        <TextBox Height="23" Width="150" HorizontalAlignment="Right" Margin="0,0,34,8" Name="customerNameTextBox" VerticalAlignment="Bottom"
+                 Text="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş, Mode=OneWay}" IsReadOnly="True">
+            <TextBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="customerNameTextBoxDeleteMenuItem" Header="İlişkiyi kaldır" Click="CustomerNameTextBoxDeleteMenuItem_Click"/>
+                </ContextMenu>
+            </TextBox.ContextMenu>
+        </TextBox>
         <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,8" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
             <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="/Images/magnifying_glass.ico" />
         </Button>
-       
     </Grid>
 </UserControl>
