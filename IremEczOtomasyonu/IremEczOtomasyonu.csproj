@@ -251,15 +251,15 @@
     <Compile Include="UI\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\AddNewProductWindow.xaml.cs">
-      <DependentUpon>AddNewProductWindow.xaml</DependentUpon>
+    <Compile Include="UI\NewProductWindow.xaml.cs">
+      <DependentUpon>NewProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\AutoCompleteFocusableBox.cs" />
     <Compile Include="UI\BarcodeWindow.xaml.cs">
       <DependentUpon>BarcodeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\AddPurchaseWindow.xaml.cs">
-      <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
+    <Compile Include="UI\NewPurchaseWindow.xaml.cs">
+      <DependentUpon>NewPurchaseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BL\ModelAdd\Customer.cs" />
     <Compile Include="BL\ModelAdd\ProductSale.cs" />
@@ -284,11 +284,11 @@
     <Compile Include="UI\ProductSaleCountWindow.xaml.cs">
       <DependentUpon>ProductSaleCountWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\PurchaseListWindow.xaml.cs">
-      <DependentUpon>PurchaseListWindow.xaml</DependentUpon>
+    <Compile Include="UI\AllPurchasesWindow.xaml.cs">
+      <DependentUpon>AllPurchasesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\SaleListWindow.xaml.cs">
-      <DependentUpon>SaleListWindow.xaml</DependentUpon>
+    <Compile Include="UI\AllSalesWindow.xaml.cs">
+      <DependentUpon>AllSalesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\WebcamImagePreviewWindow.xaml.cs">
       <DependentUpon>WebcamImagePreviewWindow.xaml</DependentUpon>
@@ -298,8 +298,8 @@
       <DependentUpon>UserControlSales.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ValueConverters.cs" />
-    <Compile Include="UI\SaleWindow.xaml.cs">
-      <DependentUpon>SaleWindow.xaml</DependentUpon>
+    <Compile Include="UI\NewSaleWindow.xaml.cs">
+      <DependentUpon>NewSaleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BL\ValidationRules.cs" />
     <Compile Include="Properties\Settings.cs" />
@@ -313,7 +313,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\AddNewProductWindow.xaml">
+    <Page Include="UI\NewProductWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,7 +321,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\AddPurchaseWindow.xaml">
+    <Page Include="UI\NewPurchaseWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -357,15 +357,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\PurchaseListWindow.xaml">
+    <Page Include="UI\AllPurchasesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\SaleListWindow.xaml">
+    <Page Include="UI\AllSalesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\SaleWindow.xaml">
+    <Page Include="UI\NewSaleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

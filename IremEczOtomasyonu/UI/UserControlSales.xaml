@@ -14,13 +14,18 @@
         <ui:ProductToBrandAndNameConverter x:Key="ProductToBrandAndNameConverter" />
     </UserControl.Resources>
     <Grid Name="saleGrid">
-        <Label Content="Barkod:" Height="28" HorizontalAlignment="Left" Margin="12,10,0,0" Name="barcodeLabel" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="68,12,0,0" Name="barcodeTextBox" VerticalAlignment="Top" Width="150" />
-        
-        <Label Content="ya da" Height="28" Margin="234,10,0,0" Name="orLabel" VerticalAlignment="Top" HorizontalAlignment="Left" Width="38" />
-        <Label Content="Marka veya İsim: " Height="28" HorizontalAlignment="Right" Margin="0,10,480,0" Name="productBrandLabel" VerticalAlignment="Top" />
-        <ui:AutoCompleteFocusableBox Height="23" HorizontalAlignment="Right" Margin="0,12,94,0" x:Name="productBrandAndNameAutoCompleteBox" 
-                                     VerticalAlignment="Top" Width="380" IsTextCompletionEnabled="True" ItemsSource="{Binding}" 
+        <Label Name="barcodeLabel" Content="Barkod:" Height="28" Margin="12,10,0,0" 
+               HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBox Name="barcodeTextBox" Height="23" Width="150" Margin="68,12,0,0" 
+                 HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <Label Name="orLabel" Content="ya da" Height="28" Width="38" Margin="234,10,0,0" 
+               VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <Label Name="productBrandLabel" Content="Marka veya İsim: " Height="28" Margin="0,10,480,0" 
+               HorizontalAlignment="Right" VerticalAlignment="Top" />
+        <ui:AutoCompleteFocusableBox x:Name="productBrandAndNameAutoCompleteBox" Height="23" Width="380" 
+                                     Margin="0,12,94,0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                     IsTextCompletionEnabled="True" ItemsSource="{Binding}" 
                                      ValueMemberBinding="{Binding Converter={StaticResource ProductToBrandAndNameConverter}}"
                                      EnterKeyDown="ProductBrandAndNameAutoCompleteBox_EnterKeyDown">
             <ui:AutoCompleteFocusableBox.ItemTemplate>
@@ -32,10 +37,13 @@
                 </DataTemplate>
             </ui:AutoCompleteFocusableBox.ItemTemplate>
         </ui:AutoCompleteFocusableBox>
-        <Button Content="Ekle" Height="23" HorizontalAlignment="Right" Margin="0,12,13,0" Name="productAddButton" VerticalAlignment="Top" Width="75" Click="ProductAddButton_Click" IsDefault="True" />
-        <DataGrid AutoGenerateColumns="False" Margin="12,41,12,68" Name="productSaleDataGrid" CellEditEnding="ProductSaleDataGrid_CellEditEnding" PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown"
+        <Button Name="productAddButton" Content="Ekle" Height="23" Width="75" Margin="0,12,13,0" 
+                HorizontalAlignment="Right" VerticalAlignment="Top" IsDefault="True" Click="ProductAddButton_Click" />
+        <DataGrid Name="productSaleDataGrid" AutoGenerateColumns="False" Margin="12,41,12,68" 
                   CanUserAddRows="False" VerticalAlignment="Stretch" ItemsSource="{Binding SaleItems}"
-                  d:DataContext="{d:DesignInstance Type=m:ProductSale}">
+                  d:DataContext="{d:DesignInstance Type=m:ProductSale}"
+                  CellEditEnding="ProductSaleDataGrid_CellEditEnding" 
+                  PreviewKeyDown="ProductSaleDataGrid_PreviewKeyDown">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="barcodeColumn" Header="Barkod" MinWidth="150" IsReadOnly="True"
                                     Binding="{Binding Path=Product.Barcode, Mode=TwoWay}"/>
@@ -55,12 +63,15 @@
                 <DataGridTemplateColumn x:Name="expirationDateColumn" Header="Son Kullanma Tarihi" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:dd.MM.yyyy}" SelectionChanged="ExpirationDateComboBox_SelectionChanged">
+                            <ComboBox Name="expirationDateComboBox" ItemStringFormat="{}{0:dd.MM.yyyy}" 
+                                      SelectionChanged="ExpirationDateComboBox_SelectionChanged">
                                 <ComboBox.ItemsSource>
-                                    <Binding Path="Product.ExpirationDates" Converter="{StaticResource ExpDatesToDateTimeListConverter}" />
+                                    <Binding Path="Product.ExpirationDates" 
+                                             Converter="{StaticResource ExpDatesToDateTimeListConverter}" />
                                 </ComboBox.ItemsSource>
                                 <ComboBox.SelectedItem>
-                                    <Binding Path="ExDate" ValidatesOnDataErrors="True" UpdateSourceTrigger="PropertyChanged"/>
+                                    <Binding Path="ExDate" ValidatesOnDataErrors="True" 
+                                             UpdateSourceTrigger="PropertyChanged"/>
                                 </ComboBox.SelectedItem>
                             </ComboBox>
                         </DataTemplate>
@@ -68,7 +79,8 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn x:Name="unitPriceColumn" Header="Birim Fiyat" MinWidth="100">
                     <DataGridTextColumn.Binding>
-                        <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
+                        <Binding Path="UnitPrice" Mode="TwoWay" ValidatesOnDataErrors="True" 
+                                 StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                             <Binding.ValidationRules>
                                 <bl:MoneyValidationRule/>
                             </Binding.ValidationRules>
@@ -86,34 +98,46 @@
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="datagridDeleteSaleItemMenuItem" Header="Sil" Click="DatagridDeleteSaleItemMenuItem_Click" />
+                    <MenuItem Name="datagridDeleteSaleItemMenuItem" Header="Sil" 
+                              Click="DatagridDeleteSaleItemMenuItem_Click" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <Label Content="Detaylar:" Height="28" HorizontalAlignment="Left" Margin="12,0,0,34" Name="detailsLabel" VerticalAlignment="Bottom" />
-        <TextBox Height="48" HorizontalAlignment="Left" Margin="68,0,0,12" Name="textBoxRemarks" VerticalAlignment="Bottom" Width="231"
-                 VerticalScrollBarVisibility="Auto" Text="{Binding Mode=TwoWay, Path=Remarks, ValidatesOnDataErrors=True}"/>
-        <Label Content="Toplam:" Height="28" HorizontalAlignment="Right" Margin="0,0,168,34" Name="totalPriceLabel" VerticalAlignment="Bottom" />
-        <TextBox Height="23" Margin="0,0,12,37" Name="totalPriceTextBox" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="150">
+        <Label Name="detailsLabel" Content="Detaylar:" Height="28" Margin="12,0,0,34" 
+               HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        <TextBox Name="textBoxRemarks" Height="48" Width="231" Margin="68,0,0,12" 
+                 HorizontalAlignment="Left" VerticalAlignment="Bottom" VerticalScrollBarVisibility="Auto" 
+                 Text="{Binding Mode=TwoWay, Path=Remarks, ValidatesOnDataErrors=True}"/>
+        <Label Name="totalPriceLabel" Content="Toplam:" Height="28" Margin="0,0,168,34" 
+               HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        <TextBox Name="totalPriceTextBox" Height="23" Width="150" Margin="0,0,12,37" 
+                 VerticalAlignment="Bottom" HorizontalAlignment="Right">
             <TextBox.Text>
-                <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True" StringFormat="{}{0:C}" ConverterCulture="tr-TR">
+                <Binding Path="TotalPrice" TargetNullValue="0" Mode="TwoWay" ValidatesOnDataErrors="True" 
+                         StringFormat="{}{0:C}" ConverterCulture="tr-TR">
                     <Binding.ValidationRules>
                         <bl:MoneyValidationRule/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Label Content="Müşteri:" Height="28" HorizontalAlignment="Right" Margin="0,0,190,5" Name="customerNameLabel" VerticalAlignment="Bottom" />
-        <TextBox Height="23" Width="150" HorizontalAlignment="Right" Margin="0,0,34,8" Name="customerNameTextBox" VerticalAlignment="Bottom"
+        <Label Name="customerNameLabel" Content="Müşteri:" Height="28" Margin="0,0,190,5" 
+               HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        <TextBox Name="customerNameTextBox" Height="23" Width="150" Margin="0,0,34,8" 
+                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                  Text="{Binding Path=Customer.FullName, FallbackValue=Belirtilmemiş, Mode=OneWay}" IsReadOnly="True">
             <TextBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="customerNameTextBoxDeleteMenuItem" Header="İlişkiyi kaldır" Click="CustomerNameTextBoxDeleteMenuItem_Click"/>
+                    <MenuItem Name="customerNameTextBoxDeleteMenuItem" Header="İlişkiyi kaldır" 
+                              Click="CustomerNameTextBoxDeleteMenuItem_Click"/>
                 </ContextMenu>
             </TextBox.ContextMenu>
         </TextBox>
-        <Button Height="23" HorizontalAlignment="Right" Margin="0,0,9,8" Name="customerFindButton" VerticalAlignment="Bottom" Width="23" Click="CustomerFindButton_Click">
-            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Stretch="None" Source="/Images/magnifying_glass.ico" />
+        <Button Name="customerFindButton" Height="23" Width="23" Margin="0,0,9,8" 
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                Click="CustomerFindButton_Click">
+            <Image Margin="0,0,0,0" Stretch="None" Source="/Images/magnifying_glass.ico"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Button>
     </Grid>
 </UserControl>

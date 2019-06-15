@@ -3,6 +3,7 @@ using System.Windows;
 using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -22,7 +23,7 @@ namespace IremEczOtomasyonu.UI
             
             userControlSales.CurrentProductSale = new ProductSale
                                                   {
-                                                      SaleItems = new List<SaleItem>(),
+                                                      SaleItems = new ObservableCollection<SaleItem>(),
                                                       SaleDate = DateTime.Now,
                                                       TotalPrice = 0
                                                   };

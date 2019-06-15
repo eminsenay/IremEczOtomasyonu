@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace IremEczOtomasyonu.Models
 {
@@ -8,7 +9,7 @@ namespace IremEczOtomasyonu.Models
         private Customer _customer;
         public ProductSale()
         {
-            SaleItems = new HashSet<SaleItem>();
+            SaleItems = new ObservableCollection<SaleItem>();
         }
 
         public Guid Id { get; set; }
@@ -31,6 +32,6 @@ namespace IremEczOtomasyonu.Models
                 }
             }
         }
-        public ICollection<SaleItem> SaleItems { get; set; }
+        public ObservableCollection<SaleItem> SaleItems { get; set; }
     }
 }
