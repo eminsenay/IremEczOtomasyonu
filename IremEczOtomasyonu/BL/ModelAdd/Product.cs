@@ -1,4 +1,5 @@
 ﻿using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -74,18 +75,21 @@ namespace IremEczOtomasyonu.Models
                 deals.Add(deal);
             }
 
-            foreach (SaleItem saleItem in SaleItems)
+            foreach (ProductSale productSale in ObjectCtx.Context.ProductSales.Include(ps => ps.SaleItems))
             {
-                Deal deal = new Deal
-                            {
-                                Details = saleItem.ProductSale.Remarks,
-                                NumItems = saleItem.NumSold,
-                                UnitPrice = saleItem.UnitPrice,
-                                TransactionDate = saleItem.ProductSale.SaleDate,
-                                TransactionType = DealType.Sale,
-                                Buyer = saleItem.ProductSale.Customer
-                            };
-                deals.Add(deal);
+                foreach (SaleItem saleItem in productSale.SaleItems.Where(si => si.Product == this))
+                {
+                    Deal deal = new Deal
+                    {
+                        Details = productSale.Remarks,
+                        Buyer = productSale.Customer,
+                        TransactionDate = productSale.SaleDate,
+                        NumItems = saleItem.NumSold,
+                        UnitPrice = saleItem.UnitPrice,
+                        TransactionType = DealType.Sale
+                    };
+                    deals.Add(deal);
+                }
             }
 
             deals.Sort((deal1, deal2) => deal1.TransactionDate.CompareTo(deal2.TransactionDate));

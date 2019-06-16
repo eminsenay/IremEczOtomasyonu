@@ -272,9 +272,6 @@ namespace IremEczOtomasyonu.UI
                 };
                 product.ExpirationDates.Add(orgExpirationDate);
             }
-            product.SaleItems.Remove(saleItem);
-            // TODO @Emin: Check if no detaching works
-            //ObjectCtx.Context.Detach(saleItem);
 
             UpdateTotalPrice();
             OnCurrentProductSaleChanged();

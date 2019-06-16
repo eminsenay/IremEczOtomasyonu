@@ -34,11 +34,11 @@ Known Problems
 
 Nothing.
 
-### AddNewProductWindow
+### NewProductWindow
 
 Nothing.
 
-### AddPurchaseWindow
+### NewPurchaseWindow
 
 Nothing.
 
@@ -65,9 +65,9 @@ Nothing.
 * Other parts are not tested properly
 
 ### ProductSaleCountWindow
-### PurchaseListWindow
-### SaleListWindow
-### SaleWindow
+### AllPurchasesWindow
+### AllSalesWindow
+### NewSaleWindow
 
 Not working - No expiration date can be found for the product (whenever the product is tried to be added).
 

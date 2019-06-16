@@ -35,7 +35,7 @@ namespace IremEczOtomasyonu.UI
         {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("ProductsViewSource")));
             Products = new ObservableCollection<Product>(ObjectCtx.Context.Products
-                .Include(p => p.ProductPurchases).Include(p => p.SaleItems).Include(p => p.ExpirationDates));
+                .Include(p => p.ProductPurchases).Include(p => p.ExpirationDates));
 
             productsViewSource.Source = Products;
             productsViewSource.SortDescriptions.Add(new SortDescription("Brand", ListSortDirection.Ascending));
@@ -52,7 +52,7 @@ namespace IremEczOtomasyonu.UI
             }
             Products.Clear();
             foreach (Product product in ObjectCtx.Context.Products.
-                Include(p => p.ProductPurchases).Include(p => p.SaleItems).Include(p => p.ExpirationDates))
+                Include(p => p.ProductPurchases).Include(p => p.ExpirationDates))
             {
                 Products.Add(product);
             }
@@ -159,7 +159,10 @@ namespace IremEczOtomasyonu.UI
                 return;
             }
 
-            if (currProduct.ProductPurchases.Count > 0 || currProduct.SaleItems.Count > 0)
+            bool isProductInSaleItems = ObjectCtx.Context.SaleItems.Include(si => si.Product).
+                Any(si => si.Product == currProduct);
+
+            if (isProductInSaleItems || currProduct.ProductPurchases.Count > 0)
             {
                 MessageBox.Show(
                     "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmek için önce bu " +
