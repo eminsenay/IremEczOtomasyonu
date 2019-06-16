@@ -34,8 +34,7 @@ namespace IremEczOtomasyonu.UI
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource productsViewSource = ((CollectionViewSource)(FindResource("ProductsViewSource")));
-            Products = new ObservableCollection<Product>(ObjectCtx.Context.Products
-                .Include(p => p.ProductPurchases).Include(p => p.ExpirationDates));
+            Products = new ObservableCollection<Product>(ObjectCtx.Context.Products.Include(p => p.ExpirationDates));
 
             productsViewSource.Source = Products;
             productsViewSource.SortDescriptions.Add(new SortDescription("Brand", ListSortDirection.Ascending));
@@ -51,8 +50,7 @@ namespace IremEczOtomasyonu.UI
                 return;
             }
             Products.Clear();
-            foreach (Product product in ObjectCtx.Context.Products.
-                Include(p => p.ProductPurchases).Include(p => p.ExpirationDates))
+            foreach (Product product in ObjectCtx.Context.Products.Include(p => p.ExpirationDates))
             {
                 Products.Add(product);
             }
@@ -159,16 +157,14 @@ namespace IremEczOtomasyonu.UI
                 return;
             }
 
-            bool isProductInSaleItems = ObjectCtx.Context.SaleItems.Include(si => si.Product).
-                Any(si => si.Product == currProduct);
-
-            if (isProductInSaleItems || currProduct.ProductPurchases.Count > 0)
+            if (ObjectCtx.Context.ProductPurchases.Include(pp => pp.Product).Any(pp => pp.Product == currProduct) || 
+                ObjectCtx.Context.SaleItems.Include(si => si.Product).Any(si => si.Product == currProduct))
             {
-                MessageBox.Show(
-                    "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmek için önce bu " +
-                    "bilgileri silmeniz gerekmektedir.\n\nÜrün alış ve satışlarına sırasıyla\n\n" + 
-                    "Ekstra -> Geçmiş alış görüntüleme ve \nEkstra -> Geçmiş Satış Görüntüleme\n\n" + 
-                    "menülerinden ulaşabilirsiniz.", "Ürün silme", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                string errMsg = "Sistemde bu ürün ile ilgili alım satım bilgileri bulunmakta. Ürünü silmek için " +
+                    "önce bu bilgileri silmeniz gerekmektedir.\n\nÜrün alış ve satışlarına sırasıyla\n\n" +
+                    "Ekstra -> Geçmiş alış görüntüleme ve \nEkstra -> Geçmiş Satış Görüntüleme\n\n" +
+                    "menülerinden ulaşabilirsiniz.";
+                MessageBox.Show(errMsg, "Ürün silme", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 

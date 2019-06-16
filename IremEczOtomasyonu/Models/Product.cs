@@ -8,7 +8,6 @@ namespace IremEczOtomasyonu.Models
         public Product()
         {
             ExpirationDates = new HashSet<ExpirationDate>();
-            ProductPurchases = new HashSet<ProductPurchase>();
         }
 
         public Guid Id { get; set; }
@@ -19,6 +18,5 @@ namespace IremEczOtomasyonu.Models
         public decimal? CurrentBuyingPrice { get; set; }
         public decimal? CurrentSellingPrice { get; set; }
         public ICollection<ExpirationDate> ExpirationDates { get; set; }
-        public ICollection<ProductPurchase> ProductPurchases { get; set; }
     }
 }

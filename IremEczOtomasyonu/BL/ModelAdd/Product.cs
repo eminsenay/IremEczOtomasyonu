@@ -62,16 +62,18 @@ namespace IremEczOtomasyonu.Models
         public List<Deal> GetAllDeals()
         {
             List<Deal> deals = new List<Deal>();
-            foreach (ProductPurchase purchase in ProductPurchases)
+
+            foreach (ProductPurchase purchase in ObjectCtx.Context.ProductPurchases.Include(pp => pp.Product).
+                Where(pp => pp.Product == this))
             {
                 Deal deal = new Deal
-                            {
-                                Details = purchase.Remarks,
-                                NumItems = purchase.NumItems,
-                                UnitPrice = purchase.Price,
-                                TransactionDate = purchase.PurchaseDate,
-                                TransactionType = DealType.Purchase
-                            };
+                {
+                    Details = purchase.Remarks,
+                    NumItems = purchase.NumItems,
+                    UnitPrice = purchase.Price,
+                    TransactionDate = purchase.PurchaseDate,
+                    TransactionType = DealType.Purchase
+                };
                 deals.Add(deal);
             }
 

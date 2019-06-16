@@ -233,7 +233,6 @@ namespace IremEczOtomasyonu.UI
                 };
                 product.ExpirationDates.Add(orgExpirationDate);
             }
-            product.ProductPurchases.Remove(selectedPurchase);
             ObjectCtx.Context.ProductPurchases.Remove(selectedPurchase);
 
             applyButton.IsEnabled = true;
