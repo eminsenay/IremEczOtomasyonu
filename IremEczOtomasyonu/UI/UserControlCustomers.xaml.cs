@@ -14,6 +14,7 @@ using Microsoft.Win32;
 using Brushes = System.Windows.Media.Brushes;
 using Image = System.Drawing.Image;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -41,32 +42,12 @@ namespace IremEczOtomasyonu.UI
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("CustomersViewSource")));
-            Customers = new ObservableCollection<Customer>(ObjectCtx.Context.Customers);
+            Customers = new ObservableCollection<Customer>(ObjectCtx.Context.Customers.
+                Include(c => c.ProductSales).ThenInclude(ps => ps.SaleItems));
             customersViewSource.Source = Customers;
             customersViewSource.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));
             _customerView = customersViewSource.View;
             AllChangesSaved = true;
-
-            // Expiration date sanity check
-            //foreach (Product product in ObjectCtx.Context.Products)
-            //{
-            //    int expSum = 0;
-            //    List<ExpirationDate> expirationDates = new List<ExpirationDate>();
-            //    foreach (ExpirationDate expirationDate in ObjectCtx.Context.ExpirationDates)
-            //    {
-            //        if (expirationDate.ProductId != product.Id)
-            //        {
-            //            continue;
-            //        }
-            //        expSum += expirationDate.NumItems;
-            //        expirationDates.Add(expirationDate);
-            //    }
-
-            //    if (product.NumItems != expSum)
-            //    {
-            //        Debug.Fail("This should not happen");
-            //    }
-            //}
         }
 
         public void Reload()
@@ -345,7 +326,14 @@ namespace IremEczOtomasyonu.UI
         public void ExecuteCustomerSale(Customer customer)
         {
             SaleWindow saleWindow = new SaleWindow(customer) { Owner = ParentWindow };
-            saleWindow.ShowDialog();
+            if (saleWindow.ShowDialog() == true)
+            {
+                // Reload the user control to display the new sale of the customer 
+                // (added ProductSale is somehow not triggering a refresh). 
+                var currCustomer = customersDataGrid.SelectedItem;
+                Reload();
+                customersDataGrid.SelectedItem = currCustomer;
+            }
         }
     }
 }

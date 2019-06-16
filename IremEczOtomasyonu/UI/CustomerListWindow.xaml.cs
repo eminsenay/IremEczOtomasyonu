@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -19,10 +20,9 @@ namespace IremEczOtomasyonu.UI
         public CustomerListWindow()
         {
             InitializeComponent();
-            //_dbContext = dbContext;
 
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("CustomersViewSource")));
-            customersViewSource.Source = ObjectCtx.Context.Customers.Local.ToObservableCollection();
+            customersViewSource.Source = ObjectCtx.Context.Customers;
             _customerView = customersViewSource.View;
         }
 

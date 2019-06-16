@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace IremEczOtomasyonu.Models
 {
@@ -7,7 +8,7 @@ namespace IremEczOtomasyonu.Models
     {
         public Customer()
         {
-            ProductSales = new HashSet<ProductSale>();
+            ProductSales = new ObservableCollection<ProductSale>();
         }
 
         public Guid Id { get; set; }
@@ -21,6 +22,6 @@ namespace IremEczOtomasyonu.Models
         public byte[] Photo { get; set; }
         public string PhoneHome { get; set; }
         public string PhoneMobile { get; set; }
-        public virtual ICollection<ProductSale> ProductSales { get; set; }
+        public virtual ObservableCollection<ProductSale> ProductSales { get; set; }
     }
 }

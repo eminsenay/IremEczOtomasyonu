@@ -73,8 +73,7 @@ Nothing.
 ### UIUtilities
 ### UserControlCustomers
 
-* Müşterinin aldığı ürünler part is only displayed correctly whenever the user switches to the products part and comes back. 
-* Other parts seem to be working
+Nothing.
 
 ### UserControlProducts
 ### UserControlSales
