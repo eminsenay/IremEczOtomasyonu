@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -130,27 +131,46 @@ namespace IremEczOtomasyonu.UI
                 startDate = SaleCntDate.IntervalStartDate ?? DateTime.Today;
                 endDate = SaleCntDate.IntervalEndDate ?? DateTime.Today;
             }
-            
+
+            SaleCountItems.Clear();
+
             // Set endDate to one day after since linq to entity doesn't support comparing by .Date property
             endDate += new TimeSpan(24, 0, 0);
 
-            var query = from saleItem in ObjectCtx.Context.SaleItems
-                        where saleItem.ProductSale.SaleDate >= startDate && saleItem.ProductSale.SaleDate <= endDate
-                        group saleItem by saleItem.Product
-                        into saleItemProduct
-                        orderby saleItemProduct.Sum(s => s.NumSold) descending 
-                        select new SaleCountItem
-                               {
-                                   ProductName = saleItemProduct.Key.Name,
-                                   Brand = saleItemProduct.Key.Brand,
-                                   TotalNumSold = saleItemProduct.Sum(saleItem => saleItem.NumSold)
-                               };
+            // The following query results with a "must be reducible node" error. 
+            // It is most probably an EFCore error accorsing to Google.
+            // Replacing with the one written below (it has ToList() somewhere to make the life easier for EFCore).
 
-            SaleCountItems.Clear();
-            foreach (SaleCountItem saleCountItem in query)
+            //var query = from saleItem in ObjectCtx.Context.SaleItems.Include(si => si.ProductSale)
+            //            where saleItem.ProductSale.SaleDate >= startDate && saleItem.ProductSale.SaleDate <= endDate
+            //            group saleItem by saleItem.Product
+            //            into saleItemProduct
+            //            orderby saleItemProduct.Sum(s => s.NumSold) descending 
+            //            select new SaleCountItem
+            //                   {
+            //                       ProductName = saleItemProduct.Key.Name,
+            //                       Brand = saleItemProduct.Key.Brand,
+            //                       TotalNumSold = saleItemProduct.Sum(saleItem => saleItem.NumSold)
+            //                   };
+            //foreach (SaleCountItem saleCountItem in query)
+            //{
+            //    SaleCountItems.Add(saleCountItem);
+            //}
+
+            var productSaleItemGroup = ObjectCtx.Context.SaleItems.Include(si => si.ProductSale).
+                Where(si => si.ProductSale.SaleDate >= startDate && si.ProductSale.SaleDate <= endDate).
+                GroupBy(si => si.Product).ToList();
+            foreach (var psiEntry in productSaleItemGroup)
             {
-                SaleCountItems.Add(saleCountItem);
+                SaleCountItem sci = new SaleCountItem
+                {
+                    ProductName = psiEntry.Key.Name,
+                    Brand = psiEntry.Key.Brand,
+                    TotalNumSold = psiEntry.Sum(si => si.NumSold)
+                };
+                SaleCountItems.Add(sci);
             }
+            SaleCountItems.OrderByDescending(s => s.TotalNumSold);
         }
     }
 }

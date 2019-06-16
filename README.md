@@ -31,5 +31,4 @@ Known Problems
   * If the user is at the products view, after purchasing a product, stock numbers are not automatically being updated.
   * If the user is at the customers view, when the user opens Extra - Previous Sales Window and changes association of 
   sales to customers, these changes are not being reflected automatically to the "Bought Products" grid.
-- ProductSaleCountWindow is not working with the exception message: Must be deducible node.
 - Deleting purchases in AllPurchasesWindow and then clicking OK causes "Foreign Key Constraint Failed" exception.
