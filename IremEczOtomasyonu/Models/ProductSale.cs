@@ -7,6 +7,8 @@ namespace IremEczOtomasyonu.Models
     public partial class ProductSale
     {
         private Customer _customer;
+        private decimal _totalPrice;
+
         public ProductSale()
         {
             SaleItems = new ObservableCollection<SaleItem>();
@@ -14,9 +16,21 @@ namespace IremEczOtomasyonu.Models
 
         public Guid Id { get; set; }
         public DateTime SaleDate { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice
+        {
+            get => _totalPrice;
+            set
+            {
+                if (_totalPrice != value)
+                {
+                    _totalPrice = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
         public string Remarks { get; set; }
-        public Customer Customer {
+        public Customer Customer
+        {
             get
             {
                 return _customer;

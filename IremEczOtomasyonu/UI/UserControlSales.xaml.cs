@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -68,7 +69,8 @@ namespace IremEczOtomasyonu.UI
             {
                 barcodeGiven = true;
                 // Add new item using barcode
-                selectedProduct = ObjectCtx.Context.Products.FirstOrDefault(p => p.Barcode == barcodeTextBox.Text);
+                selectedProduct = ObjectCtx.Context.Products.Include(p => p.ExpirationDates).
+                    FirstOrDefault(p => p.Barcode == barcodeTextBox.Text);
                 if (selectedProduct == null)
                 {
                     MessageBox.Show("Girmiş olduğunuz barkod sistemde kayıtlı değil.", "Ürün uyarısı",
@@ -413,7 +415,8 @@ namespace IremEczOtomasyonu.UI
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            productBrandAndNameAutoCompleteBox.DataContext = ObjectCtx.Context.Products.OrderBy(p => p.Brand);
+            productBrandAndNameAutoCompleteBox.DataContext = ObjectCtx.Context.Products.
+                Include(p => p.ExpirationDates).OrderBy(p => p.Brand);
             productBrandAndNameAutoCompleteBox.ItemFilter += ItemFilter;
         }
 

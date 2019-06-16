@@ -61,20 +61,19 @@ Nothing.
 ### MainWindow
 ### ProductDetailsWindow
 
-* Expiration dates of the product is not displayed when the product is added for the first time.
-* Other parts are not tested properly
+* Seem to be working but not tested completely
 
 ### ProductSaleCountWindow
 ### AllPurchasesWindow
 ### AllSalesWindow
 ### NewSaleWindow
 
-Not working - No expiration date can be found for the product (whenever the product is tried to be added).
+* Seem to be working but not tested completely.
 
 ### UIUtilities
 ### UserControlCustomers
 
-* Müşterinin aldığı ürünler part cannot be tested right now
+* Müşterinin aldığı ürünler part is only displayed correctly whenever the user switches to the products part and comes back. 
 * Other parts seem to be working
 
 ### UserControlProducts
