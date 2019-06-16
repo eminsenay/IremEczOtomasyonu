@@ -22,7 +22,7 @@ namespace IremEczOtomasyonu.UI
             InitializeComponent();
 
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("CustomersViewSource")));
-            customersViewSource.Source = ObjectCtx.Context.Customers;
+            customersViewSource.Source = ObjectCtx.Context.Customers.Local.ToObservableCollection();
             _customerView = customersViewSource.View;
         }
 
