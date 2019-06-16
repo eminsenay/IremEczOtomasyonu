@@ -8,7 +8,7 @@ For a brief period of time she used it, but at the time she wasn't at the pharma
 
 Currently the application isn't being used by anyone (as far as I know). It is serving as a playground project for me to try out new things.
 
-Roadmap (as of 04.2019)
+Roadmap (as of 06.2019)
 -----------------------
 
 1. Data layer updates (in work)
@@ -23,60 +23,14 @@ Roadmap (as of 04.2019)
 Known Problems
 --------------
 
-### General
-
 - Artifacts of Debug and release builds are generated under different folders.
 - 32 bit generation folder name is not the same among projects (Win32 - x86).
 - Connection string is located at the source code.
 - DB doesn't have a password.
-
-### AboutBox
-
-Nothing.
-
-### NewProductWindow
-
-Nothing.
-
-### NewPurchaseWindow
-
-Nothing.
-
-### AutoCompleteFocusableBox
-
-Nothing.
-
-### BarcodeWindow
-
-Nothing. 
-
-### CustomerListWindow
-
-Nothing.
-
-### IncomingExpirationsWindow
-
-Nothing.
-
-### MainWindow
-### ProductDetailsWindow
-
-* Seem to be working but not tested completely
-
-### ProductSaleCountWindow
-### AllPurchasesWindow
-### AllSalesWindow
-### NewSaleWindow
-
-* Seem to be working but not tested completely.
-
-### UIUtilities
-### UserControlCustomers
-
-Nothing.
-
-### UserControlProducts
-### UserControlSales
-### ValueConverters
-### WebcamImagePreviewWindow
-### WebcamWindow
+- Automatic refresh problems:
+  * If the user is at the products view, after purchasing a product, stock numbers are not automatically being updated.
+  * If the user is at the customers view, when the user opens Extra - Previous Sales Window and changes association of 
+  sales to customers, these changes are not being reflected automatically to the "Bought Products" grid.
+- ProductSaleCountWindow is not working with the exception message: Must be deducible node.
+- AllSalesWindow doesn't display the details of the sales.
+- Deleting purchases in AllPurchasesWindow and then clicking OK causes "Foreign Key Constraint Failed" exception.
