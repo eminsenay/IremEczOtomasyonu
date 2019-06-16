@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -46,8 +47,8 @@ namespace IremEczOtomasyonu.UI
             // Load data into ProductSales. You can modify this code as needed.
             CollectionViewSource productSalesViewSource = ((CollectionViewSource)(
                 FindResource("ProductSalesViewSource")));
-            _productSaleColl = new ObservableCollection<ProductSale>(ObjectCtx.Context.ProductSales.OrderByDescending(
-                x => x.SaleDate));
+            _productSaleColl = new ObservableCollection<ProductSale>(ObjectCtx.Context.ProductSales.
+                Include(ps => ps.SaleItems).OrderByDescending(x => x.SaleDate));
             productSalesViewSource.Source = _productSaleColl;
 
             userControlSales.saleGrid.DataContext = productSalesViewSource;
