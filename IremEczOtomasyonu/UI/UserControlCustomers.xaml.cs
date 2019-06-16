@@ -43,7 +43,7 @@ namespace IremEczOtomasyonu.UI
         {
             CollectionViewSource customersViewSource = ((CollectionViewSource)(FindResource("CustomersViewSource")));
             Customers = new ObservableCollection<Customer>(ObjectCtx.Context.Customers.
-                Include(c => c.ProductSales).ThenInclude(ps => ps.SaleItems));
+                Include(c => c.ProductSales).ThenInclude(ps => ps.SaleItems).ThenInclude(si => si.Product));
             customersViewSource.Source = Customers;
             customersViewSource.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));
             _customerView = customersViewSource.View;
