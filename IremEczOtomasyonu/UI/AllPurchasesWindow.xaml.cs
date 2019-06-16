@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using IremEczOtomasyonu.Models;
 using IremEczOtomasyonu.BL;
+using Microsoft.EntityFrameworkCore;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -35,8 +36,8 @@ namespace IremEczOtomasyonu.UI
         {
             CollectionViewSource productPurchasesViewSource = ((CollectionViewSource)(
                 FindResource("ProductPurchasesViewSource")));
-            _productPurchases = new ObservableCollection<ProductPurchase>(ObjectCtx.Context.ProductPurchases.OrderBy(
-                x => x.PurchaseDate));
+            _productPurchases = new ObservableCollection<ProductPurchase>(ObjectCtx.Context.ProductPurchases.
+                Include(pp => pp.Product).OrderBy(x => x.PurchaseDate));
             // Set prev num items by hand to keep track of numitems modifications
             foreach (ProductPurchase productPurchase in _productPurchases)
             {
