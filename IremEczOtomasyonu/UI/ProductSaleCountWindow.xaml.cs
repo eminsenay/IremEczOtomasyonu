@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -160,6 +161,7 @@ namespace IremEczOtomasyonu.UI
             var productSaleItemGroup = ObjectCtx.Context.SaleItems.Include(si => si.ProductSale).
                 Where(si => si.ProductSale.SaleDate >= startDate && si.ProductSale.SaleDate <= endDate).
                 GroupBy(si => si.Product).ToList();
+            List<SaleCountItem> sciList = new List<SaleCountItem>();
             foreach (var psiEntry in productSaleItemGroup)
             {
                 SaleCountItem sci = new SaleCountItem
@@ -168,9 +170,13 @@ namespace IremEczOtomasyonu.UI
                     Brand = psiEntry.Key.Brand,
                     TotalNumSold = psiEntry.Sum(si => si.NumSold)
                 };
+                sciList.Add(sci);
+            }
+            sciList.Sort((sci1, sci2) => sci2.TotalNumSold.CompareTo(sci1.TotalNumSold));
+            foreach (var sci in sciList)
+            {
                 SaleCountItems.Add(sci);
             }
-            SaleCountItems.OrderByDescending(s => s.TotalNumSold);
         }
     }
 }
