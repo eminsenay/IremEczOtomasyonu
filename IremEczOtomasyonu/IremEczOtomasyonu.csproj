@@ -417,7 +417,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="SetupReq\eula.rtf" />
-    <None Include="test.db">
+    <None Include="phar.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -176,7 +176,7 @@ namespace IremEczOtomasyonu.UI
                 return true;
             }
             //TODO @Emin: Check if the following code works.
-            const string ConnectionString = "Data Source=test.db;";
+            const string ConnectionString = "Data Source=phar.db;";
             MessageBox.Show(this, "Veritabanına ulaşılamıyor. Olması beklenen yer: " +
                             PathFromConnectionString(ConnectionString));
             return false;
