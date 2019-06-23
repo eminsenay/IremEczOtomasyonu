@@ -11,13 +11,10 @@ Currently the application isn't being used by anyone (as far as I know). It is s
 Roadmap (as of 06.2019)
 -----------------------
 
-1. Data layer updates (in work)
-	* Entity Framework 4.0 to Entity Framework Core
-	* SQL Server Compact 4.0 to SQLite
-2. .NET Framework to .NET Core 3.0 (in work)
-3. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
-4. Unit testing (maybe sometime in the future)
-5. UI port to Electron (maybe sometime in the future)
+1. .NET Framework to .NET Core 3.0 (in work)
+2. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
+3. Unit testing (maybe sometime in the future)
+4. UI port to Electron (maybe sometime in the future)
 
 
 Known Problems
