@@ -26,3 +26,4 @@ packages/
 *.swidtag
 .vs
 .DS_Store
+/ConnectionStringEncrypterCore/obj
