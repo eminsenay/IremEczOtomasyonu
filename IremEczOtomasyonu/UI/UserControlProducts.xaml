@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
-             xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1100" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -16,100 +15,115 @@
         </CollectionViewSource>
         <ui:ProductListToItemSumConverter x:Key="ProdListToSumConverter" />
     </UserControl.Resources>
-    <Grid DataContext="{StaticResource ProductsViewSource}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="36" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="36" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="265" />
-            <ColumnDefinition Width="265" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="120" />
-            <ColumnDefinition Width="120" />
-        </Grid.ColumnDefinitions>
-        <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="0" Name="searchBarcodeInfoTextBox" Watermark="Barkod"
+    <AdornerDecorator>
+        <Grid DataContext="{StaticResource ProductsViewSource}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="36" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="265" />
+                <ColumnDefinition Width="265" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="120" />
+            </Grid.ColumnDefinitions>
+            <ui:ClickSelectTextBox Grid.Row="0" Grid.Column="0" x:Name="searchBarcodeInfoTextBox"
                                Height="23" Width="255"
                                HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="6,6,0,0"
-                               TextChanged="ProductSearchControl_TextChanged"/>
-        <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="1" Name="searchBrandNameInfoTextBox" Watermark="Marka Adı"
+                               TextChanged="ProductSearchControl_TextChanged">
+                <ui:WatermarkService.Watermark>
+                    <TextBlock>Barkod</TextBlock>
+                </ui:WatermarkService.Watermark>
+            </ui:ClickSelectTextBox>
+            <ui:ClickSelectTextBox Grid.Row="0" Grid.Column="1" x:Name="searchBrandNameInfoTextBox"
                                Height="23" Width="255"
                                HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="6,6,0,0"
-                               TextChanged="ProductSearchControl_TextChanged"/>
-        <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" 
-                               Name="searchProductNameInfoTextBox" Watermark="Ürün Adı"
+                               TextChanged="ProductSearchControl_TextChanged">
+                <ui:WatermarkService.Watermark>
+                    <TextBlock>Marka Adı</TextBlock>
+                </ui:WatermarkService.Watermark>
+            </ui:ClickSelectTextBox>
+            <ui:ClickSelectTextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" 
+                               x:Name="searchProductNameInfoTextBox"
                                Height="23" 
                                HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="6,6,6,0"
-                               TextChanged="ProductSearchControl_TextChanged"/>
-        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" AutoGenerateColumns="False" 
+                               TextChanged="ProductSearchControl_TextChanged">
+                <ui:WatermarkService.Watermark>
+                    <TextBlock>Ürün Adı</TextBlock>
+                </ui:WatermarkService.Watermark>
+            </ui:ClickSelectTextBox>
+
+            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="6,6,6,0" Name="productsDataGrid" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" PreviewKeyDown="ProductsDataGrid_PreviewKeyDown" 
                   SelectionMode="Single" CanUserAddRows="False">
-            <DataGrid.RowStyle>
-                <Style>
-                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="ProductsDataGrid_MouseDoubleClick"/>
-                </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Path=Name}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="False">
-                                            <Expander.Header>
-                                                <!-- datacontext = collectionviewgroup -->
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Path=Name}" />
-                                                    <TextBlock Text=", Toplam "/>
-                                                    <TextBlock Text="{Binding Path=Items, Converter={StaticResource ProdListToSumConverter}}"/>
-                                                    <TextBlock Text=" ürün stokta"/>
-                                                </StackPanel>
-                                            </Expander.Header>
-                                            <ItemsPresenter />
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                </GroupStyle>
-            </DataGrid.GroupStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="barcodeColumn" Binding="{Binding Path=Barcode}" Header="Barkod" 
+                <DataGrid.RowStyle>
+                    <Style>
+                        <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="ProductsDataGrid_MouseDoubleClick"/>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                            <Expander IsExpanded="False">
+                                                <Expander.Header>
+                                                    <!-- datacontext = collectionviewgroup -->
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Path=Name}" />
+                                                        <TextBlock Text=", Toplam "/>
+                                                        <TextBlock Text="{Binding Path=Items, Converter={StaticResource ProdListToSumConverter}}"/>
+                                                        <TextBlock Text=" ürün stokta"/>
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </DataGrid.GroupStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="barcodeColumn" Binding="{Binding Path=Barcode}" Header="Barkod" 
                                     MinWidth="220" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" 
+                    <DataGridTextColumn x:Name="brandColumn" Binding="{Binding Path=Brand}" Header="Marka" 
                                     MinWidth="350" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" Header="İsim" 
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Path=Name}" Header="İsim" 
                                     MinWidth="390" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Stok Miktarı" 
+                    <DataGridTextColumn x:Name="numItemsColumn" Binding="{Binding Path=NumItems}" Header="Stok Miktarı" 
                                     Width="SizeToHeader" IsReadOnly="True" />
-            </DataGrid.Columns>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Name="datagridDetailsMenuItem" Header="Detaylar" 
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="datagridDetailsMenuItem" Header="Detaylar" 
                               Click="DatagridDetailsMenuItem_Click" />
-                    <MenuItem Name="datagridAddPurchaseMenuItem" Header="Stok Girişi" 
+                        <MenuItem Name="datagridAddPurchaseMenuItem" Header="Stok Girişi" 
                               Click="DatagridAddPurchaseMenuItem_Click" />
-                    <MenuItem Name="datagridDeleteProductMenuItem" Header="Sil" 
+                        <MenuItem Name="datagridDeleteProductMenuItem" Header="Sil" 
                               Click="DatagridDeleteProductMenuItem_Click" />
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-        </DataGrid>
-        <Button Grid.Row="2" Grid.Column="3" Content="Yeni Ürün Ekle" Height="23" Margin="0,6,6,0" 
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+            <Button Grid.Row="2" Grid.Column="3" Content="Yeni Ürün Ekle" Height="23" Margin="0,6,6,0" 
                 Name="addNewProduct" VerticalAlignment="Top" Click="AddNewProduct_Click" HorizontalAlignment="Right" 
                 Width="110" />
-        <Button Grid.Row="2" Grid.Column="4" Content="Stok Girişi" Height="23" HorizontalAlignment="Right" 
+            <Button Grid.Row="2" Grid.Column="4" Content="Stok Girişi" Height="23" HorizontalAlignment="Right" 
                 Margin="0,6,6,0" Name="addPurchaseButton" VerticalAlignment="Top" Width="110" 
                 Click="AddPurchaseButton_Click" />
-    </Grid>
+        </Grid>
+    </AdornerDecorator>
 </UserControl>

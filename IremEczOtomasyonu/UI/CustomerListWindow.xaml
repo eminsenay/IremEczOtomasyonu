@@ -6,59 +6,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:m="clr-namespace:IremEczOtomasyonu.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ui="clr-namespace:IremEczOtomasyonu.UI"
         mc:Ignorable="d">
     <Window.Resources>
         <CollectionViewSource x:Key="CustomersViewSource" Filter="CustomerCollection_Filter" 
                               CollectionViewType="{x:Type ListCollectionView}" />
     </Window.Resources>
-    <Grid DataContext="{StaticResource CustomersViewSource}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="36" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="130" />
-            <ColumnDefinition Width="130" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="85" />
-        </Grid.ColumnDefinitions>
-        <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="0" Name="searchFirstNameInfoTextBox" Watermark="İsim"
+    <AdornerDecorator>
+        <Grid DataContext="{StaticResource CustomersViewSource}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="130" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="85" />
+            </Grid.ColumnDefinitions>
+            <ui:ClickSelectTextBox Grid.Row="0" Grid.Column="0" x:Name="searchFirstNameInfoTextBox"
                                Height="23" Width="120"
                                HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="0,6,0,0"
-                               TextChanged="CustomerSearchControl_TextChanged"/>
-        <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="1" Name="searchLastNameInfoTextBox" Watermark="Soyisim"
+                               TextChanged="CustomerSearchControl_TextChanged">
+                <ui:WatermarkService.Watermark>
+                    <TextBlock>İsim</TextBlock>
+                </ui:WatermarkService.Watermark>
+            </ui:ClickSelectTextBox>
+            <ui:ClickSelectTextBox Grid.Row="0" Grid.Column="1" x:Name="searchLastNameInfoTextBox"
                                Height="23" Width="120"
                                HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="0,6,0,0"
-                               TextChanged="CustomerSearchControl_TextChanged"/>
-        <xctk:WatermarkTextBox Grid.Row="0" Grid.Column="2" Name="searchDetailedInfoInfoTextBox" 
-                               Watermark="Detaylı Bilgi"
+                               TextChanged="CustomerSearchControl_TextChanged">
+                <ui:WatermarkService.Watermark>
+                    <TextBlock>Soyisim</TextBlock>
+                </ui:WatermarkService.Watermark>
+            </ui:ClickSelectTextBox>
+            <ui:ClickSelectTextBox Grid.Row="0" Grid.Column="2" x:Name="searchDetailedInfoInfoTextBox" 
                                Height="23" 
                                HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="5,6,5,0"
-                               TextChanged="CustomerSearchControl_TextChanged"/>
-        <Button Grid.Row="0" Grid.Column="3" Content="Seç" Name="chooseButton"
+                               TextChanged="CustomerSearchControl_TextChanged">
+                <ui:WatermarkService.Watermark>
+                    <TextBlock>Detaylı Bilgi</TextBlock>
+                </ui:WatermarkService.Watermark>
+            </ui:ClickSelectTextBox>
+            <Button Grid.Row="0" Grid.Column="3" Content="Seç" Name="chooseButton"
                 Height="23" Width="75"
                 HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,7,6,0" Click="ChooseButton_Click" />
-        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Name="customersDataGrid" 
+            <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Name="customersDataGrid" 
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6,6,6,12" 
                   AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" 
                   RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" 
                   CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" 
                   MouseDoubleClick="CustomersDataGrid_MouseDoubleClick"
                   d:DataContext="{d:DesignInstance Type=m:Customer}">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="firstNameColumn" Header="İsim" 
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="firstNameColumn" Header="İsim" 
                                     Binding="{Binding Path=FirstName}" Width="4*" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="lastNameColumn" Header="Soyisim" 
+                    <DataGridTextColumn x:Name="lastNameColumn" Header="Soyisim" 
                                     Binding="{Binding Path=LastName}" Width="4*" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="birthdayColumn" Header="Doğum Tarihi"
+                    <DataGridTextColumn x:Name="birthdayColumn" Header="Doğum Tarihi"
                                     Binding="{Binding Path=Birthday, StringFormat={}{0:dd.MM.yyyy}}" Width="3*" 
                                     IsReadOnly="True" />
-                <DataGridTextColumn x:Name="skinTypeColumn" Header="Cilt Tipi"
+                    <DataGridTextColumn x:Name="skinTypeColumn" Header="Cilt Tipi"
                                     Binding="{Binding Path=SkinType}" Width="2*" IsReadOnly="True" />
-                <DataGridTextColumn x:Name="detailedInfoColumn" Header="Detaylı Bilgi"
+                    <DataGridTextColumn x:Name="detailedInfoColumn" Header="Detaylı Bilgi"
                                     Binding="{Binding Path=DetailedInfo}" Width="6*" IsReadOnly="True" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </AdornerDecorator>
 </Window>
