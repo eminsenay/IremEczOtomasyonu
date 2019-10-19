@@ -8,20 +8,20 @@ For a brief period of time she used it, but at the time she wasn't at the pharma
 
 Currently the application isn't being used by anyone (as far as I know). It is serving as a playground project for me to try out new things.
 
-Roadmap (as of 06.2019)
+Roadmap (as of 10.2019)
 -----------------------
 
-1. .NET Framework to .NET Core 3.0 (in work)
-2. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
-3. Unit testing (maybe sometime in the future)
-4. UI port to Electron (maybe sometime in the future)
+1. Add license info (LGPL) to WebCamUtils as the sources taken from AForge.NET.
+2. ClickOnce (or something similar) Setup &rarr; Note: OpenCVSharp has a bug preventing this to be functioning correctly.
+3. DB pass issue neesd to be taken care of.
+4. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
+5. Unit testing (maybe sometime in the future)
+6. UI port to Electron (maybe sometime in the future)
 
 
 Known Problems
 --------------
 
-- Artifacts of Debug and release builds are generated under different folders.
-- 32 bit generation folder name is not the same among projects (Win32 - x86).
 - Connection string is located at the source code.
 - DB doesn't have a password.
 - Automatic refresh problems:
