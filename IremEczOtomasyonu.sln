@@ -14,7 +14,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WebCamLib", "WebCamLib\WebC
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "IremEczSetupVSI", "IremEczSetupVSI\IremEczSetupVSI.vdproj", "{D64052EF-4107-4811-AA7A-FB2CF352CC18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionStringEncrypterCore", "ConnectionStringEncrypterCore\ConnectionStringEncrypterCore.csproj", "{9396D201-06DE-4A25-9C67-CBBD87767DBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionStringEncrypter", "ConnectionStringEncrypter\ConnectionStringEncrypter.csproj", "{9396D201-06DE-4A25-9C67-CBBD87767DBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
