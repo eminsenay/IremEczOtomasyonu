@@ -19,7 +19,8 @@
                HorizontalAlignment="Left"  VerticalAlignment="Center" />
         <ComboBox Grid.Row="0" Grid.Column="1" Name="webcamComboBox" 
                   Height="23" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="0,0,6,0" 
-                  SelectionChanged="WebcamComboBox_SelectionChanged" />
+                  SelectionChanged="WebcamComboBox_SelectionChanged" 
+                  DisplayMemberPath="Name"/>
         <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Name="previewGrid" 
               MinWidth="640" MinHeight="480" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image x:Name="pictureBox" Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />

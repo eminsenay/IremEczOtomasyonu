@@ -2,9 +2,6 @@
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
-using Touchless.Vision.Camera;
-using MessageBox = System.Windows.MessageBox;
 using OpenCvSharp;
 using System.Threading;
 using OpenCvSharp.Extensions;
@@ -12,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
+using WebCamUtils;
 
 namespace IremEczOtomasyonu.UI
 {
@@ -24,6 +22,7 @@ namespace IremEczOtomasyonu.UI
         private VideoCapture _videoCapture;
         private Thread _cameraThread;
         private bool _isCameraRunning = true;
+        private int _selectedWebCamIndex = 0;
 
 
         public WebcamWindow()
@@ -36,7 +35,8 @@ namespace IremEczOtomasyonu.UI
             // Refresh the list of available cameras
             webcamComboBox.Items.Clear();
             string defaultWebcam = Properties.Settings.Default.SelectedWebcam;
-            foreach (Camera cam in CameraService.AvailableCameras)
+
+            foreach (FilterInfo cam in new FilterInfoCollection(FilterCategory.VideoInputDevice))
             {
                 webcamComboBox.Items.Add(cam);
                 // Search for the last selected webcam
@@ -45,14 +45,15 @@ namespace IremEczOtomasyonu.UI
                     webcamComboBox.SelectedItem = cam;
                 }
             }
+            _selectedWebCamIndex = webcamComboBox.SelectedIndex;
         }
 
         private void WebcamComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            SaveSelectedWebcam();
             // Display a preview
             StopCapturing();
             StartCapturing();
-            SaveSelectedWebcam();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -65,13 +66,14 @@ namespace IremEczOtomasyonu.UI
         /// </summary>
         private void SaveSelectedWebcam()
         {
-            string selectedWebcam = ((Camera)webcamComboBox.SelectedItem).Name;
+            string selectedWebcam = ((FilterInfo)webcamComboBox.SelectedItem).Name;
             if (string.IsNullOrEmpty(selectedWebcam))
             {
                 return;
             }
             Properties.Settings.Default.SelectedWebcam = selectedWebcam;
             Properties.Settings.Default.Save();
+            _selectedWebCamIndex = webcamComboBox.SelectedIndex;
         }
 
         private void GrabImageButton_Click(object sender, RoutedEventArgs e)
@@ -106,8 +108,8 @@ namespace IremEczOtomasyonu.UI
         private void CaptureCameraCallback()
         {
             Mat frame = new Mat();
-            _videoCapture = new VideoCapture(0);
-            _videoCapture.Open(0); // TODO: Change the index based on webcam selection
+            _videoCapture = new VideoCapture();
+            _videoCapture.Open(_selectedWebCamIndex); 
 
             if (!_videoCapture.IsOpened())
             {
@@ -116,10 +118,18 @@ namespace IremEczOtomasyonu.UI
 
             while (_isCameraRunning)
             {
-                _videoCapture.Read(frame);
-                Bitmap image = BitmapConverter.ToBitmap(frame);
-                Dispatcher.Invoke(() => pictureBox.Source = ConvertBitmap2BitmapImage(image));
-                image.Dispose();
+                try
+                {
+                    _videoCapture.Read(frame);
+                    Bitmap image = BitmapConverter.ToBitmap(frame);
+                    Dispatcher.Invoke(() => pictureBox.Source = ConvertBitmap2BitmapImage(image));
+                    image.Dispose();
+                }
+                catch (ArgumentException)
+                {
+                    // During webcam switches for a short period of time, the frame becomes an invalid argument.
+                    // Do nothing, it heals itsel.
+                }
             }
         }
 
@@ -148,7 +158,10 @@ namespace IremEczOtomasyonu.UI
 
         private void StopCapturing()
         {
-            _isCameraRunning = false;
+            lock(this)
+            {
+                _isCameraRunning = false;
+            }
         }
 
     }

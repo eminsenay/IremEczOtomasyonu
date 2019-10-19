@@ -27,3 +27,4 @@ packages/
 .vs
 .DS_Store
 /ConnectionStringEncrypterCore/obj
+/WebCamUtils/obj

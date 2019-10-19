@@ -63,10 +63,7 @@
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.1.1.20191017" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebCamWrapper\WebCamWrapper.csproj">
-      <Project>{CC5D5149-0092-4508-AC34-2ABE1468A1C9}</Project>
-      <Name>WebCamWrapper</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\WebCamUtils\WebCamUtils.csproj" />
   </ItemGroup>
 
 
