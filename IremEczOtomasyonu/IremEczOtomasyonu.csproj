@@ -60,6 +60,7 @@
     <PackageReference Include="Fluent.Ribbon" Version="7.0.0" />-->
     <PackageReference Include="ControlzEx" Version="4.0.0-alpha0308" />
     <PackageReference Include="Fluent.Ribbon" Version="7.0.0-alpha0661" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.1.1.20191017" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebCamWrapper\WebCamWrapper.csproj">
