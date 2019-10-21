@@ -1,4 +1,12 @@
-﻿using System;
+﻿// AForge Direct Show Library
+// AForge.NET framework
+//
+// Copyright © Andrew Kirillov, 2007
+// andrew.kirillov@gmail.com
+//
+// SPDX-License-Identifier: LGPL-3.0-only
+
+using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 

@@ -1,4 +1,13 @@
-﻿using System;
+﻿// AForge Video for Windows Library
+// AForge.NET framework
+// http://www.aforgenet.com/framework/
+//
+// Copyright © AForge.NET, 2007-2011
+// contacts@aforgenet.com
+//
+// SPDX-License-Identifier: LGPL-3.0-only
+
+using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 

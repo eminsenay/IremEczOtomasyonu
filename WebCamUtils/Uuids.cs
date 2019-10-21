@@ -1,4 +1,13 @@
-﻿using System;
+﻿// AForge Direct Show Library
+// AForge.NET framework
+// http://www.aforgenet.com/framework/
+//
+// Copyright © AForge.NET, 2009-2013
+// contacts@aforgenet.com
+//
+// SPDX-License-Identifier: LGPL-3.0-only
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace WebCamUtils

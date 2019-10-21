@@ -1,4 +1,4 @@
-İrem Eczanesi Dermokozmetik Sistemi
+İrem Eczanesi Otomasyon Sistemi
 =========================
 
 A small stock tracking and customer relationship management application.
@@ -11,12 +11,11 @@ Currently the application isn't being used by anyone (as far as I know). It is s
 Roadmap (as of 10.2019)
 -----------------------
 
-1. Add license info (LGPL) to WebCamUtils as the sources taken from AForge.NET.
-2. ClickOnce (or something similar) Setup &rarr; Note: OpenCVSharp has a bug preventing this to be functioning correctly.
-3. DB pass issue neesd to be taken care of.
-4. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
-5. Unit testing (maybe sometime in the future)
-6. UI port to Electron (maybe sometime in the future)
+1. ClickOnce (or something similar) Setup &rarr; Note: OpenCVSharp has a bug preventing this to be functioning correctly.
+2. DB pass issue neesd to be taken care of.
+3. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
+4. Unit testing (maybe sometime in the future)
+5. UI port to Electron (maybe sometime in the future)
 
 
 Known Problems
