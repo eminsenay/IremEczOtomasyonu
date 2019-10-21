@@ -107,7 +107,7 @@ namespace IremEczOtomasyonu.UI
 
         private void CaptureCameraCallback()
         {
-            Mat frame = new Mat();
+            using Mat frame = new Mat();
             _videoCapture = new VideoCapture();
             _videoCapture.Open(_selectedWebCamIndex); 
 
@@ -128,9 +128,10 @@ namespace IremEczOtomasyonu.UI
                 catch (ArgumentException)
                 {
                     // During webcam switches for a short period of time, the frame becomes an invalid argument.
-                    // Do nothing, it heals itsel.
+                    // Do nothing, it heals itself.
                 }
             }
+            _videoCapture.Dispose();
         }
 
         private BitmapImage ConvertBitmap2BitmapImage(Bitmap src)

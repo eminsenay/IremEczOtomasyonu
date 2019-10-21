@@ -12,7 +12,7 @@ Roadmap (as of 10.2019)
 -----------------------
 
 1. ClickOnce (or something similar) Setup &rarr; Note: OpenCVSharp has a bug preventing this to be functioning correctly.
-2. DB pass issue neesd to be taken care of.
+2. DB pass issue needs to be taken care of.
 3. Refactoring the UI classes to be more MVVM like (maybe sometime in the future)
 4. Unit testing (maybe sometime in the future)
 5. UI port to Electron (maybe sometime in the future)
